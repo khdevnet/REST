@@ -1,0 +1,3 @@
+1. Install GitHub plugin /environment/GitHub.VisualStudio
+2. Install Stylecop 4.7.54  https://stylecop.codeplex.com/releases/view/621306 
+3. Install Stylecop 4.7.54 Run "Install-Package StyleCop.MSBuild -Version 4.7.54" in package console 
