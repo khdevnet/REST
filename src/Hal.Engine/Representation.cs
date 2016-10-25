@@ -151,7 +151,7 @@ namespace Hal.Engine
                 }
             }
 
-            if ((resolver == null) || (link == null))
+            if (Links != null && ((resolver == null) || (link == null)))
             {
                 link = Links.SingleOrDefault(x => x.Rel == "self");
 

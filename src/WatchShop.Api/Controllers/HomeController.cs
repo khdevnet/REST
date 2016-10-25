@@ -11,16 +11,16 @@ namespace WatchShop.Api.Controllers
         {
             var bestSellersProducts = new[]
             {
-                new ProductViewModel { Id = 1, Name = "Nabucco Black" },
-                new ProductViewModel { Id = 1, Name = "Classic Le Locle Silver" },
-                new ProductViewModel { Id = 1, Name = "Slimline Silver Dial Brown" },
-                new ProductViewModel { Id = 1, Name = "Melbye Grey Dial Grey Mesh" }
+                new ProductRepresentation { Id = 1, Name = "Nabucco Black" },
+                new ProductRepresentation { Id = 1, Name = "Classic Le Locle Silver" },
+                new ProductRepresentation { Id = 1, Name = "Slimline Silver Dial Brown" },
+                new ProductRepresentation { Id = 1, Name = "Melbye Grey Dial Grey Mesh" }
             };
             return new HomeRepresentation
             {
                 Title = "Mens Shop.",
                 Welcome = "Mens Shop. Be A man buy for pleasure!!!",
-                BestSellersProducts = bestSellersProducts
+                BestSellersProducts = new BestSellersProductRepresentation(bestSellersProducts)
             };
         }
 

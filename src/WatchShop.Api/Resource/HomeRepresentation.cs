@@ -10,7 +10,7 @@ namespace WatchShop.Api.Resource
 
         public string Welcome { get; set; }
 
-        public IEnumerable<ProductViewModel> BestSellersProducts { get; set; }
+        public BestSellersProductRepresentation BestSellersProducts { get; set; }
 
         protected override void CreateHypermedia()
         {

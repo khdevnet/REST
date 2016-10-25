@@ -15,6 +15,6 @@ namespace Hal.Engine
             ResourceList = list;
         }
 
-        public IList<TResource> ResourceList { get; set; }
+        public IEnumerable<TResource> ResourceList { get; set; }
     }
 }
