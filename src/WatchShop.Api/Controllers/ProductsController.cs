@@ -1,20 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using WatchShop.Api.Resource;
 
 namespace WatchShop.Api.Controllers
 {
-    public class ValuesController : ApiController
+    public class ProductsController : ApiController
     {
-        // GET api/values
+        // GET api/products
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
-        public string Get(int id)
+        public ProductDetailRepresentation Get(int id)
         {
-            return "value";
+            return new ProductDetailRepresentation
+            {
+                Id = id,
+                Name = "Rolex",
+                Reviews = new[] { new ReviewRepresentation { Id = 1, Name = "Review1" } }
+            };
         }
 
         // POST api/values

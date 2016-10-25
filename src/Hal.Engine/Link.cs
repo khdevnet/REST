@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using WebApi.Hal.Interfaces;
+using Hal.Engine.Interfaces;
 
-namespace WebApi.Hal
+namespace Hal.Engine
 {
     public class Link<T> : Link where T : class, IResource
     {

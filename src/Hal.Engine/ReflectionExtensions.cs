@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 
-namespace WebApi.Hal
+namespace Hal.Engine
 {
     internal static class ReflectionExtensions
     {

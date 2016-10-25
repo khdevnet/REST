@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using WebApi.Hal.Exceptions;
-using WebApi.Hal.Interfaces;
+using Hal.Engine.Exceptions;
+using Hal.Engine.Interfaces;
 
-namespace WebApi.Hal
+namespace Hal.Engine
 {
     public class Hypermedia : IHypermediaResolver, IHypermediaBuilder
     {

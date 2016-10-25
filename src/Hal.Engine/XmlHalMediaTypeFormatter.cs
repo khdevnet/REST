@@ -9,9 +9,9 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
-using WebApi.Hal.Interfaces;
+using Hal.Engine.Interfaces;
 
-namespace WebApi.Hal
+namespace Hal.Engine
 {
     public class XmlHalMediaTypeFormatter : BufferedMediaTypeFormatter
     {

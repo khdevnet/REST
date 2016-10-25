@@ -1,5 +1,6 @@
-﻿using System.Web.Http;
-using WebApi.Hal;
+﻿using System.Net.Http.Formatting;
+using System.Web.Http;
+using Hal.Engine;
 
 namespace WatchShop.Api
 {
@@ -15,11 +16,12 @@ namespace WatchShop.Api
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "{controller}/{id}",
-                defaults: new { controller = "values", id = RouteParameter.Optional });
+                defaults: new { controller = "home", id = RouteParameter.Optional });
 
-            var formatters = GlobalConfiguration.Configuration.Formatters;
+            MediaTypeFormatterCollection formatters = GlobalConfiguration.Configuration.Formatters;
 
             GlobalConfiguration.Configuration.Formatters.Remove(formatters.XmlFormatter);
+            GlobalConfiguration.Configuration.Formatters.Remove(formatters.JsonFormatter);
             GlobalConfiguration.Configuration.Formatters.Add(new JsonHalMediaTypeFormatter());
         }
     }

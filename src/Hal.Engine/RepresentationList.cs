@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using WebApi.Hal.Interfaces;
+using Hal.Engine.Interfaces;
 
-namespace WebApi.Hal
+namespace Hal.Engine
 {
     [Obsolete("Use SimpleListRepresentation", false)]
     public abstract class RepresentationList<TRepresentation> : Representation, IRepresentationList, IEnumerable<TRepresentation> where TRepresentation : Representation

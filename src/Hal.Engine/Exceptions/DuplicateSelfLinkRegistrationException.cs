@@ -1,6 +1,6 @@
 using System;
 
-namespace WebApi.Hal.Exceptions
+namespace Hal.Engine.Exceptions
 {
     public class DuplicateSelfLinkRegistrationException : Exception
     {

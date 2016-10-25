@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WebApi.Hal
+namespace Hal.Engine
 {
     /// <summary>
     /// this is https://github.com/tavis-software/UriTemplates

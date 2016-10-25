@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using WebApi.Hal.Interfaces;
+using Hal.Engine.Interfaces;
 
-namespace WebApi.Hal
+namespace Hal.Engine
 {
     public abstract class SimpleListRepresentation<TResource> : Representation where TResource : IResource
     {

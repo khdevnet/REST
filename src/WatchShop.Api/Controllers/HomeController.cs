@@ -1,21 +1,33 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
-using WatchShop.Api.Resources;
+﻿using System.Web.Http;
+using WatchShop.Api.Resource;
+using WatchShop.Api.ViewModel;
 
 namespace WatchShop.Api.Controllers
 {
     public class HomeController : ApiController
     {
-        // GET api/values
-        public IEnumerable<string> Get()
+        // GET Home
+        public HomeRepresentation Get()
         {
-            return new string[] { "value1", "value2" };
+            var bestSellersProducts = new[]
+            {
+                new ProductViewModel { Id = 1, Name = "Nabucco Black" },
+                new ProductViewModel { Id = 1, Name = "Classic Le Locle Silver" },
+                new ProductViewModel { Id = 1, Name = "Slimline Silver Dial Brown" },
+                new ProductViewModel { Id = 1, Name = "Melbye Grey Dial Grey Mesh" }
+            };
+            return new HomeRepresentation
+            {
+                Title = "Mens Shop.",
+                Welcome = "Mens Shop. Be A man buy for pleasure!!!",
+                BestSellersProducts = bestSellersProducts
+            };
         }
 
         // GET api/values/5
-        public WatchDetailRepresentation Get(int id)
+        public ProductDetailRepresentation Get(int id)
         {
-            return new WatchDetailRepresentation
+            return new ProductDetailRepresentation
             {
                 Id = id,
                 Name = "Test"

@@ -6,9 +6,9 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using WebApi.Hal.Interfaces;
+using Hal.Engine.Interfaces;
 
-namespace WebApi.Hal.JsonConverters
+namespace Hal.Engine.JsonConverters
 {
     public class ResourceConverter : JsonConverter
     {

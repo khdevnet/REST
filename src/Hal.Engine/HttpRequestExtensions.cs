@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 
-namespace WebApi.Hal
+namespace Hal.Engine
 {
     public static class HttpRequestExtensions
     {

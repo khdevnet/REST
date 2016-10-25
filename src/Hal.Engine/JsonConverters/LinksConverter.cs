@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
 
-namespace WebApi.Hal.JsonConverters
+namespace Hal.Engine.JsonConverters
 {
     public class LinksConverter : JsonConverter
     {

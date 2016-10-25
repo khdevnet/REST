@@ -2,9 +2,9 @@ using System;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
-using WebApi.Hal.JsonConverters;
+using Hal.Engine.JsonConverters;
 
-namespace WebApi.Hal
+namespace Hal.Engine
 {
     public class JsonHalMediaTypeFormatter : JsonMediaTypeFormatter
     {

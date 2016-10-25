@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using WebApi.Hal.Interfaces;
+using Hal.Engine.Interfaces;
 
-namespace WebApi.Hal.JsonConverters
+namespace Hal.Engine.JsonConverters
 {
     public class EmbeddedResourceConverter : JsonConverter
     {
