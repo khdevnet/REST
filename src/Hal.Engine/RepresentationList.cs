@@ -32,7 +32,7 @@ namespace Hal.Engine
             }
         }
 
-        protected internal override void CreateHypermedia()
+        protected override void CreateHypermedia()
         {
             CreateListHypermedia();
         }

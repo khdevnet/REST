@@ -9,18 +9,11 @@ namespace WatchShop.Api.Controllers
         // GET Home
         public HomeRepresentation Get()
         {
-            var bestSellersProducts = new[]
-            {
-                new ProductRepresentation { Id = 1, Name = "Nabucco Black" },
-                new ProductRepresentation { Id = 1, Name = "Classic Le Locle Silver" },
-                new ProductRepresentation { Id = 1, Name = "Slimline Silver Dial Brown" },
-                new ProductRepresentation { Id = 1, Name = "Melbye Grey Dial Grey Mesh" }
-            };
+
             return new HomeRepresentation
             {
                 Title = "Mens Shop.",
-                Welcome = "Mens Shop. Be A man buy for pleasure!!!",
-                BestSellersProducts = new BestSellersProductRepresentation(bestSellersProducts)
+                Welcome = "Mens Shop. Be A man buy for pleasure!!!"
             };
         }
 

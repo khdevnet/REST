@@ -8,17 +8,17 @@ namespace Hal.Engine
 {
     public class JsonHalMediaTypeFormatter : JsonMediaTypeFormatter
     {
-        readonly ResourceListConverter resourceListConverter = new ResourceListConverter();
-        readonly ResourceConverter resourceConverter = new ResourceConverter();
-        readonly LinksConverter linksConverter = new LinksConverter();
-        readonly EmbeddedResourceConverter embeddedResourceConverter = new EmbeddedResourceConverter();
-        readonly IHypermediaResolver hypermediaConfiguration;
+        private readonly JsonConverter resourceListConverter = new ResourceListConverter();
+        private readonly JsonConverter resourceConverter;
+        private readonly JsonConverter linksConverter = new LinksConverter();
+        private readonly JsonConverter embeddedResourceConverter = new EmbeddedResourceConverter();
 
         public JsonHalMediaTypeFormatter(IHypermediaResolver hypermediaConfiguration)
         {
-            if (hypermediaConfiguration == null) 
-                throw new ArgumentNullException("hypermediaConfiguration");
-
+            if (hypermediaConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(hypermediaConfiguration));
+            }
             resourceConverter = new ResourceConverter(hypermediaConfiguration);
             Initialize();
         }
@@ -29,16 +29,6 @@ namespace Hal.Engine
             Initialize();
         }
 
-        void Initialize()
-        {
-            SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/hal+json"));
-            SerializerSettings.Converters.Add(linksConverter);
-            SerializerSettings.Converters.Add(resourceListConverter);
-            SerializerSettings.Converters.Add(resourceConverter);
-            SerializerSettings.Converters.Add(embeddedResourceConverter);
-            SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-        }
-
         public override bool CanReadType(Type type)
         {
             return typeof(Representation).IsAssignableFrom(type);
@@ -47,6 +37,16 @@ namespace Hal.Engine
         public override bool CanWriteType(Type type)
         {
             return typeof(Representation).IsAssignableFrom(type);
+        }
+
+        private void Initialize()
+        {
+            SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/hal+json"));
+            SerializerSettings.Converters.Add(linksConverter);
+            SerializerSettings.Converters.Add(resourceListConverter);
+            SerializerSettings.Converters.Add(resourceConverter);
+            SerializerSettings.Converters.Add(embeddedResourceConverter);
+            SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
         }
     }
 }

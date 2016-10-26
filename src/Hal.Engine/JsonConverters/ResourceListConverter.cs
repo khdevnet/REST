@@ -8,12 +8,18 @@ namespace Hal.Engine.JsonConverters
     [Obsolete("use SimpleListRepresentation instead of RepresentationList")]
     public class ResourceListConverter : JsonConverter
     {
+        public override bool CanRead
+        {
+            get { return false; }
+        }
+
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             var representation = value as Representation;
             if (representation != null)
+            {
                 representation.RepopulateHyperMedia();
-
+            }
             var list = (IRepresentationList)value;
 
             writer.WriteStartObject();
@@ -43,11 +49,6 @@ namespace Hal.Engine.JsonConverters
             writer.WriteEndObject();
         }
 
-        public override bool CanRead
-        {
-            get { return false; }
-        }
-
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             return reader.Value;
@@ -58,12 +59,12 @@ namespace Hal.Engine.JsonConverters
             return IsResource(objectType) && IsResourceList(objectType);
         }
 
-        static bool IsResourceList(Type objectType)
+        private static bool IsResourceList(Type objectType)
         {
             return typeof(IRepresentationList).IsAssignableFrom(objectType);
         }
 
-        static bool IsResource(Type objectType)
+        private static bool IsResource(Type objectType)
         {
             return typeof(Representation).IsAssignableFrom(objectType);
         }

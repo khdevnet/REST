@@ -59,9 +59,7 @@ namespace Hal.Engine
                    typeof(IEnumerable<IResource>).IsAssignableFrom(type);
         }
 
-        protected internal virtual void CreateHypermedia()
-        {
-        }
+        protected abstract void CreateHypermedia();
 
         protected static void Append<T>(IResource resource, IHypermediaResolver resolver) where T : class, IResource
         {
@@ -110,7 +108,7 @@ namespace Hal.Engine
 
             var curies = new List<CuriesLink>();
 
-            RepopulateRecursively(ctx.HypermediaResolver, curies);
+             RepopulateRecursively(ctx.HypermediaResolver, curies);
 
             if (Links != null)
             {

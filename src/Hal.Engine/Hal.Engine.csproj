@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionBasedHypermediaAppender.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="CuriesLink.cs" />
     <Compile Include="EmbeddedResource.cs" />
     <Compile Include="Exceptions\DuplicateCurisLinkRegistrationException.cs" />

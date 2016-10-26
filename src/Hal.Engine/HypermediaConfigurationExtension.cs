@@ -10,10 +10,13 @@ namespace Hal.Engine
         public static void Register<T>(this IHypermediaBuilder builder, Link<T> selfLink, IHypermediaAppender<T> appender, params Link[] links) where T : class, IResource
         {
             if (selfLink == null)
+            {
                 throw new ArgumentNullException("selfLink");
-
+            }
             if (appender == null)
+            {
                 throw new ArgumentNullException("appender");
+            }
 
             builder.RegisterSelf(selfLink);
             builder.RegisterAppender(appender);

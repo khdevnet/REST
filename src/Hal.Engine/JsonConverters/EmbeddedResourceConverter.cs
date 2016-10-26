@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Hal.Engine.Interfaces;
 
@@ -16,13 +17,19 @@ namespace Hal.Engine.JsonConverters
 
             foreach (var rel in resourceList)
             {
-                writer.WritePropertyName(NormalizeRel(rel.Resources[0]));
+                writer.WritePropertyName(NormalizeRel(rel.Resources.First()));
                 if (rel.IsSourceAnArray)
+                {
                     writer.WriteStartArray();
+                }
                 foreach (var res in rel.Resources)
+                {
                     serializer.Serialize(writer, res);
+                }
                 if (rel.IsSourceAnArray)
+                {
                     writer.WriteEndArray();
+                }
             }
             writer.WriteEndObject();
         }

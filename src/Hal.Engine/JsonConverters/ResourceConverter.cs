@@ -12,9 +12,8 @@ namespace Hal.Engine.JsonConverters
 {
     public class ResourceConverter : JsonConverter
     {
-        const StreamingContextStates StreamingContextResourceConverterState = StreamingContextStates.Other;
-
-        readonly IHypermediaResolver hypermediaConfiguration;
+        private const StreamingContextStates StreamingContextResourceConverterState = StreamingContextStates.Other;
+        private readonly IHypermediaResolver hypermediaConfiguration;
 
         public ResourceConverter()
         {
@@ -23,8 +22,9 @@ namespace Hal.Engine.JsonConverters
         public ResourceConverter(IHypermediaResolver hypermediaConfiguration)
         {
             if (hypermediaConfiguration == null)
-                throw new ArgumentNullException("hypermediaConfiguration");
-
+            {
+                throw new ArgumentNullException(nameof(hypermediaConfiguration));
+            }
             this.hypermediaConfiguration = hypermediaConfiguration;
         }
 
@@ -32,6 +32,35 @@ namespace Hal.Engine.JsonConverters
         {
             return context.Context is HalJsonConverterContext && context.State == StreamingContextResourceConverterState;
         }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var resource = (IResource)value;
+            IList<Link> linksBackup = resource.Links;
+
+            if (!linksBackup.Any())
+            {
+                resource.Links = null; // avoid serialization
+            }
+
+            StreamingContext saveContext = serializer.Context;
+            serializer.Context = GetResourceConverterContext();
+            serializer.Converters.Remove(this);
+            serializer.Serialize(writer, resource);
+            serializer.Converters.Add(this);
+            serializer.Context = saveContext;
+
+            if (!linksBackup.Any())
+                resource.Links = linksBackup;
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            // let exceptions leak out of here so ordinary exception handling in the server or client pipeline can take place
+            return CreateResource(JObject.Load(reader), objectType);
+        }
+
+
 
         private StreamingContext GetResourceConverterContext()
         {
@@ -42,57 +71,40 @@ namespace Hal.Engine.JsonConverters
             return new StreamingContext(StreamingContextResourceConverterState, context);
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            var resource = (IResource)value;
-			var linksBackup = resource.Links;
-
-			if (!linksBackup.Any())
-				resource.Links = null; // avoid serialization
-
-			var saveContext = serializer.Context;
-            serializer.Context = GetResourceConverterContext();
-            serializer.Converters.Remove(this);
-            serializer.Serialize(writer, resource);
-            serializer.Converters.Add(this);
-            serializer.Context = saveContext;
-
-			if (!linksBackup.Any())
-				resource.Links = linksBackup;
-		}
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-                                        JsonSerializer serializer)
-        {
-            // let exceptions leak out of here so ordinary exception handling in the server or client pipeline can take place
-            return CreateResource(JObject.Load(reader), objectType);
-        }
-
-        const string HalLinksName = "_links";
-        const string HalEmbeddedName = "_embedded";
 
         static IResource CreateResource(JObject jObj, Type resourceType)
         {
             // remove _links and _embedded so those don't try to deserialize, because we know they will fail
             JToken links;
-            if (jObj.TryGetValue(HalLinksName, out links))
-                jObj.Remove(HalLinksName);
+            if (jObj.TryGetValue(Constants.HalLinksName, out links))
+            {
+                jObj.Remove(Constants.HalLinksName);
+            }
             JToken embeddeds;
-            if (jObj.TryGetValue(HalEmbeddedName, out embeddeds))
-                jObj.Remove(HalEmbeddedName);
+            if (jObj.TryGetValue(Constants.HalEmbeddedName, out embeddeds))
+            {
+                jObj.Remove(Constants.HalEmbeddedName);
+            }
 
             // create value properties in base object
             var resource = jObj.ToObject(resourceType) as IResource;
-            if (resource == null) return null;
+            if (resource == null)
+            {
+                return null;
+            }
 
             // links are named properties, where the name is Link.Rel and the value is the rest of Link
             if (links != null)
             {
-                foreach (var rel in links.OfType<JProperty>())
+                foreach (JProperty rel in links.OfType<JProperty>())
+                {
                     CreateLinks(rel, resource);
-                var self = resource.Links.SingleOrDefault(l => l.Rel == "self");
+                }
+                Link self = resource.Links.SingleOrDefault(l => l.Rel == Constants.SelfLinkName);
                 if (self != null)
+                {
                     resource.Href = self.Href;
+                }
             }
 
             // embedded are named properties, where the name is the Rel, which needs to map to a Resource Type, and the value is the Resource
@@ -102,21 +114,24 @@ namespace Hal.Engine.JsonConverters
                 foreach (var prop in resourceType.GetProperties().Where(p => Representation.IsEmbeddedResourceType(p.PropertyType)))
                 {
                     // expects embedded collection of resources is implemented as an IList on the Representation-derived class
-                    if (typeof (IEnumerable<IResource>).IsAssignableFrom(prop.PropertyType))
+                    if (typeof(IEnumerable<IResource>).IsAssignableFrom(prop.PropertyType))
                     {
                         var lst = prop.GetValue(resource) as IList;
                         if (lst == null)
                         {
                             lst = ConstructResource(prop.PropertyType) as IList ??
                                   Activator.CreateInstance(
-                                      typeof (List<>).MakeGenericType(prop.PropertyType.GenericTypeArguments)) as IList;
-                            if (lst == null) continue;
+                                      typeof(List<>).MakeGenericType(prop.PropertyType.GenericTypeArguments)) as IList;
+                            if (lst == null)
+                            {
+                                continue;
+                            }
+
                             prop.SetValue(resource, lst);
                         }
                         if (prop.PropertyType.GenericTypeArguments != null &&
                             prop.PropertyType.GenericTypeArguments.Length > 0)
-                            CreateEmbedded(embeddeds, prop.PropertyType.GenericTypeArguments[0],
-                                newRes => lst.Add(newRes));
+                            CreateEmbedded(embeddeds, prop.PropertyType.GenericTypeArguments[0], newRes => lst.Add(newRes));
                     }
                     else
                     {

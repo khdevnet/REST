@@ -10,13 +10,11 @@ namespace WatchShop.Api.Resource
 
         public string Welcome { get; set; }
 
-        public BestSellersProductRepresentation BestSellersProducts { get; set; }
-
         protected override void CreateHypermedia()
         {
             Href = "/";
-            Links.Add(new Link { Title = "Products", Href = "/products" });
-            Links.Add(new Link { Title = "Cart", Href = "/cart" });
+            Links.Add(new Link { Rel = "catalog", Href = "/catalog" });
+            Links.Add(new Link { Rel = "cart", Href = "/cart" });
         }
     }
 }
