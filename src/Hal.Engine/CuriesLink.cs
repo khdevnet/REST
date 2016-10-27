@@ -6,132 +6,133 @@ using Hal.Engine.Interfaces;
 
 namespace Hal.Engine
 {
-    public class CuriesLink
-    {
-        const string CuriesRelExpression = "rel";
+    //public class CuriesLink
+    //{
+    //    const string CuriesRelExpression = "rel";
 
-        static readonly IEqualityComparer<CuriesLink> ComparerInstance = new NameEqualityComparer();
+    //    static readonly IEqualityComparer<CuriesLink> ComparerInstance = new NameEqualityComparer();
 
-        public CuriesLink(string name, string href)
-        {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+    //    public CuriesLink(string name, string href)
+    //    {
+    //        if (string.IsNullOrEmpty(name))
+    //            throw new ArgumentNullException("name");
 
-            if (string.IsNullOrEmpty(href))
-                throw new ArgumentNullException("href");
+    //        if (string.IsNullOrEmpty(href))
+    //            throw new ArgumentNullException("href");
 
-            if (!IsValidCuriesHref(href))
-                throw new ArgumentException("The provided href is not a valid uri template: " + href, href);
+    //        if (!IsValidCuriesHref(href))
+    //            throw new ArgumentException("The provided href is not a valid uri template: " + href, href);
 
-            Name = name;
-            Href = href;
-        }
+    //        Name = name;
+    //        Href = href;
+    //    }
 
-        public string Name { get; private set; }
-        public string Href { get; private set; }
+    //    public string Name { get; private set; }
 
-        string CreateLinkRelation(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+    //    public string Href { get; private set; }
 
-            if (name.Contains(":"))
-                throw new ArgumentException("Specified link relation already contains ':' " + name, "name");
+    //    string CreateLinkRelation(string name)
+    //    {
+    //        if (string.IsNullOrEmpty(name))
+    //            throw new ArgumentNullException("name");
 
-            return string.Concat(Name, ":", name);
-        }
+    //        if (name.Contains(":"))
+    //            throw new ArgumentException("Specified link relation already contains ':' " + name, "name");
 
-        public Link CreateLink(string name, string href)
-        {
-            return new Link(CreateLinkRelation(name), href, this);
-        }
+    //        return string.Concat(Name, ":", name);
+    //    }
 
-        public Link<T> CreateLink<T>(string name, string href) where T : class, IResource
-        {
-            return new Link<T>(CreateLinkRelation(name), href, this);
-        }
+    //    public Link CreateLink(string name, string href)
+    //    {
+    //        return new Link(CreateLinkRelation(name), href, this);
+    //    }
 
-        private static bool IsValidCuriesHref(string template)
-        {
-            if (string.IsNullOrEmpty(template))
-                return false;
+    //    public Link<T> CreateLink<T>(string name, string href) where T : class, IResource
+    //    {
+    //        return new Link<T>(CreateLinkRelation(name), href, this);
+    //    }
 
-            var expression = new StringBuilder();
-            var building = false;
-            var foundRel = false;
+    //    private static bool IsValidCuriesHref(string template)
+    //    {
+    //        if (string.IsNullOrEmpty(template))
+    //            return false;
 
-            foreach (var c in template)
-            {
-                switch (c)
-                {
-                    case '{':
-                        if (foundRel)
-                            return false; // only a single "rel" expression is allowed in this template ...
-                        building = true;
-                        expression.Clear();
-                        break;
-                    case '}':
-                        if (!IsValidCuriesHrefRelExpression(expression.ToString()))
-                            return false; // only a single "rel" expression is allowed in this template ...
-                        building = false;
-                        foundRel = true;
-                        break;
-                    default:
-                        if (building)
-                            expression.Append(c);
-                        break;
-                }
-            }
+    //        var expression = new StringBuilder();
+    //        var building = false;
+    //        var foundRel = false;
 
-            return foundRel;
-        }
+    //        foreach (var c in template)
+    //        {
+    //            switch (c)
+    //            {
+    //                case '{':
+    //                    if (foundRel)
+    //                        return false; // only a single "rel" expression is allowed in this template ...
+    //                    building = true;
+    //                    expression.Clear();
+    //                    break;
+    //                case '}':
+    //                    if (!IsValidCuriesHrefRelExpression(expression.ToString()))
+    //                        return false; // only a single "rel" expression is allowed in this template ...
+    //                    building = false;
+    //                    foundRel = true;
+    //                    break;
+    //                default:
+    //                    if (building)
+    //                        expression.Append(c);
+    //                    break;
+    //            }
+    //        }
 
-        private static bool IsValidCuriesHrefRelExpression(string expression)
-        {
-            if (expression.Equals(CuriesRelExpression, StringComparison.OrdinalIgnoreCase))
-                return true;
+    //        return foundRel;
+    //    }
 
-            var operators = new[] { '+', ';', '/', '#', '&', '?', '.' };
-            var first = expression[0];
+    //    private static bool IsValidCuriesHrefRelExpression(string expression)
+    //    {
+    //        if (expression.Equals(CuriesRelExpression, StringComparison.OrdinalIgnoreCase))
+    //            return true;
 
-            if (operators.Any(o => o == first))
-                return expression.Substring(1).Equals(CuriesRelExpression, StringComparison.OrdinalIgnoreCase);
+    //        var operators = new[] { '+', ';', '/', '#', '&', '?', '.' };
+    //        var first = expression[0];
 
-            return false; // only a single "rel" expression is allowed in this template ...
-        }
+    //        if (operators.Any(o => o == first))
+    //            return expression.Substring(1).Equals(CuriesRelExpression, StringComparison.OrdinalIgnoreCase);
 
-        public Link ToLink()
-        {
-            return new Link
-            {
-                Rel = Link.RelForCuries,
-                Name = Name,
-                Href = Href
-            };
-        }
+    //        return false; // only a single "rel" expression is allowed in this template ...
+    //    }
 
-        public static IEqualityComparer<CuriesLink> EqualityComparer
-        {
-            get { return ComparerInstance; }
-        }
+    //    public Link ToLink()
+    //    {
+    //        return new Link
+    //        {
+    //            Rel = Link.RelForCuries,
+    //            Name = Name,
+    //            Href = Href
+    //        };
+    //    }
 
-        sealed class NameEqualityComparer : IEqualityComparer<CuriesLink>
-        {
-            public bool Equals(CuriesLink x, CuriesLink y)
-            {
-                if (ReferenceEquals(x, y)) return true;
-                if (ReferenceEquals(x, null)) return false;
-                if (ReferenceEquals(y, null)) return false;
-                if (x.GetType() != y.GetType()) return false;
-                return string.Equals(x.Name, y.Name);
-            }
+    //    public static IEqualityComparer<CuriesLink> EqualityComparer
+    //    {
+    //        get { return ComparerInstance; }
+    //    }
 
-            public int GetHashCode(CuriesLink obj)
-            {
-                return (obj.Name != null
-                    ? obj.Name.GetHashCode()
-                    : 0);
-            }
-        }
-    }
+    //    sealed class NameEqualityComparer : IEqualityComparer<CuriesLink>
+    //    {
+    //        public bool Equals(CuriesLink x, CuriesLink y)
+    //        {
+    //            if (ReferenceEquals(x, y)) return true;
+    //            if (ReferenceEquals(x, null)) return false;
+    //            if (ReferenceEquals(y, null)) return false;
+    //            if (x.GetType() != y.GetType()) return false;
+    //            return string.Equals(x.Name, y.Name);
+    //        }
+
+    //        public int GetHashCode(CuriesLink obj)
+    //        {
+    //            return (obj.Name != null
+    //                ? obj.Name.GetHashCode()
+    //                : 0);
+    //        }
+    //    }
+    //}
 }

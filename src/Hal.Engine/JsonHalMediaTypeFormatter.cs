@@ -8,10 +8,10 @@ namespace Hal.Engine
 {
     public class JsonHalMediaTypeFormatter : JsonMediaTypeFormatter
     {
-        private readonly JsonConverter resourceListConverter = new ResourceListConverter();
+     //   private readonly JsonConverter resourceListConverter = new ResourceListConverter();
         private readonly JsonConverter resourceConverter;
-        private readonly JsonConverter linksConverter = new LinksConverter();
-        private readonly JsonConverter embeddedResourceConverter = new EmbeddedResourceConverter();
+    //    private readonly JsonConverter linksConverter = new LinksConverter();
+      //  private readonly JsonConverter embeddedResourceConverter = new EmbeddedResourceConverter();
 
         public JsonHalMediaTypeFormatter(IHypermediaResolver hypermediaConfiguration)
         {

@@ -3,15 +3,15 @@ using Hal.Engine.Interfaces;
 
 namespace Hal.Engine
 {
-    internal class EmbeddedResource
-    {
-        public EmbeddedResource()
-        {
-            Resources = new List<IResource>();
-        }
+    //internal class EmbeddedResource
+    //{
+    //    public EmbeddedResource()
+    //    {
+    //        Resources = new List<IResource>();
+    //    }
 
-        public bool IsSourceAnArray { get; set; }
+    //    public bool IsSourceAnArray { get; set; }
 
-        public IList<IResource> Resources { get; private set; }
-    }
+    //    public IList<IResource> Resources { get; private set; }
+    //}
 }
