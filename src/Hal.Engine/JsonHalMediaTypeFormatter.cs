@@ -11,6 +11,7 @@ using System.Web.Http.Routing;
 using System.Web;
 using Hal.Engine.Extensibility;
 using System.Net.Http;
+using Hal.Engine.Extensibility.Dto;
 
 namespace Hal.Engine
 {
@@ -27,8 +28,8 @@ namespace Hal.Engine
 
         public override void WriteToStream(Type type, object value, Stream writeStream, Encoding effectiveEncoding)
         {
-            MethodInfo methodInfo = type.BaseType.GetMethod("CreateHypermedia", BindingFlags.Instance | BindingFlags.NonPublic);
-            Representation resource = value as Representation;
+            MethodInfo methodInfo = type.GetMethod("Hal.Engine.Extensibility.IRepresentation.CreateHypermedia", BindingFlags.Instance | BindingFlags.NonPublic);
+            ILinksResource resource = value as ILinksResource;
             if (methodInfo != null)
             {
                 methodInfo.Invoke(resource, null);
@@ -40,12 +41,12 @@ namespace Hal.Engine
 
         public override bool CanReadType(Type type)
         {
-            return typeof(Representation<>).IsAssignableFrom(type);
+            return typeof(IRepresentation).IsAssignableFrom(type);
         }
 
         public override bool CanWriteType(Type type)
         {
-            return typeof(Representation).IsAssignableFrom(type);
+            return typeof(IRepresentation).IsAssignableFrom(type);
         }
     }
 }

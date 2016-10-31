@@ -1,6 +1,6 @@
 using System;
 
-namespace Hal.Engine
+namespace Hal.Engine.Extensibility.Dto
 {
     public class Link
     {

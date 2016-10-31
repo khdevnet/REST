@@ -138,24 +138,15 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Resource\BestSellersProductRepresentation.cs" />
-    <Compile Include="Resource\CatalogRepresentation.cs" />
-    <Compile Include="ViewModel\ProductViewModel.cs" />
     <Compile Include="Resource\HomeRepresentation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource\ProductRepresentation.cs" />
-    <Compile Include="Resource\ReviewRepresentation.cs" />
-    <Compile Include="Resource\ProductDetailRepresentation.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

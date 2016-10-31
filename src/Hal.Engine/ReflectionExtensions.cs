@@ -1,3 +1,4 @@
+using Hal.Engine.Extensibility;
 using System;
 using System.Collections;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Hal.Engine
             if (type.IsGenericType && typeof(IList).IsAssignableFrom(type))
             {
                 var genericType = type.GetGenericArguments().Single();
-                return typeof(Representation<>).IsAssignableFrom(genericType);
+                return typeof(IRepresentation).IsAssignableFrom(genericType);
             }
 
             return false;
