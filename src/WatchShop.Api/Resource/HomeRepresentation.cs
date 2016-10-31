@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Hal.Engine;
-using WatchShop.Api.ViewModel;
+﻿using Hal.Engine;
 
 namespace WatchShop.Api.Resource
 {
@@ -12,7 +10,7 @@ namespace WatchShop.Api.Resource
 
         protected override void CreateHypermedia()
         {
-            Href = "/";
+            Links.Add(new Link { Rel = "self", Href = "/" });
             Links.Add(new Link { Rel = "catalog", Href = "/catalog" });
             Links.Add(new Link { Rel = "cart", Href = "/cart" });
         }

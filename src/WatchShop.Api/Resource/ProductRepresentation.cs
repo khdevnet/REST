@@ -10,7 +10,7 @@ namespace WatchShop.Api.Resource
 
         protected override void CreateHypermedia()
         {
-            Href = $"products/{Id}";
+            Links.Add(new Link("self", $"products/{Id}"));
         }
     }
 }

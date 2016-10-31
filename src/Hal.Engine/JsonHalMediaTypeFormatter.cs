@@ -1,52 +1,51 @@
 using System;
+using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
-using Hal.Engine.JsonConverters;
+using System.IO;
+using System.Text;
+using System.Reflection;
+using Newtonsoft.Json.Serialization;
+using System.Web.Http.Routing;
+using System.Web;
+using Hal.Engine.Extensibility;
+using System.Net.Http;
 
 namespace Hal.Engine
 {
     public class JsonHalMediaTypeFormatter : JsonMediaTypeFormatter
     {
-     //   private readonly JsonConverter resourceListConverter = new ResourceListConverter();
-        private readonly JsonConverter resourceConverter;
-    //    private readonly JsonConverter linksConverter = new LinksConverter();
-      //  private readonly JsonConverter embeddedResourceConverter = new EmbeddedResourceConverter();
-
-        public JsonHalMediaTypeFormatter(IHypermediaResolver hypermediaConfiguration)
-        {
-            if (hypermediaConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(hypermediaConfiguration));
-            }
-            resourceConverter = new ResourceConverter(hypermediaConfiguration);
-            Initialize();
-        }
+        private const string HalMediaType = "application/hal+json";
 
         public JsonHalMediaTypeFormatter()
         {
-            resourceConverter = new ResourceConverter();
-            Initialize();
+            SupportedMediaTypes.Add(new MediaTypeHeaderValue(HalMediaType));
+            SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        }
+
+        public override void WriteToStream(Type type, object value, Stream writeStream, Encoding effectiveEncoding)
+        {
+            MethodInfo methodInfo = type.BaseType.GetMethod("CreateHypermedia", BindingFlags.Instance | BindingFlags.NonPublic);
+            Representation resource = value as Representation;
+            if (methodInfo != null)
+            {
+                methodInfo.Invoke(resource, null);
+                UrlHelper url = new UrlHelper(HttpContext.Current.Items["MS_HttpRequestMessage"] as HttpRequestMessage);
+                resource.Links = resource.Links.Select(x => new Link(x.Rel, url.Content(x.Href))).ToList();
+            }
+            base.WriteToStream(type, resource, writeStream, effectiveEncoding);
         }
 
         public override bool CanReadType(Type type)
         {
-            return typeof(Representation).IsAssignableFrom(type);
+            return typeof(Representation<>).IsAssignableFrom(type);
         }
 
         public override bool CanWriteType(Type type)
         {
             return typeof(Representation).IsAssignableFrom(type);
-        }
-
-        private void Initialize()
-        {
-            SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/hal+json"));
-            SerializerSettings.Converters.Add(linksConverter);
-            SerializerSettings.Converters.Add(resourceListConverter);
-            SerializerSettings.Converters.Add(resourceConverter);
-            SerializerSettings.Converters.Add(embeddedResourceConverter);
-            SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
         }
     }
 }

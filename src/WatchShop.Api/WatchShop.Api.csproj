@@ -148,7 +148,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="LinkTemplates.cs" />
     <Compile Include="Resource\BestSellersProductRepresentation.cs" />
     <Compile Include="Resource\CatalogRepresentation.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />

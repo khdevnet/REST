@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Hal.Engine.Interfaces
+namespace Hal.Engine.Extensibility
 {
     public interface IResourceBase
     {
