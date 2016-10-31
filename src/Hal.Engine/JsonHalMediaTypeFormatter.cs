@@ -37,6 +37,7 @@ namespace Hal.Engine
                 var linkFormatter = new LinkHypermediaFormatter();
                 linkFormatter.Formating(resource);
             }
+
             base.WriteToStream(type, resource, writeStream, effectiveEncoding);
         }
 
