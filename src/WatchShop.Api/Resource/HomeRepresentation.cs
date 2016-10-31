@@ -6,7 +6,7 @@ using Hal.Engine.Extensibility.Dto;
 
 namespace WatchShop.Api.Resource
 {
-    public class HomeRepresentation : ILinksResource, IRepresentation
+    public class HomeRepresentation : ILinksResource, IHypermedia
     {
         public HomeRepresentation()
         {
@@ -17,7 +17,8 @@ namespace WatchShop.Api.Resource
         public string Title { get; set; }
 
         public string Welcome { get; set; }
-        void IRepresentation.CreateHypermedia()
+
+        void IHypermedia.Bind()
         {
             Links.Add(new Link { Rel = "self", Href = "/" });
             Links.Add(new Link { Rel = "catalog", Href = "/catalog" });

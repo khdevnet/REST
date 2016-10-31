@@ -12,6 +12,7 @@ using System.Web;
 using Hal.Engine.Extensibility;
 using System.Net.Http;
 using Hal.Engine.Extensibility.Dto;
+using Hal.Engine.HypermediaFormatter;
 
 namespace Hal.Engine
 {
@@ -28,25 +29,25 @@ namespace Hal.Engine
 
         public override void WriteToStream(Type type, object value, Stream writeStream, Encoding effectiveEncoding)
         {
-            MethodInfo methodInfo = type.GetMethod("Hal.Engine.Extensibility.IRepresentation.CreateHypermedia", BindingFlags.Instance | BindingFlags.NonPublic);
-            ILinksResource resource = value as ILinksResource;
+            MethodInfo methodInfo = type.GetMethod("Hal.Engine.Extensibility.IHypermedia.Bind", BindingFlags.Instance | BindingFlags.NonPublic);
+            var resource = value as IHypermedia;
             if (methodInfo != null)
             {
                 methodInfo.Invoke(resource, null);
-                UrlHelper url = new UrlHelper(HttpContext.Current.Items["MS_HttpRequestMessage"] as HttpRequestMessage);
-                resource.Links = resource.Links.Select(x => new Link(x.Rel, url.Content(x.Href))).ToList();
+                var linkFormatter = new LinkHypermediaFormatter();
+                linkFormatter.Formating(resource);
             }
             base.WriteToStream(type, resource, writeStream, effectiveEncoding);
         }
 
         public override bool CanReadType(Type type)
         {
-            return typeof(IRepresentation).IsAssignableFrom(type);
+            return typeof(IHypermedia).IsAssignableFrom(type);
         }
 
         public override bool CanWriteType(Type type)
         {
-            return typeof(IRepresentation).IsAssignableFrom(type);
+            return typeof(IHypermedia).IsAssignableFrom(type);
         }
     }
 }

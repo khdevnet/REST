@@ -22,7 +22,7 @@ namespace Hal.Engine
             if (type.IsGenericType && typeof(IList).IsAssignableFrom(type))
             {
                 var genericType = type.GetGenericArguments().Single();
-                return typeof(IRepresentation).IsAssignableFrom(genericType);
+                return typeof(IHypermedia).IsAssignableFrom(genericType);
             }
 
             return false;

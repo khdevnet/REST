@@ -58,10 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Extensibility\IHypermediaFormatter.cs" />
     <Compile Include="Extensibility\IRepresentation.cs" />
     <Compile Include="Extensibility\IMetaDataResource.cs" />
     <Compile Include="Extensibility\ILinksResource.cs" />
     <Compile Include="Extensibility\IContentResource.cs" />
+    <Compile Include="HypermediaFormatter\LinkHypermediaFormatter.cs" />
     <Compile Include="JsonHalMediaTypeFormatter.cs" />
     <Compile Include="Extensibility\Dto\Link.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,8 +1,8 @@
 
 namespace Hal.Engine.Extensibility
 {
-    public interface IRepresentation
+    public interface IHypermedia
     {
-        void CreateHypermedia();
+        void Bind();
     }
 }
