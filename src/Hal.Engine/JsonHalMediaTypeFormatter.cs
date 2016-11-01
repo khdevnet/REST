@@ -1,41 +1,46 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using Newtonsoft.Json;
-using System.IO;
 using System.Text;
-using System.Reflection;
-using Newtonsoft.Json.Serialization;
-using System.Web.Http.Routing;
-using System.Web;
 using Hal.Engine.Extensibility;
-using System.Net.Http;
-using Hal.Engine.Extensibility.Dto;
 using Hal.Engine.HypermediaFormatter;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Hal.Engine
 {
     public class JsonHalMediaTypeFormatter : JsonMediaTypeFormatter
     {
         private const string HalMediaType = "application/hal+json";
+        private readonly IDictionary<string, IHypermediaFormatter> formatters;
 
         public JsonHalMediaTypeFormatter()
         {
             SupportedMediaTypes.Add(new MediaTypeHeaderValue(HalMediaType));
             SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            formatters = new Dictionary<string, IHypermediaFormatter>
+            {
+                { nameof(IHypermedia), new HypermediaFormatter.HypermediaFormatter() },
+                { nameof(ILinksHypermedia), new LinkHypermediaFormatter() }
+            };
         }
 
         public override void WriteToStream(Type type, object value, Stream writeStream, Encoding effectiveEncoding)
         {
-            MethodInfo methodInfo = type.GetMethod("Hal.Engine.Extensibility.IHypermedia.Bind", BindingFlags.Instance | BindingFlags.NonPublic);
+            IList<string> interfacesName = GetInterfacesName(type);
             var resource = value as IHypermedia;
-            if (methodInfo != null)
+            foreach (string interfaceName in interfacesName)
             {
-                methodInfo.Invoke(resource, null);
-                var linkFormatter = new LinkHypermediaFormatter();
-                linkFormatter.Formating(resource);
+                if (formatters.ContainsKey(interfaceName))
+                {
+                    IHypermediaFormatter formatter = formatters[interfaceName];
+                    formatter.Formating(resource);
+                }
             }
 
             base.WriteToStream(type, resource, writeStream, effectiveEncoding);
@@ -49,6 +54,13 @@ namespace Hal.Engine
         public override bool CanWriteType(Type type)
         {
             return typeof(IHypermedia).IsAssignableFrom(type);
+        }
+
+        private static IList<string> GetInterfacesName(Type type)
+        {
+            IList<string> interfacesName = type.GetInterfaces().Where(x => x.Name != nameof(IHypermedia)).Select(i => i.Name).ToList();
+            interfacesName.Insert(0, nameof(IHypermedia));
+            return interfacesName;
         }
     }
 }

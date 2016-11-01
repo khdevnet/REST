@@ -3,7 +3,7 @@ using Hal.Engine.Extensibility.Dto;
 
 namespace Hal.Engine.Extensibility
 {
-    public interface ILinksResource
+    public interface ILinksHypermedia : IHypermedia
     {
         IList<Link> Links { get; set; }
     }

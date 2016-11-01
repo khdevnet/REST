@@ -1,6 +1,6 @@
 namespace Hal.Engine.Extensibility
 {
-    public interface IContentResource<TContent> 
+    public interface IContentHypermedia<TContent>
     {
         TContent Content { get; set; }
     }
