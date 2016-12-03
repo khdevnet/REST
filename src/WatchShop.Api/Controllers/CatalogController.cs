@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Hal.Engine.Extensibility;
+using Hal.Engine.Extensibility.Hypermedia;
+using System.Collections.Generic;
 using System.Web.Http;
 using WatchShop.Api.Resource;
 
@@ -11,7 +13,7 @@ namespace WatchShop.Api.Controllers
         {
             var catalog = new CatalogRepresentation
             {
-                Items = new List<ProductRepresentation>
+                Items = new List<ILinksHypermedia>
                 {
                     new ProductRepresentation
                     {
@@ -31,6 +33,17 @@ namespace WatchShop.Api.Controllers
                 }
             };
             return catalog;
+        }
+
+        // GET Home
+        [HttpGet]
+        public ProductRepresentation GetProduct(int id)
+        {
+            return new ProductRepresentation
+            {
+                Id = id,
+                Name = "Product 1"
+            };
         }
     }
 }

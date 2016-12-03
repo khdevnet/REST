@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Hal.Engine.Extensibility;
 using Hal.Engine.Extensibility.Dto;
+using Hal.Engine.Extensibility.Hypermedia;
 
 namespace WatchShop.Api.Resource
 {
@@ -20,6 +20,7 @@ namespace WatchShop.Api.Resource
         public void Bind()
         {
             Links.Add(new Link { Rel = "self", Href = $"/products/{Id}" });
+            Links.Add(new Link { Rel = "catalog", Href = "/catalog" });
         }
     }
 }

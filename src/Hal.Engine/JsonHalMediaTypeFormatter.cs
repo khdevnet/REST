@@ -5,10 +5,11 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Text;
-using Hal.Engine.Extensibility;
-using Hal.Engine.HypermediaFormatter;
+using Hal.Engine.Formatter;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Hal.Engine.Extensibility.Formatter;
+using Hal.Engine.Extensibility.Hypermedia;
 
 namespace Hal.Engine
 {
@@ -19,20 +20,22 @@ namespace Hal.Engine
 
         public JsonHalMediaTypeFormatter()
         {
+            SupportedMediaTypes.Clear();
             SupportedMediaTypes.Add(new MediaTypeHeaderValue(HalMediaType));
             SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             formatters = new Dictionary<string, IHypermediaFormatter>
             {
-                { nameof(IHypermedia), new HypermediaFormatter.HypermediaFormatter() },
-                { nameof(ILinksHypermedia), new LinkHypermediaFormatter() }
+                { typeof(IHypermedia).Name, new HypermediaFormatter() },
+                { typeof(ILinksHypermedia).Name, new LinkHypermediaFormatter() },
+                { typeof(IListHypermedia<>).Name, new ListHypermediaFormatter() }
             };
         }
 
         public override void WriteToStream(Type type, object value, Stream writeStream, Encoding effectiveEncoding)
         {
-            IList<string> interfacesName = GetInterfacesName(type);
+            IEnumerable<string> interfacesName = GetInterfacesName(type);
             var resource = value as IHypermedia;
             foreach (string interfaceName in interfacesName)
             {
@@ -48,7 +51,7 @@ namespace Hal.Engine
 
         public override bool CanReadType(Type type)
         {
-            return typeof(IHypermedia).IsAssignableFrom(type);
+            return false;
         }
 
         public override bool CanWriteType(Type type)
@@ -56,10 +59,10 @@ namespace Hal.Engine
             return typeof(IHypermedia).IsAssignableFrom(type);
         }
 
-        private static IList<string> GetInterfacesName(Type type)
+        private static IEnumerable<string> GetInterfacesName(Type type)
         {
-            IList<string> interfacesName = type.GetInterfaces().Where(x => x.Name != nameof(IHypermedia)).Select(i => i.Name).ToList();
-            interfacesName.Insert(0, nameof(IHypermedia));
+            IList<string> interfacesName = type.GetInterfaces().Where(t => t != typeof(IHypermedia)).Select(t=>t.Name).ToList();
+            interfacesName.Insert(0, typeof(IHypermedia).Name);
             return interfacesName;
         }
     }

@@ -1,7 +1,8 @@
 ﻿using System.Reflection;
-using Hal.Engine.Extensibility;
+using Hal.Engine.Extensibility.Formatter;
+using Hal.Engine.Extensibility.Hypermedia;
 
-namespace Hal.Engine.HypermediaFormatter
+namespace Hal.Engine.Formatter
 {
     public class HypermediaFormatter : IHypermediaFormatter
     {

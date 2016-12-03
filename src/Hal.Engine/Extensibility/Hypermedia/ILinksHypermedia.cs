@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Hal.Engine.Extensibility.Dto;
 
-namespace Hal.Engine.Extensibility
+namespace Hal.Engine.Extensibility.Hypermedia
 {
     public interface ILinksHypermedia : IHypermedia
     {

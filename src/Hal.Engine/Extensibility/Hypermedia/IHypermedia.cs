@@ -1,5 +1,4 @@
-
-namespace Hal.Engine.Extensibility
+namespace Hal.Engine.Extensibility.Hypermedia
 {
     public interface IHypermedia
     {

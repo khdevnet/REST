@@ -2,10 +2,11 @@
 using System.Net.Http;
 using System.Web;
 using System.Web.Http.Routing;
-using Hal.Engine.Extensibility;
 using Hal.Engine.Extensibility.Dto;
+using Hal.Engine.Extensibility.Formatter;
+using Hal.Engine.Extensibility.Hypermedia;
 
-namespace Hal.Engine.HypermediaFormatter
+namespace Hal.Engine.Formatter
 {
     public class LinkHypermediaFormatter : IHypermediaFormatter
     {

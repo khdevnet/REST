@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Hal.Engine.Extensibility;
 using Hal.Engine.Extensibility.Dto;
+using Hal.Engine.Extensibility.Hypermedia;
 
 namespace WatchShop.Api.Resource
 {

@@ -14,9 +14,15 @@ namespace WatchShop.Api
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+              name: "DefaultApi 1",
+              routeTemplate: "products/{id}",
+              defaults: new { controller = "catalog", action = "GetProduct", id = RouteParameter.Optional });
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "{controller}/{id}",
                 defaults: new { controller = "home", id = RouteParameter.Optional });
+
 
             MediaTypeFormatterCollection formatters = GlobalConfiguration.Configuration.Formatters;
 
