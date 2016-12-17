@@ -1,7 +1,6 @@
-﻿using Hal.Engine.Extensibility;
-using Hal.Engine.Extensibility.Hypermedia;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Http;
+using Hal.Engine.Extensibility.Hypermedia;
 using WatchShop.Api.Resource;
 
 namespace WatchShop.Api.Controllers
