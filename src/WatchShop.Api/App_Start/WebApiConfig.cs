@@ -1,8 +1,6 @@
 ﻿using System.Net.Http.Formatting;
 using System.Web.Http;
 using Hal.Engine;
-using System.Data.Entity;
-using WatchShop.Domain.Database;
 
 namespace WatchShop.Api
 {
@@ -30,8 +28,6 @@ namespace WatchShop.Api
             GlobalConfiguration.Configuration.Formatters.Remove(formatters.XmlFormatter);
             GlobalConfiguration.Configuration.Formatters.Remove(formatters.JsonFormatter);
             GlobalConfiguration.Configuration.Formatters.Add(new JsonHalMediaTypeFormatter());
-
-            Database.SetInitializer(new CreateDatabaseIfNotExists<ShopDbContext>());
         }
     }
 }

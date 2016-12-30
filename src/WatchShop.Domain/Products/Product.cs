@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using WatchShop.Domain.Orders;
 
-namespace WatchShop.Domain.Database.Model
+namespace WatchShop.Domain.Products
 {
     public class Product
     {
@@ -10,6 +11,6 @@ namespace WatchShop.Domain.Database.Model
 
         public decimal Price { get; set; }
 
-        public ICollection<OrderProduct> OrderProducts { get; set; }
+        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }

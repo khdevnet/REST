@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WatchShop.Domain.Database.Model;
-using WatchShop.Domain.Extensibility;
-using WatchShop.Domain.Extensibility.Repository;
 
-namespace WatchShop.Domain.Repository
+namespace WatchShop.Domain.Products
 {
     public class ProductRepository : BaseRepository, IProductRepository
     {

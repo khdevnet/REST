@@ -1,6 +1,5 @@
 ﻿using System.Web.Http;
 using WatchShop.Api.Resource;
-using WatchShop.Domain.Service;
 
 namespace WatchShop.Api.Controllers
 {
@@ -9,8 +8,6 @@ namespace WatchShop.Api.Controllers
         // GET Home
         public HomeRepresentation Get()
         {
-            var service = new ProductService();
-            var s = service.GetProdutcs();
             return new HomeRepresentation
             {
                 Title = "Mens Shop.",

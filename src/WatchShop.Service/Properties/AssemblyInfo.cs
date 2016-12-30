@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WatchShop.SqlRepository")]
+[assembly: AssemblyTitle("WatchShop.Service")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WatchShop.SqlRepository")]
+[assembly: AssemblyProduct("WatchShop.Service")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("dab51ef0-8634-43af-b70a-6b4ab1cddcec")]
+[assembly: Guid("76e9d5dc-6672-4dcc-b5f7-8e98ddc701e2")]
 
 // Version information for an assembly consists of the following four values:
 //

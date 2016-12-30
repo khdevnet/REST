@@ -1,4 +1,6 @@
-﻿namespace WatchShop.Domain.Database.Model
+﻿using WatchShop.Domain.Products;
+
+namespace WatchShop.Domain.Orders
 {
     public class OrderProduct
     {
@@ -14,6 +16,6 @@
 
         public Order Order { get; set; }
 
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

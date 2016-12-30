@@ -1,7 +1,6 @@
 ﻿using System;
-using WatchShop.Domain.Database;
 
-namespace WatchShop.Domain.Repository
+namespace WatchShop.Domain
 {
     public class BaseRepository : IDisposable
     {
@@ -17,10 +16,7 @@ namespace WatchShop.Domain.Repository
         {
             if (disposing)
             {
-                if (Db != null)
-                {
-                    Db.Dispose();
-                }
+                Db?.Dispose();
             }
         }
     }

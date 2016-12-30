@@ -1,5 +1,4 @@
 using System.Data.Entity.Migrations;
-using WatchShop.Domain.Database;
 
 namespace WatchShop.Domain.Migrations
 {

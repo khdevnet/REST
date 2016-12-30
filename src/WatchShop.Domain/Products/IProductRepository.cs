@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using WatchShop.Domain.Database.Model;
 
-namespace WatchShop.Domain.Extensibility.Repository
+namespace WatchShop.Domain.Products
 {
     public interface IProductRepository : IDisposable
     {
