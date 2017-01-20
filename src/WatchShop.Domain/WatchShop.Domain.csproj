@@ -55,19 +55,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
+    <Compile Include="Carts\Cart.cs" />
+    <Compile Include="Carts\CartItem.cs" />
     <Compile Include="Customers\Customer.cs" />
     <Compile Include="Customers\CustomerRepository.cs" />
+    <Compile Include="Customers\CustomerService.cs" />
+    <Compile Include="Customers\CustomerViewModel.cs" />
     <Compile Include="Customers\ICustomerRepository.cs" />
-    <Compile Include="Migrations\201612171931325_Initial.cs" />
-    <Compile Include="Migrations\201612171931325_Initial.Designer.cs">
-      <DependentUpon>201612171931325_Initial.cs</DependentUpon>
+    <Compile Include="Customers\ICustomerService.cs" />
+    <Compile Include="Migrations\201701201955550_init.cs" />
+    <Compile Include="Migrations\201701201955550_init.Designer.cs">
+      <DependentUpon>201701201955550_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701202009478_AddCarts.cs" />
+    <Compile Include="Migrations\201701202009478_AddCarts.Designer.cs">
+      <DependentUpon>201701202009478_AddCarts.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Products\IProductRepository.cs" />
+    <Compile Include="Catalog\IProductRepository.cs" />
     <Compile Include="Orders\Order.cs" />
     <Compile Include="Orders\OrderProduct.cs" />
-    <Compile Include="Products\Product.cs" />
-    <Compile Include="Products\ProductRepository.cs" />
+    <Compile Include="Catalog\IProductService.cs" />
+    <Compile Include="Catalog\Product.cs" />
+    <Compile Include="Catalog\ProductRepository.cs" />
+    <Compile Include="Catalog\ProductViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShopDbContext.cs" />
   </ItemGroup>
@@ -76,8 +87,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612171931325_Initial.resx">
-      <DependentUpon>201612171931325_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701201955550_init.resx">
+      <DependentUpon>201701201955550_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701202009478_AddCarts.resx">
+      <DependentUpon>201701202009478_AddCarts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

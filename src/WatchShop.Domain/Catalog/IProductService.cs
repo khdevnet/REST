@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WatchShop.Service.Products
+namespace WatchShop.Domain.Catalog
 {
     public interface IProductService
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WatchShop.Service.Customers
+namespace WatchShop.Domain.Customers
 {
     public interface ICustomerService
     {

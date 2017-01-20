@@ -20,8 +20,8 @@ namespace WatchShop.Api.Resource
         public void Bind()
         {
             Links.Add(new Link { Rel = "self", Href = "/" });
-            Links.Add(new Link { Rel = "catalog", Href = "/catalog" });
-            Links.Add(new Link { Rel = "cart", Href = "/cart" });
+            Links.Add(new Link { Rel = "catalog", Href = "/catalog/catalog" });
+            Links.Add(new Link { Rel = "cart", Href = "/cart/cart" });
         }
     }
 }

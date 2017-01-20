@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using Hal.Engine.Extensibility.Hypermedia;
-using WatchShop.Api.Resource;
 
-namespace WatchShop.Api.Controllers
+namespace WatchShop.Api.Catalog
 {
     public class CatalogController : ApiController
     {

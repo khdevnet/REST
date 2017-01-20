@@ -1,4 +1,4 @@
-﻿namespace WatchShop.Service.Products
+﻿namespace WatchShop.Domain.Catalog
 {
     public class ProductViewModel
     {

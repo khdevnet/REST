@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WatchShop.Domain.Customers;
 
-namespace WatchShop.Service.Customers
+namespace WatchShop.Domain.Customers
 {
     public class CustomerService : ICustomerService
     {

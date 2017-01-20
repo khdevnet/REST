@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
-using WatchShop.Service.Customers;
+using WatchShop.Domain.Customers;
 
-namespace WatchShop.Api.Controllers
+namespace WatchShop.Api.Customers
 {
     public class CustomerController : ApiController
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace WatchShop.Domain.Products
+namespace WatchShop.Domain.Catalog
 {
     public class ProductRepository : BaseRepository, IProductRepository
     {

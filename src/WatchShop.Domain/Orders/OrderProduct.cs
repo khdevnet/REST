@@ -1,4 +1,4 @@
-﻿using WatchShop.Domain.Products;
+﻿using WatchShop.Domain.Catalog;
 
 namespace WatchShop.Domain.Orders
 {

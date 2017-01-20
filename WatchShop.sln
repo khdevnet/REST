@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchShop.Domain", "src\Wat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hal.Engine", "src\Hal.Engine\Hal.Engine.csproj", "{881B8AAA-28F1-43A6-9800-5DFBB4F7B440}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchShop.Service", "src\WatchShop.Service\WatchShop.Service.csproj", "{76E9D5DC-6672-4DCC-B5F7-8E98DDC701E2}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B8FBED5D-E844-40EF-B263-8E9552C85D4F}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{881B8AAA-28F1-43A6-9800-5DFBB4F7B440}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{881B8AAA-28F1-43A6-9800-5DFBB4F7B440}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{881B8AAA-28F1-43A6-9800-5DFBB4F7B440}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76E9D5DC-6672-4DCC-B5F7-8E98DDC701E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76E9D5DC-6672-4DCC-B5F7-8E98DDC701E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76E9D5DC-6672-4DCC-B5F7-8E98DDC701E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76E9D5DC-6672-4DCC-B5F7-8E98DDC701E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

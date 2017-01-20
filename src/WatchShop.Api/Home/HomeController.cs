@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using WatchShop.Api.Resource;
 
-namespace WatchShop.Api.Controllers
+namespace WatchShop.Api.Home
 {
     public class HomeController : ApiController
     {

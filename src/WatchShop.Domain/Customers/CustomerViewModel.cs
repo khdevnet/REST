@@ -1,4 +1,4 @@
-﻿namespace WatchShop.Service.Customers
+﻿namespace WatchShop.Domain.Customers
 {
     public class CustomerViewModel
     {

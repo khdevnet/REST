@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using WatchShop.Domain.Orders;
 
-namespace WatchShop.Domain.Products
+namespace WatchShop.Domain.Catalog
 {
     public class Product
     {

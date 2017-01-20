@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Hal.Engine.Extensibility.Dto;
 using Hal.Engine.Extensibility.Hypermedia;
 
-namespace WatchShop.Api.Resource
+namespace WatchShop.Api.Catalog
 {
     public class CatalogRepresentation : IListHypermedia<ILinksHypermedia>, ILinksHypermedia
     {
@@ -18,9 +17,9 @@ namespace WatchShop.Api.Resource
 
         public void Bind()
         {
-            Links.Add(new Link { Rel = "self", Href = "/catalog" });
+            Links.Add(new Link { Rel = "self", Href = "/catalog/catalog" });
             Links.Add(new Link { Rel = "home", Href = "/" });
-            Links.Add(new Link { Rel = "cart", Href = "/cart" });
+            Links.Add(new Link { Rel = "cart", Href = "/cart/cart" });
         }
     }
 }
