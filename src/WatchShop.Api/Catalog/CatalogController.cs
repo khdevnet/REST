@@ -1,47 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using System.Web.Http;
-using Hal.Engine.Extensibility.Hypermedia;
+using WatchShop.Domain.Catalog;
 
 namespace WatchShop.Api.Catalog
 {
     public class CatalogController : ApiController
     {
-        // GET Home
+        private readonly IProductRepository productRepository = new ProductRepository();
+
         public CatalogRepresentation Get()
         {
-            var catalog = new CatalogRepresentation
+            var products = productRepository
+                .GetProdutcs()
+                .Select(product => new ProductRepresentation
             {
-                Items = new List<ILinksHypermedia>
-                {
-                    new ProductRepresentation
-                    {
-                        Id = 1,
-                        Name = "Product 1"
-                    },
-                    new ProductRepresentation
-                    {
-                        Id = 2,
-                        Name = "Product 2"
-                    },
-                    new ProductRepresentation
-                    {
-                        Id = 3,
-                        Name = "Product 3"
-                    }
-                }
-            };
-            return catalog;
+                Id = product.Id,
+                Name = product.Name
+            }).ToList();
+
+            return new CatalogRepresentation(products);
         }
 
-        // GET Home
-        [HttpGet]
         public ProductRepresentation GetProduct(int id)
         {
-            return new ProductRepresentation
-            {
-                Id = id,
-                Name = "Product 1"
-            };
+            return productRepository
+                .GetProdutcs()
+                .Where(product => product.Id == id)
+                .Select(product => new ProductRepresentation
+                {
+                    Id = product.Id,
+                    Name = product.Name
+                }).Single();
         }
     }
 }

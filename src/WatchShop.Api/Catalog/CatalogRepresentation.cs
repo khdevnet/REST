@@ -6,20 +6,21 @@ namespace WatchShop.Api.Catalog
 {
     public class CatalogRepresentation : IListHypermedia<ILinksHypermedia>, ILinksHypermedia
     {
-        public CatalogRepresentation()
+        public CatalogRepresentation(IEnumerable<ILinksHypermedia> items)
         {
             Links = new List<Link>();
+            Items = items;
         }
 
         public IList<Link> Links { get; set; }
 
-        public IList<ILinksHypermedia> Items { get; set; }
+        public IEnumerable<ILinksHypermedia> Items { get; }
 
         public void Bind()
         {
-            Links.Add(new Link { Rel = "self", Href = "/catalog/catalog" });
-            Links.Add(new Link { Rel = "home", Href = "/" });
-            Links.Add(new Link { Rel = "cart", Href = "/cart/cart" });
+            Links.Add(new Link { Rel = "self", Href = "/api/catalog" });
+            Links.Add(new Link { Rel = "home", Href = "/api/" });
+            Links.Add(new Link { Rel = "cart", Href = "/api/cart" });
         }
     }
 }

@@ -19,8 +19,8 @@ namespace WatchShop.Api.Catalog
 
         public void Bind()
         {
-            Links.Add(new Link { Rel = "self", Href = $"/products/{Id}" });
-            Links.Add(new Link { Rel = "catalog", Href = "/catalog" });
+            Links.Add(new Link { Rel = "self", Href = $"/api/catalog/product/{Id}" });
+            Links.Add(new Link { Rel = "catalog", Href = "/api/catalog" });
         }
     }
 }

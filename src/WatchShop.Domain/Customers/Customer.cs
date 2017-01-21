@@ -20,11 +20,8 @@ namespace WatchShop.Domain.Customers
 
         public string Address { get; set; }
 
-        public IList<Order> Orders { get; }
+        public virtual Cart Cart { get; set; }
 
-        public void Add(Order order)
-        {
-            Orders.Add(order);
-        }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

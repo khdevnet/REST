@@ -1,8 +1,9 @@
-﻿using System.Net.Http.Formatting;
-using System.Web.Http;
-using Hal.Engine;
+﻿using System.Web.Http;
 using System.Web.Http.Dispatcher;
-using WatchShop.Api.Infrastructure.Router;
+using System.Net.Http.Formatting;
+using Hal.Engine;
+using WatchShop.Api.Infrastructure;
+using WatchShop.Api.Catalog;
 
 namespace WatchShop.Api
 {
@@ -10,23 +11,23 @@ namespace WatchShop.Api
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-
             // Web API routes
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-              name: "DefaultApi 1",
-              routeTemplate: "{domain}/products/{id}",
-              defaults: new { controller = "catalog", action = "GetProduct", id = RouteParameter.Optional });
+                name: "StartPage",
+                routeTemplate: "",
+                defaults: new { controller = "home", id = RouteParameter.Optional });
+
+            CatalogRouters.Map(config.Routes);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "{domain}/{controller}/{id}",
-                defaults: new { domain = "home", controller = "home", id = RouteParameter.Optional }
-                );
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { controller = "home", id = RouteParameter.Optional });
 
-            config.Services.Replace(typeof(IHttpControllerSelector), new NamespaceHttpControllerSelector(config));
+            config.Services.Replace(typeof(IHttpControllerSelector), new DomainHttpControllerSelector(config));
+
             ConfigureFormatters();
         }
 

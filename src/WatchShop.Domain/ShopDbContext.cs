@@ -1,6 +1,5 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using WatchShop.Domain.Carts;
 using WatchShop.Domain.Catalog;
 using WatchShop.Domain.Customers;
 using WatchShop.Domain.Orders;
@@ -58,6 +57,10 @@ namespace WatchShop.Domain
              .Property(x => x.Phone)
              .HasMaxLength(256)
              .IsRequired();
+
+            modelBuilder.Entity<Customer>()
+                .HasOptional(customer => customer.Cart)
+                .WithRequired(cart => cart.Customer);
         }
 
         private static void BuildProduct(DbModelBuilder modelBuilder)

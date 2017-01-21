@@ -3,11 +3,11 @@ using WatchShop.Domain.Customers;
 
 namespace WatchShop.Api.Customers
 {
-    public class CustomerController : ApiController
+    public class CustomersController : ApiController
     {
         private readonly ICustomerService customerService;
 
-        public CustomerController(ICustomerService customerService)
+        public CustomersController(ICustomerService customerService)
         {
             this.customerService = customerService;
         }
