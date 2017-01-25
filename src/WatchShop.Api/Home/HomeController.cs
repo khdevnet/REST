@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using WatchShop.Api.Resource;
 
 namespace WatchShop.Api.Home
 {

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Text;
-using Hal.Engine.Formatter;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Hal.Engine.Formatter;
 using Hal.Engine.Extensibility.Formatter;
 using Hal.Engine.Extensibility.Hypermedia;
 
@@ -49,11 +49,6 @@ namespace Hal.Engine
             base.WriteToStream(type, resource, writeStream, effectiveEncoding);
         }
 
-        public override bool CanReadType(Type type)
-        {
-            return false;
-        }
-
         public override bool CanWriteType(Type type)
         {
             return typeof(IHypermedia).IsAssignableFrom(type);
@@ -61,7 +56,7 @@ namespace Hal.Engine
 
         private static IEnumerable<string> GetInterfacesName(Type type)
         {
-            IList<string> interfacesName = type.GetInterfaces().Where(t => t != typeof(IHypermedia)).Select(t=>t.Name).ToList();
+            IList<string> interfacesName = type.GetInterfaces().Where(t => t != typeof(IHypermedia)).Select(t => t.Name).ToList();
             interfacesName.Insert(0, typeof(IHypermedia).Name);
             return interfacesName;
         }

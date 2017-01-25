@@ -154,6 +154,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Catalog\CatalogController.cs" />
     <Compile Include="Catalog\CatalogRouters.cs" />
+    <Compile Include="Customers\CartController.cs" />
+    <Compile Include="Customers\CartItemViewModel.cs" />
     <Compile Include="Customers\CustomersController.cs" />
     <Compile Include="Home\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -162,7 +164,10 @@
     <Compile Include="Catalog\CatalogRepresentation.cs" />
     <Compile Include="Catalog\ProductRepresentation.cs" />
     <Compile Include="Home\HomeRepresentation.cs" />
+    <Compile Include="Infrastructure\Authorization\UserIdentity.cs" />
+    <Compile Include="Infrastructure\Authorization\UserPrincipal.cs" />
     <Compile Include="Infrastructure\DomainHttpControllerSelector.cs" />
+    <Compile Include="Infrastructure\Authorization\SimpleAuthorizeAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

@@ -58,14 +58,16 @@
     <Compile Include="Customers\Cart.cs" />
     <Compile Include="Customers\CartItem.cs" />
     <Compile Include="Customers\Customer.cs" />
+    <Compile Include="Customers\CartRepository.cs" />
     <Compile Include="Customers\CustomerRepository.cs" />
     <Compile Include="Customers\CustomerService.cs" />
     <Compile Include="Customers\CustomerViewModel.cs" />
+    <Compile Include="Customers\ICartRepository.cs" />
     <Compile Include="Customers\ICustomerRepository.cs" />
     <Compile Include="Customers\ICustomerService.cs" />
-    <Compile Include="Migrations\201701201955550_init.cs" />
-    <Compile Include="Migrations\201701201955550_init.Designer.cs">
-      <DependentUpon>201701201955550_init.cs</DependentUpon>
+    <Compile Include="Migrations\201701201955550_Init.cs" />
+    <Compile Include="Migrations\201701201955550_Init.Designer.cs">
+      <DependentUpon>201701201955550_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201701202009478_AddCarts.cs" />
     <Compile Include="Migrations\201701202009478_AddCarts.Designer.cs">
@@ -82,6 +84,10 @@
     <Compile Include="Migrations\201701211351122_AddCartCartItemReference.cs" />
     <Compile Include="Migrations\201701211351122_AddCartCartItemReference.Designer.cs">
       <DependentUpon>201701211351122_AddCartCartItemReference.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701251021122_AddSampleCustomer.cs" />
+    <Compile Include="Migrations\201701251021122_AddSampleCustomer.Designer.cs">
+      <DependentUpon>201701251021122_AddSampleCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Catalog\IProductRepository.cs" />
@@ -102,8 +108,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701201955550_init.resx">
-      <DependentUpon>201701201955550_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701201955550_Init.resx">
+      <DependentUpon>201701201955550_Init.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701202009478_AddCarts.resx">
       <DependentUpon>201701202009478_AddCarts.cs</DependentUpon>
@@ -116,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701211351122_AddCartCartItemReference.resx">
       <DependentUpon>201701211351122_AddCartCartItemReference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701251021122_AddSampleCustomer.resx">
+      <DependentUpon>201701251021122_AddSampleCustomer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\SqlScripts.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -13,16 +13,16 @@ namespace WatchShop.Api.Infrastructure
     public class DomainHttpControllerSelector : IHttpControllerSelector
     {
         private const string ControllerKey = "controller";
-        private readonly Lazy<Dictionary<string, HttpControllerDescriptor>> _controllersDiscriptor;
+        private readonly Lazy<Dictionary<string, HttpControllerDescriptor>> controllersDiscriptor;
 
         public DomainHttpControllerSelector(HttpConfiguration httpConfiguration)
         {
-            _controllersDiscriptor = GetControllersDiscriptor(httpConfiguration);
+            controllersDiscriptor = GetControllersDiscriptor(httpConfiguration);
         }
 
         public IDictionary<string, HttpControllerDescriptor> GetControllerMapping()
         {
-            return _controllersDiscriptor.Value;
+            return controllersDiscriptor.Value;
         }
 
         public HttpControllerDescriptor SelectController(HttpRequestMessage request)
@@ -45,7 +45,7 @@ namespace WatchShop.Api.Infrastructure
         private HttpControllerDescriptor GetControllerDescriptor(string controllerName)
         {
             HttpControllerDescriptor controllerDescriptor;
-            if (_controllersDiscriptor.Value.TryGetValue(controllerName, out controllerDescriptor))
+            if (controllersDiscriptor.Value.TryGetValue(controllerName, out controllerDescriptor))
             {
                 return controllerDescriptor;
             }
@@ -58,19 +58,19 @@ namespace WatchShop.Api.Infrastructure
             IAssembliesResolver assembliesResolver = httpConfiguration.Services.GetAssembliesResolver();
             IHttpControllerTypeResolver controllersResolver = httpConfiguration.Services.GetHttpControllerTypeResolver();
 
-            var controllersDiscriptor = new Dictionary<string, HttpControllerDescriptor>(StringComparer.OrdinalIgnoreCase);
+            var discriptors = new Dictionary<string, HttpControllerDescriptor>(StringComparer.OrdinalIgnoreCase);
             foreach (Type controllerType in controllersResolver.GetControllerTypes(assembliesResolver))
             {
                 string controllerName = GetControllerName(controllerType.Name);
-                if (!controllersDiscriptor.Keys.Contains(controllerName))
+                if (!discriptors.Keys.Contains(controllerName))
                 {
-                    controllersDiscriptor[controllerName] = new HttpControllerDescriptor(httpConfiguration, controllerType.Name, controllerType);
+                    discriptors[controllerName] = new HttpControllerDescriptor(httpConfiguration, controllerType.Name, controllerType);
                 }
             }
-            return new Lazy<Dictionary<string, HttpControllerDescriptor>>(() => controllersDiscriptor);
+            return new Lazy<Dictionary<string, HttpControllerDescriptor>>(() => discriptors);
         }
 
-        private static string GetControllerName(string controllerTypeName)
+        private string GetControllerName(string controllerTypeName)
         {
             return controllerTypeName.Remove(controllerTypeName.Length - DefaultHttpControllerSelector.ControllerSuffix.Length);
         }

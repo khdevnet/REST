@@ -2,7 +2,7 @@
 using Hal.Engine.Extensibility.Dto;
 using Hal.Engine.Extensibility.Hypermedia;
 
-namespace WatchShop.Api.Resource
+namespace WatchShop.Api.Home
 {
     public class HomeRepresentation : ILinksHypermedia
     {
