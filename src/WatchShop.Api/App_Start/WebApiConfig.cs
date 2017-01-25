@@ -3,6 +3,12 @@ using System.Web.Http.Dispatcher;
 using System.Net.Http.Formatting;
 using WatchShop.Api.Infrastructure;
 using WatchShop.Api.Catalog;
+using Ninject.Web.WebApi;
+using Ninject;
+using WatchShop.Domain;
+using Ninject.Web.WebApi.Filter;
+using System.Web.Http.Validation;
+using System.Linq;
 
 namespace WatchShop.Api
 {

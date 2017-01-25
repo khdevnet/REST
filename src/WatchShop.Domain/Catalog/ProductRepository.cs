@@ -8,7 +8,7 @@ namespace WatchShop.Domain.Catalog
     {
         public IEnumerable<ProductDomain> GetProdutcs()
         {
-            return Db.Products.Select(x => new ProductDomain(x.Id, x.Name, x.Price)).ToList();
+            return Db.Products.ToList().Select(x => new ProductDomain(x.Id, x.Name, x.Price));
         }
     }
 }
