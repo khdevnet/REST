@@ -1,8 +1,9 @@
 ﻿using System;
+using WatchShop.Domain.Database;
 
 namespace WatchShop.Domain
 {
-    public class BaseRepository : IDisposable
+    internal class BaseRepository : IDisposable
     {
         protected readonly ShopDbContext Db = new ShopDbContext();
 

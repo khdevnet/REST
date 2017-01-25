@@ -1,12 +1,9 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using WatchShop.Domain.Catalog;
-using WatchShop.Domain.Customers;
-using WatchShop.Domain.Orders;
 
-namespace WatchShop.Domain
+namespace WatchShop.Domain.Database
 {
-    public class ShopDbContext : DbContext
+    internal class ShopDbContext : DbContext
     {
         public ShopDbContext() : base("name=ShopDbContext")
         {

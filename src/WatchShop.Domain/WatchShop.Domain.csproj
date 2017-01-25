@@ -43,6 +43,10 @@
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -57,14 +61,21 @@
     <Compile Include="BaseRepository.cs" />
     <Compile Include="Customers\Cart.cs" />
     <Compile Include="Customers\CartItem.cs" />
+    <Compile Include="Customers\Contact.cs" />
+    <Compile Include="Database\Cart.cs" />
+    <Compile Include="Database\CartItem.cs" />
     <Compile Include="Customers\Customer.cs" />
     <Compile Include="Customers\CartRepository.cs" />
     <Compile Include="Customers\CustomerRepository.cs" />
-    <Compile Include="Customers\CustomerService.cs" />
     <Compile Include="Customers\CustomerViewModel.cs" />
     <Compile Include="Customers\ICartRepository.cs" />
     <Compile Include="Customers\ICustomerRepository.cs" />
     <Compile Include="Customers\ICustomerService.cs" />
+    <Compile Include="Database\Customer.cs" />
+    <Compile Include="Database\Order.cs" />
+    <Compile Include="Database\OrderProduct.cs" />
+    <Compile Include="Database\Product.cs" />
+    <Compile Include="DomainNinjectModule.cs" />
     <Compile Include="Migrations\201701201955550_Init.cs" />
     <Compile Include="Migrations\201701201955550_Init.Designer.cs">
       <DependentUpon>201701201955550_Init.cs</DependentUpon>
@@ -101,7 +112,7 @@
     <Compile Include="Catalog\Product.cs" />
     <Compile Include="Catalog\ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShopDbContext.cs" />
+    <Compile Include="Database\ShopDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

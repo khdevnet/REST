@@ -24,20 +24,16 @@ namespace WatchShop.Api.Infrastructure.Authorization
 
                 if (!String.IsNullOrWhiteSpace(userName) && allowedUsers.Contains(userName))
                 {
-                    HandleUnauthorizeRequest(userName);
+                    HandleAuthorization(userName);
                 }
-
-                HandleUnauthorizedRequest(actionContext);
+                else
+                {
+                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                }
             }
         }
 
-        protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
-        {
-            actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
-            base.HandleUnauthorizedRequest(actionContext);
-        }
-
-        private static void HandleUnauthorizeRequest(string userName)
+        private static void HandleAuthorization(string userName)
         {
             var identity = new UserIdentity("simple", true, userName);
             var userPrincipal = new UserPrincipal(identity);

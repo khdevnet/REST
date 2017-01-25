@@ -2,9 +2,9 @@
 {
     public interface ICartRepository
     {
-        void Add(int customerId, CartItem cartItem);
+        void Update(Cart cart);
 
-        Cart GetCart(int customerId);
+        Cart GetCart(string customerEmail);
 
         void Remove(CartItem cartItem);
     }

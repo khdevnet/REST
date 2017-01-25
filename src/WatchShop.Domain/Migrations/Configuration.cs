@@ -1,8 +1,9 @@
 using System.Data.Entity.Migrations;
+using WatchShop.Domain.Database;
 
 namespace WatchShop.Domain.Migrations
 {
-    public sealed class Configuration : DbMigrationsConfiguration<ShopDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ShopDbContext>
     {
         public Configuration()
         {

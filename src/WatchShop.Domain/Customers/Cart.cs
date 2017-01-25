@@ -4,12 +4,28 @@ namespace WatchShop.Domain.Customers
 {
     public class Cart
     {
-        public int Id { get; set; }
+        public Cart(int id, int customerId, List<CartItem> items = null)
+        {
+            Id = id;
+            CustomerId = customerId;
+            Items = items ?? new List<CartItem>();
+        }
 
-        public int CustomerId { get; set; }
+        protected Cart()
+        {
+        }
 
-        public virtual Customer Customer { get; set; }
+        public static Cart Default { get; } = new Cart();
 
-        public virtual IEnumerable<CartItem> Items { get; set; }
+        public int Id { get; }
+
+        public int CustomerId { get; }
+
+        public List<CartItem> Items { get; }
+
+        public void AddItem(CartItem item)
+        {
+            Items.Add(item);
+        }
     }
 }

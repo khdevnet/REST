@@ -1,7 +1,6 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using System.Net.Http.Formatting;
-using Hal.Engine;
 using WatchShop.Api.Infrastructure;
 using WatchShop.Api.Catalog;
 
@@ -28,16 +27,16 @@ namespace WatchShop.Api
 
             config.Services.Replace(typeof(IHttpControllerSelector), new DomainHttpControllerSelector(config));
 
-            ConfigureFormatters();
+            ConfigurateFormatters();
         }
 
-        private static void ConfigureFormatters()
+        private static void ConfigurateFormatters()
         {
             MediaTypeFormatterCollection formatters = GlobalConfiguration.Configuration.Formatters;
 
             GlobalConfiguration.Configuration.Formatters.Remove(formatters.XmlFormatter);
-            GlobalConfiguration.Configuration.Formatters.Remove(formatters.JsonFormatter);
-            GlobalConfiguration.Configuration.Formatters.Add(new JsonHalMediaTypeFormatter());
+            //GlobalConfiguration.Configuration.Formatters.Remove(formatters.JsonFormatter);
+            //GlobalConfiguration.Configuration.Formatters.Add(new JsonHalMediaTypeFormatter());
         }
     }
 }
