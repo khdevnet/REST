@@ -45,7 +45,7 @@ namespace WatchShop.Domain.Customers
                             new CartDomain(
                                 x.Cart.Id,
                                 x.Id,
-                                x.Cart.Items.Select(c => new CartItemDomain(c.ProductId)).ToList()));
+                                x.Cart.Items.Select(c => new CartItemDomain(c.ProductId, c.Quantity)).ToList()));
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿using WatchShop.Domain.Catalog;
-
-namespace WatchShop.Domain.Database
+﻿namespace WatchShop.Domain.Database
 {
     internal class CartItem
     {
         public int Id { get; set; }
 
         public int ProductId { get; set; }
+
+        public int Quantity { get; set; }
 
         public int CartId { get; set; }
 

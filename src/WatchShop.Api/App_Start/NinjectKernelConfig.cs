@@ -1,15 +1,15 @@
-﻿using System.Web.Http;
-using Ninject.Web.WebApi;
-using Ninject;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Web.Http;
+using Ninject;
+using Ninject.Web.WebApi;
 
 namespace WatchShop.Api
 {
     public static class NinjectKernelConfig
     {
-        private const string  NinjectModuleAssemblyKey = "domain";
+        private const string NinjectModuleAssemblyKey = "domain";
 
         public static void Register()
         {

@@ -1,5 +1,6 @@
 ﻿using Ninject.Modules;
 using WatchShop.Domain.Catalog;
+using WatchShop.Domain.Customers;
 
 namespace WatchShop.Domain
 {
@@ -8,6 +9,7 @@ namespace WatchShop.Domain
         public override void Load()
         {
             Bind<IProductRepository>().To<ProductRepository>();
+            Bind<ICartRepository>().To<CartRepository>();
         }
     }
 }

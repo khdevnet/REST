@@ -100,6 +100,14 @@
     <Compile Include="Migrations\201701251021122_AddSampleCustomer.Designer.cs">
       <DependentUpon>201701251021122_AddSampleCustomer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701301200559_AddQuantityToCartItem.cs" />
+    <Compile Include="Migrations\201701301200559_AddQuantityToCartItem.Designer.cs">
+      <DependentUpon>201701301200559_AddQuantityToCartItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701301309165_UpdateCustomerToCartReference.cs" />
+    <Compile Include="Migrations\201701301309165_UpdateCustomerToCartReference.Designer.cs">
+      <DependentUpon>201701301309165_UpdateCustomerToCartReference.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Catalog\IProductRepository.cs" />
     <Compile Include="Migrations\SqlScripts.Designer.cs">
@@ -137,6 +145,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701251021122_AddSampleCustomer.resx">
       <DependentUpon>201701251021122_AddSampleCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701301200559_AddQuantityToCartItem.resx">
+      <DependentUpon>201701301200559_AddQuantityToCartItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701301309165_UpdateCustomerToCartReference.resx">
+      <DependentUpon>201701301309165_UpdateCustomerToCartReference.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\SqlScripts.resx">
       <Generator>ResXFileCodeGenerator</Generator>

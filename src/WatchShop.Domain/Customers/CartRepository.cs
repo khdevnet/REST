@@ -12,13 +12,12 @@ namespace WatchShop.Domain.Customers
     {
         public void Update(CartDomain cart)
         {
-            CartEntity cartEntity = GetCart(cart.Id);
+            CartEntity cartEntity = GetSingleOrDefaultCart(cart);
 
-            foreach (CartItem item in cart.Items)
+            if (cartEntity == null)
             {
-                var cartItemEntity = new CartItemEntity();
-                cartItemEntity.ProductId = item.ProductId;
-                cartEntity.Items.Add(cartItemEntity);
+                cartEntity = new CartEntity { Customer = Db.Customers.FirstOrDefault(x => x.Id == cart.CustomerId) };
+                Db.Carts.Add(cartEntity);
             }
 
             Db.SaveChanges();
@@ -33,18 +32,25 @@ namespace WatchShop.Domain.Customers
         {
             CartEntity cartEntity = Db.Carts.FirstOrDefault(c => c.Customer.Email == customerEmail);
 
-            return (cartEntity != null) ? GetCartDomain(cartEntity) : CartDomain.Default;
-        }
-
-        public CartEntity GetCart(int cartId)
-        {
-            return Db.Carts.FirstOrDefault(c => c.Id == cartId) ?? new CartEntity();
+            if (cartEntity == null)
+            {
+                cartEntity = new CartEntity
+                {
+                    CustomerId = Db.Customers.Single(c => c.Email == customerEmail).Id
+                };
+            }
+            return GetCartDomain(cartEntity);
         }
 
         private static CartDomain GetCartDomain(CartEntity cartEntity)
         {
-            List<CartItem> cartItems = cartEntity.Items.Select(item => new CartItemDomain(item.ProductId)).ToList();
+            List<CartItemDomain> cartItems = cartEntity.Items.Select(item => new CartItemDomain(item.ProductId, item.Quantity)).ToList();
             return new CartDomain(cartEntity.Id, cartEntity.CustomerId, cartItems);
+        }
+
+        private CartEntity GetSingleOrDefaultCart(CartDomain cartDomain)
+        {
+            return Db.Carts.SingleOrDefault(c => c.Id == cartDomain.Id);
         }
     }
 }

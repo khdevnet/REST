@@ -1,14 +1,9 @@
-﻿using System.Web.Http;
-using System.Web.Http.Dispatcher;
+﻿using System;
 using System.Net.Http.Formatting;
-using WatchShop.Api.Infrastructure;
+using System.Web.Http;
+using System.Web.Http.Dispatcher;
 using WatchShop.Api.Catalog;
-using Ninject.Web.WebApi;
-using Ninject;
-using WatchShop.Domain;
-using Ninject.Web.WebApi.Filter;
-using System.Web.Http.Validation;
-using System.Linq;
+using WatchShop.Api.Infrastructure;
 
 namespace WatchShop.Api
 {
@@ -21,7 +16,7 @@ namespace WatchShop.Api
 
             config.Routes.MapHttpRoute(
                 name: "StartPage",
-                routeTemplate: "",
+                routeTemplate: String.Empty,
                 defaults: new { controller = "home", id = RouteParameter.Optional });
 
             CatalogRouters.Map(config.Routes);
@@ -41,8 +36,9 @@ namespace WatchShop.Api
             MediaTypeFormatterCollection formatters = GlobalConfiguration.Configuration.Formatters;
 
             GlobalConfiguration.Configuration.Formatters.Remove(formatters.XmlFormatter);
-            //GlobalConfiguration.Configuration.Formatters.Remove(formatters.JsonFormatter);
-            //GlobalConfiguration.Configuration.Formatters.Add(new JsonHalMediaTypeFormatter());
+
+            // GlobalConfiguration.Configuration.Formatters.Remove(formatters.JsonFormatter);
+            // GlobalConfiguration.Configuration.Formatters.Add(new JsonHalMediaTypeFormatter());
         }
     }
 }

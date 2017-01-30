@@ -13,9 +13,8 @@ namespace WatchShop.Domain.Customers
 
         protected Cart()
         {
+            Items = new List<CartItem>();
         }
-
-        public static Cart Default { get; } = new Cart();
 
         public int Id { get; }
 

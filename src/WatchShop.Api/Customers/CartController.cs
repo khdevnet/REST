@@ -8,12 +8,10 @@ namespace WatchShop.Api.Customers
     public class CartController : ApiController
     {
         private readonly ICartRepository cartRepository;
-        private readonly ICustomerRepository customerRepository;
 
-        public CartController(ICartRepository cartRepository, ICustomerRepository customerRepository)
+        public CartController(ICartRepository cartRepository)
         {
             this.cartRepository = cartRepository;
-            this.customerRepository = customerRepository;
         }
 
         [HttpPost]
@@ -21,15 +19,9 @@ namespace WatchShop.Api.Customers
         {
             Cart cart = cartRepository.GetCart(User.Identity.Name);
 
-            var cartItem = new CartItem(cartItemViewModel.ProductId);
-
-            cart.Items.Add(cartItem);
+            cart.Items.Add(new CartItem(cartItemViewModel.ProductId, cartItemViewModel.Quantity));
 
             cartRepository.Update(cart);
-
-            // cart id get by user 
-            // cartRepository add cartItem (cartId,productId,qty,)
-            // cart rep save
         }
     }
 }
