@@ -43,7 +43,6 @@ namespace WatchShop.Domain.Customers
                             x.Name,
                             new Contact(x.Email, x.Phone, x.Address),
                             new CartDomain(
-                                x.Cart.Id,
                                 x.Id,
                                 x.Cart.Items.Select(c => new CartItemDomain(c.ProductId, c.Quantity)).ToList()));
         }

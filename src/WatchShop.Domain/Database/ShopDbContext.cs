@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace WatchShop.Domain.Database
@@ -27,6 +28,7 @@ namespace WatchShop.Domain.Database
                 .Remove<PluralizingTableNameConvention>();
 
             BuildCustomer(modelBuilder);
+            BuildCart(modelBuilder);
             BuildProduct(modelBuilder);
             BuildOrder(modelBuilder);
             BuildOrderProduct(modelBuilder);
@@ -58,6 +60,14 @@ namespace WatchShop.Domain.Database
             modelBuilder.Entity<Customer>()
                 .HasOptional(customer => customer.Cart)
                 .WithRequired(cart => cart.Customer);
+        }
+
+        private static void BuildCart(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Cart>()
+                .HasKey(p => p.CustomerId)
+                .Property(p => p.CustomerId)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
 
         private static void BuildProduct(DbModelBuilder modelBuilder)

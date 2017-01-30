@@ -45,12 +45,12 @@ namespace WatchShop.Domain.Customers
         private static CartDomain GetCartDomain(CartEntity cartEntity)
         {
             List<CartItemDomain> cartItems = cartEntity.Items.Select(item => new CartItemDomain(item.ProductId, item.Quantity)).ToList();
-            return new CartDomain(cartEntity.Id, cartEntity.CustomerId, cartItems);
+            return new CartDomain(cartEntity.CustomerId, cartItems);
         }
 
         private CartEntity GetSingleOrDefaultCart(CartDomain cartDomain)
         {
-            return Db.Carts.SingleOrDefault(c => c.Id == cartDomain.Id);
+            return Db.Carts.SingleOrDefault(c => c.CustomerId == cartDomain.CustomerId);
         }
     }
 }

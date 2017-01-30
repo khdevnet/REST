@@ -4,9 +4,8 @@ namespace WatchShop.Domain.Customers
 {
     public class Cart
     {
-        public Cart(int id, int customerId, List<CartItem> items = null)
+        public Cart(int customerId, List<CartItem> items = null)
         {
-            Id = id;
             CustomerId = customerId;
             Items = items ?? new List<CartItem>();
         }
@@ -15,8 +14,6 @@ namespace WatchShop.Domain.Customers
         {
             Items = new List<CartItem>();
         }
-
-        public int Id { get; }
 
         public int CustomerId { get; }
 
