@@ -9,7 +9,7 @@ namespace WatchShop.Domain.Database
             Items = new List<CartItem>();
         }
 
-        public int CustomerId { get; set; }
+        public int Id { get; set; }
 
         public virtual Customer Customer { get; set; }
 

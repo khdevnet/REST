@@ -1,27 +1,42 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace WatchShop.Domain.Customers
 {
     public class Cart
     {
+        private readonly List<CartItem> items;
+
         public Cart(int customerId, List<CartItem> items = null)
         {
             CustomerId = customerId;
-            Items = items ?? new List<CartItem>();
+            this.items = items ?? new List<CartItem>();
         }
 
         protected Cart()
         {
-            Items = new List<CartItem>();
+            items = new List<CartItem>();
         }
 
         public int CustomerId { get; }
 
-        public List<CartItem> Items { get; }
-
-        public void AddItem(CartItem item)
+        public IEnumerable<CartItem> GetItems()
         {
-            Items.Add(item);
+            return items.ToList();
+        }
+
+        public void AddItem(int productId, int quantity)
+        {
+            CartItem cartItem = items.FirstOrDefault(x => x.ProductId == productId);
+
+            if (cartItem == null)
+            {
+                items.Add(new CartItem(productId, quantity));
+            }
+            else
+            {
+                cartItem.UpdateQuantity(quantity);
+            }
         }
     }
 }

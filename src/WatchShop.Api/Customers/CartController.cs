@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
 using WatchShop.Api.Infrastructure.Authorization;
 using WatchShop.Domain.Customers;
 
@@ -14,12 +16,24 @@ namespace WatchShop.Api.Customers
             this.cartRepository = cartRepository;
         }
 
+        public IEnumerable<CartItemViewModel> Get()
+        {
+            return cartRepository
+                .GetCart(User.Identity.Name)
+                .GetItems()
+                .Select(item => new CartItemViewModel
+                {
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity
+                });
+        }
+
         [HttpPost]
         public void Add([FromBody]CartItemViewModel cartItemViewModel)
         {
             Cart cart = cartRepository.GetCart(User.Identity.Name);
 
-            cart.Items.Add(new CartItem(cartItemViewModel.ProductId, cartItemViewModel.Quantity));
+            cart.AddItem(cartItemViewModel.ProductId, cartItemViewModel.Quantity);
 
             cartRepository.Update(cart);
         }

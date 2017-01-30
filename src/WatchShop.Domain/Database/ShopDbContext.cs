@@ -65,9 +65,13 @@ namespace WatchShop.Domain.Database
         private static void BuildCart(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Cart>()
-                .HasKey(p => p.CustomerId)
-                .Property(p => p.CustomerId)
+                .Property(p => p.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+            modelBuilder.Entity<Cart>()
+                .HasMany(p => p.Items)
+                .WithRequired(p => p.Cart)
+                .HasForeignKey(p => p.CartId);
         }
 
         private static void BuildProduct(DbModelBuilder modelBuilder)

@@ -104,6 +104,14 @@
     <Compile Include="Migrations\201701301200559_AddQuantityToCartItem.Designer.cs">
       <DependentUpon>201701301200559_AddQuantityToCartItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701301631110_RemoveCustomerIdFromCart.cs" />
+    <Compile Include="Migrations\201701301631110_RemoveCustomerIdFromCart.Designer.cs">
+      <DependentUpon>201701301631110_RemoveCustomerIdFromCart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701301747172_DeleteAutoIncrementFromCartId.cs" />
+    <Compile Include="Migrations\201701301747172_DeleteAutoIncrementFromCartId.Designer.cs">
+      <DependentUpon>201701301747172_DeleteAutoIncrementFromCartId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Catalog\IProductRepository.cs" />
     <Compile Include="Migrations\SqlScripts.Designer.cs">
@@ -144,6 +152,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701301200559_AddQuantityToCartItem.resx">
       <DependentUpon>201701301200559_AddQuantityToCartItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701301631110_RemoveCustomerIdFromCart.resx">
+      <DependentUpon>201701301631110_RemoveCustomerIdFromCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701301747172_DeleteAutoIncrementFromCartId.resx">
+      <DependentUpon>201701301747172_DeleteAutoIncrementFromCartId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\SqlScripts.resx">
       <Generator>ResXFileCodeGenerator</Generator>

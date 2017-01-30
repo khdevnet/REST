@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using CartDomain = WatchShop.Domain.Customers.Cart;
 using CartEntity = WatchShop.Domain.Database.Cart;
@@ -20,6 +21,25 @@ namespace WatchShop.Domain.Customers
                 Db.Carts.Add(cartEntity);
             }
 
+            foreach (CartItem item in cart.GetItems())
+            {
+                CartItemEntity cartItemEntity = Db.CartItems.FirstOrDefault(ci => ci.ProductId == item.ProductId);
+
+                if (cartItemEntity == null)
+                {
+                    cartItemEntity = new CartItemEntity
+                    {
+                        ProductId = item.ProductId,
+                        Quantity = item.Quantity
+                    };
+                    cartEntity.Items.Add(cartItemEntity);
+                }
+                else
+                {
+                    cartItemEntity.Quantity = item.Quantity;
+                }
+            }
+
             Db.SaveChanges();
         }
 
@@ -30,13 +50,13 @@ namespace WatchShop.Domain.Customers
 
         public CartDomain GetCart(string customerEmail)
         {
-            CartEntity cartEntity = Db.Carts.FirstOrDefault(c => c.Customer.Email == customerEmail);
+            CartEntity cartEntity = Db.Carts.Include(x => x.Items).FirstOrDefault(c => c.Customer.Email == customerEmail);
 
             if (cartEntity == null)
             {
                 cartEntity = new CartEntity
                 {
-                    CustomerId = Db.Customers.Single(c => c.Email == customerEmail).Id
+                    Id = Db.Customers.Single(c => c.Email == customerEmail).Id
                 };
             }
             return GetCartDomain(cartEntity);
@@ -45,12 +65,12 @@ namespace WatchShop.Domain.Customers
         private static CartDomain GetCartDomain(CartEntity cartEntity)
         {
             List<CartItemDomain> cartItems = cartEntity.Items.Select(item => new CartItemDomain(item.ProductId, item.Quantity)).ToList();
-            return new CartDomain(cartEntity.CustomerId, cartItems);
+            return new CartDomain(cartEntity.Id, cartItems);
         }
 
         private CartEntity GetSingleOrDefaultCart(CartDomain cartDomain)
         {
-            return Db.Carts.SingleOrDefault(c => c.CustomerId == cartDomain.CustomerId);
+            return Db.Carts.SingleOrDefault(c => c.Id == cartDomain.CustomerId);
         }
     }
 }
