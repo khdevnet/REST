@@ -2,6 +2,8 @@
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using WatchShop.Api.Catalog;
 using WatchShop.Api.Infrastructure;
 
@@ -23,6 +25,11 @@ namespace WatchShop.Api
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
+                routeTemplate: "api/{controller}/{action}/{id}",
+                defaults: new { controller = "home", id = RouteParameter.Optional });
+
+            config.Routes.MapHttpRoute(
+                name: "controller",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { controller = "home", id = RouteParameter.Optional });
 
@@ -34,6 +41,11 @@ namespace WatchShop.Api
         private static void ConfigurateFormatters()
         {
             MediaTypeFormatterCollection formatters = GlobalConfiguration.Configuration.Formatters;
+            formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
 
             GlobalConfiguration.Configuration.Formatters.Remove(formatters.XmlFormatter);
 

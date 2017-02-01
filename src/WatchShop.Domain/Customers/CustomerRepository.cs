@@ -1,50 +1,40 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using CartDomain = WatchShop.Domain.Customers.Cart;
-using CartItemDomain = WatchShop.Domain.Customers.CartItem;
-using CustomerDomain = WatchShop.Domain.Customers.Customer;
-using CustomerEntity = WatchShop.Domain.Database.Customer;
 
 namespace WatchShop.Domain.Customers
 {
     internal class CustomerRepository : BaseRepository, ICustomerRepository
     {
-        public void Add(CustomerDomain customer)
+        public void Add(Customer customer)
         {
-            Db.Customers.Add(new CustomerEntity());
+            Db.Customers.Add(new Customer());
             Db.SaveChanges();
         }
 
-        public CustomerDomain GetCustomer(string email)
+        public Customer GetCustomer(string email)
         {
-            return GetCustomers().Single(c => c.Contacts.Email == email);
+            return GetCustomers().Single(c => c.Email == email);
         }
 
-        public CustomerDomain GetCustomer(int customerId)
+        public Customer GetCustomer(int customerId)
         {
             return GetCustomers().FirstOrDefault(x => x.Id == customerId);
         }
 
-        public IEnumerable<CustomerDomain> GetCustomers()
+        public IEnumerable<Customer> GetCustomers()
         {
-            return Db.Customers.Select(x => CreateCustomerDomain(x)).ToList();
+            return Db.Customers
+                .Include(x => x.Cart.Items)
+                .Include("Cart.Items.Product")
+                .Include(x => x.Orders)
+                .ToList();
         }
 
         public void Remove(int customerId)
         {
-            CustomerEntity customer = Db.Customers.Find(customerId);
+            Customer customer = Db.Customers.Find(customerId);
             Db.Customers.Remove(customer);
-        }
-
-        private static CustomerDomain CreateCustomerDomain(CustomerEntity x)
-        {
-            return new CustomerDomain(
-                            x.Id,
-                            x.Name,
-                            new Contact(x.Email, x.Phone, x.Address),
-                            new CartDomain(
-                                x.Id,
-                                x.Cart.Items.Select(c => new CartItemDomain(c.ProductId, c.Quantity)).ToList()));
         }
     }
 }

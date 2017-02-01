@@ -1,21 +1,27 @@
-﻿namespace WatchShop.Domain.Customers
+﻿using System.Collections.Generic;
+using WatchShop.Domain.Orders;
+
+namespace WatchShop.Domain.Customers
 {
     public class Customer
     {
-        public Customer(int id, string name, Contact contacts, Cart cart)
+        public Customer()
         {
-            Id = id;
-            Name = name;
-            Cart = cart;
-            Contacts = contacts;
+            Orders = new List<Order>();
         }
 
-        public int Id { get; }
+        public int Id { get; set; }
 
-        public string Name { get; }
+        public string Name { get; set; }
 
-        public Contact Contacts { get; }
+        public string Email { get; set; }
 
-        public Cart Cart { get; }
+        public string Phone { get; set; }
+
+        public string Address { get; set; }
+
+        public virtual Cart Cart { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

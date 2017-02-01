@@ -1,76 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using CartDomain = WatchShop.Domain.Customers.Cart;
-using CartEntity = WatchShop.Domain.Database.Cart;
-using CartItemDomain = WatchShop.Domain.Customers.CartItem;
-using CartItemEntity = WatchShop.Domain.Database.CartItem;
 
 namespace WatchShop.Domain.Customers
 {
     internal class CartRepository : BaseRepository, ICartRepository
     {
-        public void Update(CartDomain cart)
+        public void Update(Cart cart)
         {
-            CartEntity cartEntity = GetSingleOrDefaultCart(cart);
+            if (cart == null)
+            {
+                cart = new Cart { Customer = Db.Customers.FirstOrDefault(x => x.Id == cart.Id) };
+                Db.Carts.Add(cart);
+            }
+
+            DeleteRemovedItemsFromCart(cart.Items);
+
+            UpdateExistCartItems(cart.Items);
+
+            Db.SaveChanges();
+        }
+
+        public Cart GetCart(string customerEmail)
+        {
+            Cart cartEntity = Db.Carts
+                .Include(x => x.Items.Select(item => item.Product))
+                .FirstOrDefault(c => c.Customer.Email == customerEmail);
 
             if (cartEntity == null)
             {
-                cartEntity = new CartEntity { Customer = Db.Customers.FirstOrDefault(x => x.Id == cart.CustomerId) };
-                Db.Carts.Add(cartEntity);
+                cartEntity = new Cart
+                {
+                    Id = Db.Customers.Single(c => c.Email == customerEmail).Id
+                };
             }
+            return cartEntity;
+        }
 
-            foreach (CartItem item in cart.GetItems())
+        private void UpdateExistCartItems(ICollection<CartItem> cartItems)
+        {
+            foreach (CartItem item in cartItems.ToList())
             {
-                CartItemEntity cartItemEntity = Db.CartItems.FirstOrDefault(ci => ci.ProductId == item.ProductId);
+                CartItem cartItemEntity = Db.CartItems.FirstOrDefault(ci => ci.ProductId == item.ProductId);
 
                 if (cartItemEntity == null)
                 {
-                    cartItemEntity = new CartItemEntity
+                    cartItemEntity = new CartItem
                     {
                         ProductId = item.ProductId,
                         Quantity = item.Quantity
                     };
-                    cartEntity.Items.Add(cartItemEntity);
+                    cartItems.Add(cartItemEntity);
                 }
                 else
                 {
                     cartItemEntity.Quantity = item.Quantity;
                 }
             }
-
-            Db.SaveChanges();
         }
 
-        public void Remove(CartItem cartItem)
+        private void DeleteRemovedItemsFromCart(IEnumerable<CartItem> cartItems)
         {
-            throw new NotImplementedException();
-        }
-
-        public CartDomain GetCart(string customerEmail)
-        {
-            CartEntity cartEntity = Db.Carts.Include(x => x.Items).FirstOrDefault(c => c.Customer.Email == customerEmail);
-
-            if (cartEntity == null)
-            {
-                cartEntity = new CartEntity
-                {
-                    Id = Db.Customers.Single(c => c.Email == customerEmail).Id
-                };
-            }
-            return GetCartDomain(cartEntity);
-        }
-
-        private static CartDomain GetCartDomain(CartEntity cartEntity)
-        {
-            List<CartItemDomain> cartItems = cartEntity.Items.Select(item => new CartItemDomain(item.ProductId, item.Quantity)).ToList();
-            return new CartDomain(cartEntity.Id, cartItems);
-        }
-
-        private CartEntity GetSingleOrDefaultCart(CartDomain cartDomain)
-        {
-            return Db.Carts.SingleOrDefault(c => c.Id == cartDomain.CustomerId);
+            IEnumerable<int> itemsProductIds = cartItems.Select(x => x.ProductId);
+            IQueryable<int> removeItemsIds = Db.CartItems.Select(x => x.ProductId).Where(x => !itemsProductIds.Contains(x));
+            Db.CartItems.Where(x => removeItemsIds.Contains(x.ProductId)).ToList().ForEach(item => Db.CartItems.Remove(item));
         }
     }
 }

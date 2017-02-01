@@ -1,22 +1,19 @@
-﻿namespace WatchShop.Domain.Customers
+﻿using WatchShop.Domain.Catalog;
+
+namespace WatchShop.Domain.Customers
 {
     public class CartItem
     {
-        private int quantity;
+        public int Id { get; set; }
 
-        public CartItem(int productId, int quantity)
-        {
-            ProductId = productId;
-            this.quantity = quantity;
-        }
+        public int ProductId { get; set; }
 
-        public int ProductId { get; }
+        public int Quantity { get; set; }
 
-        public int Quantity => quantity;
+        public int CartId { get; set; }
 
-        public void UpdateQuantity(int qty)
-        {
-            quantity = qty;
-        }
+        public Cart Cart { get; set; }
+
+        public Product Product { get; set; }
     }
 }

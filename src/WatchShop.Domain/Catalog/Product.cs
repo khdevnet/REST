@@ -1,18 +1,16 @@
-﻿namespace WatchShop.Domain.Catalog
+﻿using System.Collections.Generic;
+using WatchShop.Domain.Orders;
+
+namespace WatchShop.Domain.Catalog
 {
     public class Product
     {
-        public Product(int id, string name, decimal price)
-        {
-            Id = id;
-            Name = name;
-            Price = price;
-        }
+        public int Id { get; set; }
 
-        public int Id { get; }
+        public string Name { get; set; }
 
-        public string Name { get; }
+        public decimal Price { get; set; }
 
-        public decimal Price { get; }
+        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }

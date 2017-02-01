@@ -5,7 +5,5 @@
         void Update(Cart cart);
 
         Cart GetCart(string customerEmail);
-
-        void Remove(CartItem cartItem);
     }
 }

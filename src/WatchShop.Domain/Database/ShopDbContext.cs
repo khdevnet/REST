@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using WatchShop.Domain.Catalog;
+using WatchShop.Domain.Customers;
+using WatchShop.Domain.Orders;
 
 namespace WatchShop.Domain.Database
 {

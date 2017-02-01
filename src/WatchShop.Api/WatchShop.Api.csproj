@@ -152,8 +152,12 @@
     <Compile Include="Catalog\CatalogController.cs" />
     <Compile Include="Catalog\CatalogRouters.cs" />
     <Compile Include="Customers\CartController.cs" />
-    <Compile Include="Customers\CartItemViewModel.cs" />
+    <Compile Include="Customers\Models\CartItemProductRequestModel.cs" />
+    <Compile Include="Customers\Models\CartItemResponseModel.cs" />
+    <Compile Include="Customers\Models\CartItemRequestModel.cs" />
+    <Compile Include="Customers\CartResponseModel.cs" />
     <Compile Include="Customers\CustomersController.cs" />
+    <Compile Include="Filters\ModelValidatorAttribute.cs" />
     <Compile Include="Home\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

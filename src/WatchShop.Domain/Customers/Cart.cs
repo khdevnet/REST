@@ -5,37 +5,47 @@ namespace WatchShop.Domain.Customers
 {
     public class Cart
     {
-        private readonly List<CartItem> items;
-
-        public Cart(int customerId, List<CartItem> items = null)
+        public Cart()
         {
-            CustomerId = customerId;
-            this.items = items ?? new List<CartItem>();
+            Items = new List<CartItem>();
         }
 
-        protected Cart()
-        {
-            items = new List<CartItem>();
-        }
+        public int Id { get; set; }
 
-        public int CustomerId { get; }
+        public virtual Customer Customer { get; set; }
 
-        public IEnumerable<CartItem> GetItems()
-        {
-            return items.ToList();
-        }
+        public virtual ICollection<CartItem> Items { get; set; }
 
         public void AddItem(int productId, int quantity)
         {
-            CartItem cartItem = items.FirstOrDefault(x => x.ProductId == productId);
+            CartItem cartItem = Items.FirstOrDefault(x => x.ProductId == productId);
 
             if (cartItem == null)
             {
-                items.Add(new CartItem(productId, quantity));
+                Items.Add(new CartItem
+                {
+                    ProductId = productId,
+                    Quantity = quantity
+                });
             }
             else
             {
-                cartItem.UpdateQuantity(quantity);
+                cartItem.Quantity = quantity;
+            }
+        }
+
+        public decimal GetTotal()
+        {
+            return Items.Sum(item => item.Product.Price * item.Quantity);
+        }
+
+        public void RemoveItem(int productId)
+        {
+            CartItem item = Items.FirstOrDefault(x => x.ProductId == productId);
+
+            if (item != null)
+            {
+                Items.Remove(item);
             }
         }
     }

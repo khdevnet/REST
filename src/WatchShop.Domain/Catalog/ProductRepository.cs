@@ -1,14 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using ProductDomain = WatchShop.Domain.Catalog.Product;
 
 namespace WatchShop.Domain.Catalog
 {
     internal class ProductRepository : BaseRepository, IProductRepository
     {
-        public IEnumerable<ProductDomain> GetProdutcs()
+        public IEnumerable<Product> GetProdutcs()
         {
-            return Db.Products.ToList().Select(x => new ProductDomain(x.Id, x.Name, x.Price));
+            return Db.Products.ToList();
+        }
+
+        public bool IsExist(int productId)
+        {
+            return Db.Products.Any(x => x.Id == productId);
         }
     }
 }

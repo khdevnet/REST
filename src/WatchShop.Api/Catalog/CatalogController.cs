@@ -19,24 +19,33 @@ namespace WatchShop.Api.Catalog
             IEnumerable<ProductRepresentation> products = productRepository
                 .GetProdutcs()
                 .Select(product => new ProductRepresentation
-            {
-                Id = product.Id,
-                Name = product.Name
-            }).ToList();
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Price = product.Price
+                }).ToList();
 
             return new CatalogRepresentation(products);
         }
 
-        public ProductRepresentation GetProduct(int id)
+        public IHttpActionResult GetProduct(int id)
         {
-            return productRepository
+            if (productRepository.IsExist(id))
+            {
+                ProductRepresentation result = productRepository
                 .GetProdutcs()
                 .Where(product => product.Id == id)
                 .Select(product => new ProductRepresentation
                 {
                     Id = product.Id,
-                    Name = product.Name
+                    Name = product.Name,
+                    Price = product.Price
                 }).Single();
+
+                return Ok(result);
+            }
+
+            return NotFound();
         }
     }
 }

@@ -17,6 +17,8 @@ namespace WatchShop.Api.Catalog
 
         public string Name { get; set; }
 
+        public decimal Price { get; set; }
+
         public void Bind()
         {
             Links.Add(new Link { Rel = "self", Href = $"/api/catalog/product/{Id}" });

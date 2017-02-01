@@ -2,8 +2,11 @@
 using System.Linq;
 using System.Reflection;
 using System.Web.Http;
+using System.Web.Http.Filters;
 using Ninject;
 using Ninject.Web.WebApi;
+using Ninject.Web.WebApi.FilterBindingSyntax;
+using WatchShop.Api.Filters;
 
 namespace WatchShop.Api
 {
@@ -14,7 +17,9 @@ namespace WatchShop.Api
         public static void Register()
         {
             var kernel = new StandardKernel();
+            kernel.BindHttpFilter<ModelValidatorAttribute>(FilterScope.Global);
             kernel.Load(GetDomainAssemblies());
+
             GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
         }
 

@@ -6,5 +6,7 @@ namespace WatchShop.Domain.Catalog
     public interface IProductRepository : IDisposable
     {
         IEnumerable<Product> GetProdutcs();
+
+        bool IsExist(int productId);
     }
 }
