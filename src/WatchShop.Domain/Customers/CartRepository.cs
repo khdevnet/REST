@@ -8,11 +8,7 @@ namespace WatchShop.Domain.Customers
     {
         public void Update(Cart cart)
         {
-            if (cart == null)
-            {
-                cart = new Cart { Customer = Db.Customers.FirstOrDefault(x => x.Id == cart.Id) };
-                Db.Carts.Add(cart);
-            }
+            AddCartIfNotExist(cart);
 
             DeleteRemovedItemsFromCart(cart.Items);
 
@@ -35,6 +31,14 @@ namespace WatchShop.Domain.Customers
                 };
             }
             return cartEntity;
+        }
+
+        private void AddCartIfNotExist(Cart cart)
+        {
+            if (!Db.Carts.Any(c => c.Customer.Email == cart.Customer.Email))
+            {
+                Db.Carts.Add(cart);
+            }
         }
 
         private void UpdateExistCartItems(ICollection<CartItem> cartItems)
