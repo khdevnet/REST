@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -8,18 +9,13 @@ namespace WatchShop.Domain.Customers
     {
         public void Add(Customer customer)
         {
-            Db.Customers.Add(new Customer());
+            Db.Customers.Add(customer);
             Db.SaveChanges();
         }
 
         public Customer GetCustomer(string email)
         {
             return GetCustomers().Single(c => c.Email == email);
-        }
-
-        public Customer GetCustomer(int customerId)
-        {
-            return GetCustomers().FirstOrDefault(x => x.Id == customerId);
         }
 
         public IEnumerable<Customer> GetCustomers()
@@ -31,10 +27,11 @@ namespace WatchShop.Domain.Customers
                 .ToList();
         }
 
-        public void Remove(int customerId)
+        public void Remove(string email)
         {
-            Customer customer = Db.Customers.Find(customerId);
+            Customer customer = Db.Customers.FirstOrDefault(c => c.Email == email);
             Db.Customers.Remove(customer);
+            Db.SaveChanges();
         }
     }
 }

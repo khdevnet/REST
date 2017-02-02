@@ -3,13 +3,13 @@ using WatchShop.Api.Customers.CustomerModels;
 using WatchShop.Domain.Customers;
 using WatchShop.Domain.Registration;
 
-namespace WatchShop.Api.Customers
+namespace WatchShop.Api.Registration
 {
-    public class CustomersController : ApiController
+    public class CustomerRegistrationController : ApiController
     {
         private readonly ICustomerRegistration customerRegistration;
 
-        public CustomersController(ICustomerRegistration customerRegistration)
+        public CustomerRegistrationController(ICustomerRegistration customerRegistration)
         {
             this.customerRegistration = customerRegistration;
         }
@@ -19,6 +19,7 @@ namespace WatchShop.Api.Customers
             return customerRegistration.GetRegisteredCustomer(email);
         }
 
+        [HttpPost]
         public void Register(CustomerRegistrationRequestModel customerModel)
         {
             var customer = new Customer

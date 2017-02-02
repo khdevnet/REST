@@ -7,11 +7,9 @@ namespace WatchShop.Domain.Customers
     {
         void Add(Customer customer);
 
-        void Remove(int customerId);
+        void Remove(string email);
 
         Customer GetCustomer(string email);
-
-        Customer GetCustomer(int customerId);
 
         IEnumerable<Customer> GetCustomers();
     }

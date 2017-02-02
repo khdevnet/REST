@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Http;
-using WatchShop.Api.Customers.Models;
+using WatchShop.Api.Customers.CartModels;
 using WatchShop.Api.Infrastructure.Authorization;
 using WatchShop.Domain.Customers;
 
@@ -18,7 +18,7 @@ namespace WatchShop.Api.Customers
 
         public CartResponseModel Get()
         {
-            Cart cart = cartRepository.GetCart(User.Identity.Name);
+            Domain.Customers.Cart cart = cartRepository.GetCart(User.Identity.Name);
 
             return new CartResponseModel
             {
@@ -35,7 +35,7 @@ namespace WatchShop.Api.Customers
         }
 
         [HttpPost]
-        public void Add([FromBody]CartItemRequestModel cartItemViewModel)
+        public void Add([FromBody]AddCartItemRequestModel cartItemViewModel)
         {
             Cart cart = cartRepository.GetCart(User.Identity.Name);
 
@@ -45,7 +45,7 @@ namespace WatchShop.Api.Customers
         }
 
         [HttpPost]
-        public void Remove([FromBody]CartItemProductRequestModel product)
+        public void Remove([FromBody]ProductCartItemRequestModel product)
         {
             Cart cart = cartRepository.GetCart(User.Identity.Name);
 

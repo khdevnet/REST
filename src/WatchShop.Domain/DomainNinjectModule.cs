@@ -1,6 +1,7 @@
 ﻿using Ninject.Modules;
 using WatchShop.Domain.Catalog;
 using WatchShop.Domain.Customers;
+using WatchShop.Domain.Registration;
 
 namespace WatchShop.Domain
 {
@@ -10,6 +11,9 @@ namespace WatchShop.Domain
         {
             Bind<IProductRepository>().To<ProductRepository>();
             Bind<ICartRepository>().To<CartRepository>();
+
+            Bind<ICustomerRepository>().To<CustomerRepository>();
+            Bind<ICustomerRegistration>().To<CustomerRegistration>();
         }
     }
 }
