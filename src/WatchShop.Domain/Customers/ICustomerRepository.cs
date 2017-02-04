@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using WatchShop.Domain.Common;
 
 namespace WatchShop.Domain.Customers
 {
-    public interface ICustomerRepository : IDisposable
+    public interface ICustomerRepository : IRepositoryBase, IDisposable
     {
         void Add(Customer customer);
 
-        void Remove(string email);
+        void Remove(Customer customer);
 
         Customer GetCustomer(string email);
 

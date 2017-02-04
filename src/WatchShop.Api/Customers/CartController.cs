@@ -10,17 +10,19 @@ namespace WatchShop.Api.Customers
     public class CartController : ApiController
     {
         private readonly ICartRepository cartRepository;
+        private readonly ICustomerRepository customerRepository;
 
-        public CartController(ICartRepository cartRepository)
+        public CartController(ICartRepository cartRepository, ICustomerRepository customerRepository)
         {
             this.cartRepository = cartRepository;
+            this.customerRepository = customerRepository;
         }
 
-        public CartResponseModel Get()
+        public IHttpActionResult Get()
         {
-            Domain.Customers.Cart cart = cartRepository.GetCart(User.Identity.Name);
+            Cart cart = cartRepository.GetCart(User.Identity.Name);
 
-            return new CartResponseModel
+            return Ok(new CartResponseModel
             {
                 Items = cart.Items
                 .Select(item => new CartItemResponseModel
@@ -31,27 +33,31 @@ namespace WatchShop.Api.Customers
                     Price = item.Product.Price
                 }),
                 Total = cart.GetTotal()
-            };
+            });
         }
 
         [HttpPost]
-        public void Add([FromBody]AddCartItemRequestModel cartItemViewModel)
+        public IHttpActionResult Add([FromBody]AddCartItemRequestModel cartItemViewModel)
         {
             Cart cart = cartRepository.GetCart(User.Identity.Name);
-
             cart.AddItem(cartItemViewModel.ProductId, cartItemViewModel.Quantity);
 
-            cartRepository.Update(cart);
+            cartRepository.AddOrUpdateCart(cart);
+            cartRepository.SaveChanges();
+
+            return Ok();
         }
 
         [HttpPost]
-        public void Remove([FromBody]ProductCartItemRequestModel product)
+        public IHttpActionResult Remove([FromBody]ProductCartItemRequestModel product)
         {
             Cart cart = cartRepository.GetCart(User.Identity.Name);
 
             cart.RemoveItem(product.ProductId);
 
-            cartRepository.Update(cart);
+            cartRepository.SaveChanges();
+
+            return Ok();
         }
     }
 }

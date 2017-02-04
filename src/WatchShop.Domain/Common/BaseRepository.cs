@@ -1,11 +1,17 @@
 ﻿using System;
+using WatchShop.Domain.Common;
 using WatchShop.Domain.Database;
 
 namespace WatchShop.Domain
 {
-    internal class BaseRepository : IDisposable
+    internal abstract class RepositoryBase : IDisposable, IRepositoryBase
     {
         protected readonly ShopDbContext Db = new ShopDbContext();
+
+        public virtual void SaveChanges()
+        {
+            Db.SaveChanges();
+        }
 
         public void Dispose()
         {

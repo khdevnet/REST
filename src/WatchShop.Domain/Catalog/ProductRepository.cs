@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace WatchShop.Domain.Catalog
 {
-    internal class ProductRepository : BaseRepository, IProductRepository
+    internal class ProductRepository : RepositoryBase, IProductRepository
     {
         public IEnumerable<Product> GetProdutcs()
         {

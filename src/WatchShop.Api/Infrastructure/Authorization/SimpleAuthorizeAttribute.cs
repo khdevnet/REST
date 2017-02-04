@@ -15,7 +15,7 @@ namespace WatchShop.Api.Infrastructure.Authorization
     {
         private const string CustomerEmailHeaderKey = "HTTP_CUSTOMER_EMAIL";
         private const string AuthorithationType = "simple";
-        private readonly IEnumerable<string> allowedUsers = new[] { "anton@gmail.com" };
+        private readonly IEnumerable<string> allowedUsers = new[] { "anton@gmail.com", "petro@gmail.com" };
 
         public override void OnAuthorization(HttpActionContext actionContext)
         {

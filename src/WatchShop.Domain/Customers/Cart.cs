@@ -24,6 +24,7 @@ namespace WatchShop.Domain.Customers
             {
                 Items.Add(new CartItem
                 {
+                    CartId = Id,
                     ProductId = productId,
                     Quantity = quantity
                 });

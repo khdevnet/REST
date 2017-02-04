@@ -5,12 +5,11 @@ using System.Linq;
 
 namespace WatchShop.Domain.Customers
 {
-    internal class CustomerRepository : BaseRepository, ICustomerRepository
+    internal class CustomerRepository : RepositoryBase, ICustomerRepository
     {
         public void Add(Customer customer)
         {
             Db.Customers.Add(customer);
-            Db.SaveChanges();
         }
 
         public Customer GetCustomer(string email)
@@ -27,11 +26,9 @@ namespace WatchShop.Domain.Customers
                 .ToList();
         }
 
-        public void Remove(string email)
+        public void Remove(Customer customer)
         {
-            Customer customer = Db.Customers.FirstOrDefault(c => c.Email == email);
             Db.Customers.Remove(customer);
-            Db.SaveChanges();
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using WatchShop.Domain.Customers;
+﻿using System.Linq;
 
-namespace WatchShop.Domain.Registration
+namespace WatchShop.Domain.Customers
 {
     internal class CustomerRegistration : ICustomerRegistration
     {
@@ -11,16 +9,6 @@ namespace WatchShop.Domain.Registration
         public CustomerRegistration(ICustomerRepository customerRepository)
         {
             this.customerRepository = customerRepository;
-        }
-
-        public Customer GetRegisteredCustomer(string email)
-        {
-            return customerRepository.GetCustomer(email);
-        }
-
-        public IEnumerable<Customer> GetRegisteredCustomers()
-        {
-            return customerRepository.GetCustomers();
         }
 
         public bool IsCustomerRegistered(string email)
@@ -33,12 +21,15 @@ namespace WatchShop.Domain.Registration
             if (!IsCustomerRegistered(customer.Email))
             {
                 customerRepository.Add(customer);
+                customerRepository.SaveChanges();
             }
         }
 
         public void UnRegisterCustomer(string email)
         {
-            customerRepository.Remove(email);
+            var customer = customerRepository.GetCustomer(email);
+            customerRepository.Remove(customer);
+            customerRepository.SaveChanges();
         }
     }
 }

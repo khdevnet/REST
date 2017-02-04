@@ -2,19 +2,27 @@
 
 namespace WatchShop.Api.Customers.CustomerModels
 {
-    public class CustomerRegistrationRequestModel
+    public class CustomerRequestModel
     {
         [Required]
+        [MinLength(4)]
+        [MaxLength(256)]
         public string Name { get; set; }
 
         [Required]
         [EmailAddress]
+        [MinLength(4)]
+        [MaxLength(256)]
         public string Email { get; set; }
 
         [Required]
+        [MinLength(4)]
+        [MaxLength(256)]
         public string Phone { get; set; }
 
         [Required]
+        [MinLength(4)]
+        [MaxLength(256)]
         public string Address { get; set; }
     }
 }

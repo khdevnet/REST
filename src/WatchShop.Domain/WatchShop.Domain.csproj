@@ -58,17 +58,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseRepository.cs" />
-    <Compile Include="Customers\Contact.cs" />
+    <Compile Include="Common\BaseRepository.cs" />
+    <Compile Include="Common\IBaseRepository.cs" />
     <Compile Include="Customers\Cart.cs" />
     <Compile Include="Customers\CartItem.cs" />
     <Compile Include="Customers\CartRepository.cs" />
     <Compile Include="Customers\CustomerRepository.cs" />
-    <Compile Include="Registration\CustomerRegistration.cs" />
+    <Compile Include="Customers\CustomerRegistration.cs" />
     <Compile Include="Customers\ICartRepository.cs" />
     <Compile Include="Customers\ICustomerRepository.cs" />
     <Compile Include="Customers\Customer.cs" />
-    <Compile Include="Registration\ICustomerRegistration.cs" />
+    <Compile Include="Customers\ICustomerRegistration.cs" />
     <Compile Include="Orders\Order.cs" />
     <Compile Include="Orders\OrderProduct.cs" />
     <Compile Include="Catalog\Product.cs" />
