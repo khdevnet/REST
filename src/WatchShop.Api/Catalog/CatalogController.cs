@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using WatchShop.Domain.Catalog;
+using WatchShop.Domain.Common.Extensibility;
 
 namespace WatchShop.Api.Catalog
 {
     public class CatalogController : ApiController
     {
-        private readonly IProductRepository productRepository;
+        private readonly IShopDataContext dataContext;
 
-        public CatalogController(IProductRepository productRepository)
+        public CatalogController(IShopDataContext dataContext)
         {
-            this.productRepository = productRepository;
+            this.dataContext = dataContext;
         }
 
         public CatalogRepresentation Get()
         {
-            IEnumerable<ProductRepresentation> products = productRepository
-                .GetProdutcs()
+            IEnumerable<ProductRepresentation> products = dataContext.Products
+                .GetProducts()
                 .Select(product => new ProductRepresentation
                 {
                     Id = product.Id,
@@ -30,10 +30,10 @@ namespace WatchShop.Api.Catalog
 
         public IHttpActionResult GetProduct(int id)
         {
-            if (productRepository.IsExist(id))
+            if (dataContext.Products.IsExist(id))
             {
-                ProductRepresentation result = productRepository
-                .GetProdutcs()
+                ProductRepresentation result = dataContext.Products
+                .GetProducts()
                 .Where(product => product.Id == id)
                 .Select(product => new ProductRepresentation
                 {

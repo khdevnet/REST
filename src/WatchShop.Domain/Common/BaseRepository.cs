@@ -1,30 +1,14 @@
-﻿using System;
-using WatchShop.Domain.Common;
-using WatchShop.Domain.Database;
+﻿using WatchShop.Domain.Database;
 
-namespace WatchShop.Domain
+namespace WatchShop.Domain.Common
 {
-    internal abstract class RepositoryBase : IDisposable, IRepositoryBase
+    internal abstract class RepositoryBase
     {
-        protected readonly ShopDbContext Db = new ShopDbContext();
+        protected readonly IShopDbContext context;
 
-        public virtual void SaveChanges()
+        public RepositoryBase(IShopDbContext context)
         {
-            Db.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                Db?.Dispose();
-            }
+            this.context = context;
         }
     }
 }

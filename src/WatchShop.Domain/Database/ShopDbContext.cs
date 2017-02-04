@@ -1,15 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using WatchShop.Domain.Carts;
-using WatchShop.Domain.Catalog;
-using WatchShop.Domain.Customers;
-using WatchShop.Domain.Orders;
+using WatchShop.Domain.Carts.Extensibility.Entities;
+using WatchShop.Domain.Catalog.Extensibility.Entities;
+using WatchShop.Domain.Customers.Extensibility.Entities;
 
 namespace WatchShop.Domain.Database
 {
-    internal class ShopDbContext : DbContext
+    internal class ShopDbContext : DbContext, IShopDbContext
     {
         public ShopDbContext() : base("name=ShopDbContext")
         {
@@ -77,17 +75,6 @@ namespace WatchShop.Domain.Database
                 .HasMany(p => p.Items)
                 .WithRequired(p => p.Cart)
                 .HasForeignKey(p => p.CartId);
-
-    //        modelBuilder
-    //            .Entity<Cart>()
-    //.Property(t => t.)
-    //.HasColumnAnnotation(
-    //    "Index",
-    //    new IndexAnnotation(new[]
-    //        {
-    //            new IndexAttribute("Index1"),
-    //            new IndexAttribute("Index2") { IsUnique = true }
-    //        })));
         }
 
         private static void BuildProduct(DbModelBuilder modelBuilder)

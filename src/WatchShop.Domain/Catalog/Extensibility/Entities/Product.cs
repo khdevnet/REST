@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using WatchShop.Domain.Orders;
+using WatchShop.Domain.Customers.Extensibility.Entities;
 
-namespace WatchShop.Domain.Catalog
+namespace WatchShop.Domain.Catalog.Extensibility.Entities
 {
     public class Product
     {

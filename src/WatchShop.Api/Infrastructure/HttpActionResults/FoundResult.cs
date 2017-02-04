@@ -14,6 +14,7 @@ namespace WatchShop.Api.Infrastructure.HttpActionResults
         {
             this.reasonPhrase = reasonPhrase;
         }
+
         public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
             return Task.FromResult(new HttpResponseMessage()

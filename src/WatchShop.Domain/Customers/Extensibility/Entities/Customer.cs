@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using WatchShop.Domain.Carts;
-using WatchShop.Domain.Orders;
+using WatchShop.Domain.Carts.Extensibility.Entities;
 
-namespace WatchShop.Domain.Customers
+namespace WatchShop.Domain.Customers.Extensibility.Entities
 {
     public class Customer
     {

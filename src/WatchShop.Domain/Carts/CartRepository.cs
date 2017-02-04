@@ -1,13 +1,21 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using WatchShop.Domain.Carts.Extensibility;
+using WatchShop.Domain.Carts.Extensibility.Entities;
+using WatchShop.Domain.Common;
+using WatchShop.Domain.Database;
 
 namespace WatchShop.Domain.Carts
 {
     internal class CartRepository : RepositoryBase, ICartRepository
     {
+        public CartRepository(IShopDbContext context) : base(context)
+        {
+        }
+
         public Cart GetCart(string customerEmail)
         {
-            Cart cartEntity = Db.Carts
+            Cart cartEntity = context.Carts
                 .Include(x => x.Items.Select(item => item.Product))
                 .FirstOrDefault(c => c.Customer.Email == customerEmail);
 
@@ -15,8 +23,8 @@ namespace WatchShop.Domain.Carts
             {
                 cartEntity = new Cart
                 {
-                    Id = Db.Customers.Single(c => c.Email == customerEmail).Id,
-                    Customer = Db.Customers.Single(c => c.Email == customerEmail)
+                    Id = context.Customers.Single(c => c.Email == customerEmail).Id,
+                    Customer = context.Customers.Single(c => c.Email == customerEmail)
                 };
             }
             return cartEntity;
@@ -24,10 +32,15 @@ namespace WatchShop.Domain.Carts
 
         public void AddOrUpdateCart(Cart cart)
         {
-            if (!Db.Carts.Any(c => c.Id == cart.Id))
+            if (!context.Carts.Any(c => c.Id == cart.Id))
             {
-                Db.Carts.Add(cart);
+                context.Carts.Add(cart);
             }
+        }
+
+        public void Remove(Cart cart)
+        {
+            context.Carts.Remove(cart);
         }
     }
 }

@@ -2,26 +2,24 @@
 using System.Web.Http;
 using WatchShop.Api.Carts.Models;
 using WatchShop.Api.Infrastructure.Authorization;
-using WatchShop.Domain.Carts;
-using WatchShop.Domain.Customers;
+using WatchShop.Domain.Carts.Extensibility.Entities;
+using WatchShop.Domain.Common.Extensibility;
 
 namespace WatchShop.Api.Carts
 {
     [SimpleAuthorize]
     public class CartController : ApiController
     {
-        private readonly ICartRepository cartRepository;
-        private readonly ICustomerRepository customerRepository;
+        private readonly IShopDataContext dataContext;
 
-        public CartController(ICartRepository cartRepository, ICustomerRepository customerRepository)
+        public CartController(IShopDataContext dataContext)
         {
-            this.cartRepository = cartRepository;
-            this.customerRepository = customerRepository;
+            this.dataContext = dataContext;
         }
 
         public IHttpActionResult Get()
         {
-            Cart cart = cartRepository.GetCart(User.Identity.Name);
+            Cart cart = dataContext.Carts.GetCart(User.Identity.Name);
 
             return Ok(new CartResponseModel
             {
@@ -40,11 +38,11 @@ namespace WatchShop.Api.Carts
         [HttpPost]
         public IHttpActionResult Add([FromBody]AddCartItemRequestModel cartItemViewModel)
         {
-            Cart cart = cartRepository.GetCart(User.Identity.Name);
+            Cart cart = dataContext.Carts.GetCart(User.Identity.Name);
             cart.AddItem(cartItemViewModel.ProductId, cartItemViewModel.Quantity);
 
-            cartRepository.AddOrUpdateCart(cart);
-            cartRepository.SaveChanges();
+            dataContext.Carts.AddOrUpdateCart(cart);
+            dataContext.SaveChanges();
 
             return Ok();
         }
@@ -52,11 +50,10 @@ namespace WatchShop.Api.Carts
         [HttpPost]
         public IHttpActionResult Remove([FromBody]ProductCartItemRequestModel product)
         {
-            Cart cart = cartRepository.GetCart(User.Identity.Name);
+            Cart cart = dataContext.Carts.GetCart(User.Identity.Name);
 
             cart.RemoveItem(product.ProductId);
-
-            cartRepository.SaveChanges();
+            dataContext.SaveChanges();
 
             return Ok();
         }

@@ -1,35 +1,38 @@
 ﻿using System.Linq;
+using WatchShop.Domain.Common.Extensibility;
+using WatchShop.Domain.Customers.Extensibility;
+using WatchShop.Domain.Customers.Extensibility.Entities;
 
 namespace WatchShop.Domain.Customers
 {
     internal class CustomerRegistration : ICustomerRegistration
     {
-        private readonly ICustomerRepository customerRepository;
+        private readonly IShopDataContext dataContext;
 
-        public CustomerRegistration(ICustomerRepository customerRepository)
+        public CustomerRegistration(IShopDataContext dataContext)
         {
-            this.customerRepository = customerRepository;
+            this.dataContext = dataContext;
         }
 
         public bool IsCustomerRegistered(string email)
         {
-            return customerRepository.GetCustomers().Any(c => c.Email == email);
+            return dataContext.Customers.GetCustomers().Any(c => c.Email == email);
         }
 
         public void RegisterCustomer(Customer customer)
         {
             if (!IsCustomerRegistered(customer.Email))
             {
-                customerRepository.Add(customer);
-                customerRepository.SaveChanges();
+                dataContext.Customers.Add(customer);
+                dataContext.SaveChanges();
             }
         }
 
         public void UnRegisterCustomer(string email)
         {
-            var customer = customerRepository.GetCustomer(email);
-            customerRepository.Remove(customer);
-            customerRepository.SaveChanges();
+            var customer = dataContext.Customers.GetCustomer(email);
+            dataContext.Customers.Remove(customer);
+            dataContext.SaveChanges();
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using WatchShop.Domain.Catalog;
+﻿using WatchShop.Domain.Catalog.Extensibility.Entities;
 
-namespace WatchShop.Domain.Carts
+namespace WatchShop.Domain.Carts.Extensibility.Entities
 {
     public class CartItem
     {

@@ -1,6 +1,7 @@
 ﻿using WatchShop.Domain.Catalog;
+using WatchShop.Domain.Catalog.Extensibility.Entities;
 
-namespace WatchShop.Domain.Orders
+namespace WatchShop.Domain.Customers.Extensibility.Entities
 {
     public class OrderProduct
     {

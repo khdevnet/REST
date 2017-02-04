@@ -1,15 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using WatchShop.Domain.Common;
+using WatchShop.Domain.Customers.Extensibility;
+using WatchShop.Domain.Customers.Extensibility.Entities;
+using WatchShop.Domain.Database;
 
 namespace WatchShop.Domain.Customers
 {
     internal class CustomerRepository : RepositoryBase, ICustomerRepository
     {
+        public CustomerRepository(IShopDbContext context) : base(context)
+        {
+        }
+
         public void Add(Customer customer)
         {
-            Db.Customers.Add(customer);
+            context.Customers.Add(customer);
         }
 
         public Customer GetCustomer(string email)
@@ -19,7 +26,7 @@ namespace WatchShop.Domain.Customers
 
         public IEnumerable<Customer> GetCustomers()
         {
-            return Db.Customers
+            return context.Customers
                 .Include(x => x.Cart.Items)
                 .Include("Cart.Items.Product")
                 .Include(x => x.Orders)
@@ -28,7 +35,7 @@ namespace WatchShop.Domain.Customers
 
         public void Remove(Customer customer)
         {
-            Db.Customers.Remove(customer);
+            context.Customers.Remove(customer);
         }
     }
 }

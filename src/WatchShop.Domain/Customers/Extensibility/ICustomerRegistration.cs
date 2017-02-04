@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using WatchShop.Domain.Customers.Extensibility.Entities;
 
-namespace WatchShop.Domain.Customers
+namespace WatchShop.Domain.Customers.Extensibility
 {
     public interface ICustomerRegistration
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WatchShop.Domain.Customers;
+using WatchShop.Domain.Customers.Extensibility.Entities;
 
-namespace WatchShop.Domain.Carts
+namespace WatchShop.Domain.Carts.Extensibility.Entities
 {
     public class Cart
     {

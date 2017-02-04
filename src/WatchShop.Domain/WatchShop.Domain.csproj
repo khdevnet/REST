@@ -59,19 +59,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\BaseRepository.cs" />
-    <Compile Include="Common\IBaseRepository.cs" />
-    <Compile Include="Carts\Cart.cs" />
-    <Compile Include="Carts\CartItem.cs" />
+    <Compile Include="Carts\Extensibility\Entities\Cart.cs" />
+    <Compile Include="Carts\Extensibility\Entities\CartItem.cs" />
     <Compile Include="Carts\CartRepository.cs" />
+    <Compile Include="Common\ShopDataContext.cs" />
+    <Compile Include="Customers\CheckoutProcess.cs" />
+    <Compile Include="Customers\Extensibility\ICheckoutProcess.cs" />
+    <Compile Include="Customers\Extensibility\IOrderRepository.cs" />
+    <Compile Include="Customers\OrderRepository.cs" />
     <Compile Include="Customers\CustomerRepository.cs" />
     <Compile Include="Customers\CustomerRegistration.cs" />
-    <Compile Include="Carts\ICartRepository.cs" />
-    <Compile Include="Customers\ICustomerRepository.cs" />
-    <Compile Include="Customers\Customer.cs" />
-    <Compile Include="Customers\ICustomerRegistration.cs" />
-    <Compile Include="Orders\Order.cs" />
-    <Compile Include="Orders\OrderProduct.cs" />
-    <Compile Include="Catalog\Product.cs" />
+    <Compile Include="Carts\Extensibility\ICartRepository.cs" />
+    <Compile Include="Customers\Extensibility\ICustomerRepository.cs" />
+    <Compile Include="Customers\Extensibility\Entities\Customer.cs" />
+    <Compile Include="Customers\Extensibility\ICustomerRegistration.cs" />
+    <Compile Include="Customers\Extensibility\Entities\Order.cs" />
+    <Compile Include="Customers\Extensibility\Entities\OrderProduct.cs" />
+    <Compile Include="Catalog\Extensibility\Entities\Product.cs" />
+    <Compile Include="Common\Extensibility\IShopDataContext.cs" />
+    <Compile Include="Database\ISaveContext.cs" />
+    <Compile Include="Database\IShopDbContext.cs" />
     <Compile Include="DomainNinjectModule.cs" />
     <Compile Include="Migrations\201701201955550_Init.cs" />
     <Compile Include="Migrations\201701201955550_Init.Designer.cs">
@@ -109,8 +116,12 @@
     <Compile Include="Migrations\201701301747172_DeleteAutoIncrementFromCartId.Designer.cs">
       <DependentUpon>201701301747172_DeleteAutoIncrementFromCartId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702041704195_UpdateOrdersToCustomerReference.cs" />
+    <Compile Include="Migrations\201702041704195_UpdateOrdersToCustomerReference.Designer.cs">
+      <DependentUpon>201702041704195_UpdateOrdersToCustomerReference.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Catalog\IProductRepository.cs" />
+    <Compile Include="Catalog\Extensibility\IProductRepository.cs" />
     <Compile Include="Migrations\SqlScripts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -153,6 +164,9 @@
     <EmbeddedResource Include="Migrations\201701301747172_DeleteAutoIncrementFromCartId.resx">
       <DependentUpon>201701301747172_DeleteAutoIncrementFromCartId.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702041704195_UpdateOrdersToCustomerReference.resx">
+      <DependentUpon>201702041704195_UpdateOrdersToCustomerReference.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\SqlScripts.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SqlScripts.Designer.cs</LastGenOutput>
@@ -161,6 +175,7 @@
   <ItemGroup>
     <None Include="Resources\InsertProducts.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\StyleCop.MSBuild.4.7.54.0\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.4.7.54.0\build\StyleCop.MSBuild.Targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
