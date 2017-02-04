@@ -1,4 +1,4 @@
-﻿namespace WatchShop.Api.Customers.CartModels
+﻿namespace WatchShop.Api.Carts.Models
 {
     public class CartItemResponseModel
     {

@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
-namespace WatchShop.Api.Filters
+namespace WatchShop.Api.Infrastructure.Validation
 {
     public class ModelValidatorAttribute : ActionFilterAttribute
     {

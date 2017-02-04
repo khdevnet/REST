@@ -1,6 +1,6 @@
 ﻿using WatchShop.Domain.Catalog;
 
-namespace WatchShop.Domain.Customers
+namespace WatchShop.Domain.Carts
 {
     public class CartItem
     {

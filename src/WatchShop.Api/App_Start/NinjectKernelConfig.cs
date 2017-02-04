@@ -6,7 +6,7 @@ using System.Web.Http.Filters;
 using Ninject;
 using Ninject.Web.WebApi;
 using Ninject.Web.WebApi.FilterBindingSyntax;
-using WatchShop.Api.Filters;
+using WatchShop.Api.Infrastructure.Validation;
 
 namespace WatchShop.Api
 {

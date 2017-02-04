@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 
-namespace WatchShop.Domain.Customers
+namespace WatchShop.Domain.Carts
 {
     internal class CartRepository : RepositoryBase, ICartRepository
     {

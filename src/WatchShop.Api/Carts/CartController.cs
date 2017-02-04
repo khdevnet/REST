@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using System.Web.Http;
-using WatchShop.Api.Customers.CartModels;
+using WatchShop.Api.Carts.Models;
 using WatchShop.Api.Infrastructure.Authorization;
+using WatchShop.Domain.Carts;
 using WatchShop.Domain.Customers;
 
-namespace WatchShop.Api.Customers
+namespace WatchShop.Api.Carts
 {
     [SimpleAuthorize]
     public class CartController : ApiController

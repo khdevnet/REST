@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WatchShop.Api.Customers.CartModels
+namespace WatchShop.Api.Carts.Models
 {
     public class CartResponseModel
     {

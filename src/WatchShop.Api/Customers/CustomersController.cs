@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using WatchShop.Api.Customers.CustomerModels;
+using WatchShop.Api.Customers.Models;
 using WatchShop.Api.Infrastructure.Authorization;
 using WatchShop.Api.Infrastructure.HttpActionResults;
 using WatchShop.Domain.Customers;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WatchShop.Domain.Carts;
 using WatchShop.Domain.Orders;
 
 namespace WatchShop.Domain.Customers

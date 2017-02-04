@@ -1,6 +1,7 @@
 ﻿using Ninject.Modules;
 using WatchShop.Domain.Catalog;
 using WatchShop.Domain.Customers;
+using WatchShop.Domain.Carts;
 
 namespace WatchShop.Domain
 {

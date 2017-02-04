@@ -151,15 +151,15 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Catalog\CatalogController.cs" />
     <Compile Include="Catalog\CatalogRouters.cs" />
-    <Compile Include="Customers\CartController.cs" />
-    <Compile Include="Customers\CartModels\ProductCartItemRequestModel.cs" />
-    <Compile Include="Customers\CartModels\CartItemResponseModel.cs" />
-    <Compile Include="Customers\CartModels\AddCartItemRequestModel.cs" />
-    <Compile Include="Customers\CartModels\CartResponseModel.cs" />
-    <Compile Include="Customers\CustomerModels\CustomerEmailRequestModel.cs" />
-    <Compile Include="Customers\CustomerModels\CustomerRequestModel.cs" />
+    <Compile Include="Carts\CartController.cs" />
+    <Compile Include="Carts\Models\ProductCartItemRequestModel.cs" />
+    <Compile Include="Carts\Models\CartItemResponseModel.cs" />
+    <Compile Include="Carts\Models\AddCartItemRequestModel.cs" />
+    <Compile Include="Carts\Models\CartResponseModel.cs" />
+    <Compile Include="Customers\Models\CustomerEmailRequestModel.cs" />
+    <Compile Include="Customers\Models\CustomerRequestModel.cs" />
     <Compile Include="Customers\CustomersController.cs" />
-    <Compile Include="Filters\ModelValidatorAttribute.cs" />
+    <Compile Include="Infrastructure\Validation\ModelValidatorAttribute.cs" />
     <Compile Include="Home\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

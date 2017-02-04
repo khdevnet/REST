@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using WatchShop.Domain.Carts;
 using WatchShop.Domain.Catalog;
 using WatchShop.Domain.Customers;
 using WatchShop.Domain.Orders;

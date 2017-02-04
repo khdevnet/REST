@@ -1,6 +1,6 @@
 ﻿using WatchShop.Domain.Common;
 
-namespace WatchShop.Domain.Customers
+namespace WatchShop.Domain.Carts
 {
     public interface ICartRepository : IRepositoryBase
     {
