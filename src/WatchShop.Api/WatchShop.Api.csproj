@@ -156,6 +156,8 @@
     <Compile Include="Carts\Models\CartItemResponseModel.cs" />
     <Compile Include="Carts\Models\AddCartItemRequestModel.cs" />
     <Compile Include="Carts\Models\CartResponseModel.cs" />
+    <Compile Include="Catalog\Models\ProductIdRequestModel.cs" />
+    <Compile Include="Catalog\Models\ProductRequestModel.cs" />
     <Compile Include="Customers\Models\CustomerEmailRequestModel.cs" />
     <Compile Include="Customers\Models\CustomerRequestModel.cs" />
     <Compile Include="Customers\CustomersController.cs" />

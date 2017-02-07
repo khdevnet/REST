@@ -59,7 +59,7 @@ namespace WatchShop.Api.Customers
         {
             if (customerRegistration.IsCustomerRegistered(customerModel.Email))
             {
-                var customer = dataContext.Customers.GetCustomer(customerModel.Email);
+                Customer customer = dataContext.Customers.GetCustomer(customerModel.Email);
                 customer.Address = customerModel.Address;
                 customer.Email = customerModel.Email;
                 customer.Name = customerModel.Name;

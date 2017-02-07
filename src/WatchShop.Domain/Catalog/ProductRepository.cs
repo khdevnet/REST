@@ -22,5 +22,31 @@ namespace WatchShop.Domain.Catalog
         {
             return context.Products.Any(x => x.Id == productId);
         }
+
+        public void Add(string name, decimal price)
+        {
+            context.Products.Add(new Product
+            {
+                Name = name,
+                Price = price
+            });
+        }
+
+        public void Update(Product product)
+        {
+            Product productEntity = Single(product.Id);
+            productEntity.Name = product.Name;
+            productEntity.Price = product.Price;
+        }
+
+        public void Remove(int productId)
+        {
+            context.Products.Remove(Single(productId));
+        }
+
+        public Product Single(int productId)
+        {
+            return context.Products.Single(p => p.Id == productId);
+        }
     }
 }

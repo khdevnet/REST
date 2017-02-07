@@ -8,5 +8,13 @@ namespace WatchShop.Domain.Catalog.Extensibility
         IEnumerable<Product> GetProducts();
 
         bool IsExist(int productId);
+
+        Product Single(int productId);
+
+        void Add(string name, decimal price);
+
+        void Update(Product product);
+
+        void Remove(int productId);
     }
 }
