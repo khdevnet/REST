@@ -11,7 +11,7 @@ namespace WatchShop.Domain.Catalog.Extensibility
 
         Product Single(int productId);
 
-        void Add(string name, decimal price);
+        void Add(Product product);
 
         void Update(Product product);
 

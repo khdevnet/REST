@@ -23,13 +23,9 @@ namespace WatchShop.Domain.Catalog
             return context.Products.Any(x => x.Id == productId);
         }
 
-        public void Add(string name, decimal price)
+        public void Add(Product product)
         {
-            context.Products.Add(new Product
-            {
-                Name = name,
-                Price = price
-            });
+            context.Products.Add(product);
         }
 
         public void Update(Product product)

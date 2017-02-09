@@ -24,6 +24,7 @@ namespace WatchShop.Domain
             Bind<IShopDbContext>().To<ShopDbContext>().InSingletonScope();
 
             Bind<ICustomerRegistration>().To<CustomerRegistration>();
+            Bind<ICatalogAdministration>().To<CatalogAdministration>();
             Bind<ICheckoutProcess>().To<CheckoutProcess>();
         }
     }

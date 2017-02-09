@@ -3,7 +3,9 @@ using System.Linq;
 using System.Web.Http;
 using WatchShop.Api.Catalog.Models;
 using WatchShop.Api.Infrastructure.Authorization;
+using WatchShop.Domain.Catalog.Extensibility;
 using WatchShop.Domain.Catalog.Extensibility.Entities;
+using WatchShop.Domain.Common.Exceptions;
 using WatchShop.Domain.Common.Extensibility;
 
 namespace WatchShop.Api.Catalog
@@ -11,10 +13,12 @@ namespace WatchShop.Api.Catalog
     public class CatalogController : ApiController
     {
         private readonly IShopDataContext dataContext;
+        private readonly ICatalogAdministration catalogAdministration;
 
-        public CatalogController(IShopDataContext dataContext)
+        public CatalogController(IShopDataContext dataContext, ICatalogAdministration catalogAdministration)
         {
             this.dataContext = dataContext;
+            this.catalogAdministration = catalogAdministration;
         }
 
         public CatalogRepresentation Get()
@@ -55,8 +59,7 @@ namespace WatchShop.Api.Catalog
         [SimpleAuthorize]
         public IHttpActionResult AddProduct([FromBody]ProductRequestModel product)
         {
-            dataContext.Products.Add(product.Name, product.Price);
-            dataContext.SaveChanges();
+            catalogAdministration.AddProduct(product.Name, product.Price);
             return Ok();
         }
 
@@ -64,25 +67,36 @@ namespace WatchShop.Api.Catalog
         [SimpleAuthorize]
         public IHttpActionResult UpdateProduct([FromBody]ProductRequestModel product)
         {
-            if (dataContext.Products.IsExist(product.Id))
+            try
             {
-                Product productEntity = dataContext.Products.Single(product.Id);
-                productEntity.Name = product.Name;
-                productEntity.Price = product.Price;
-                dataContext.Products.Update(productEntity);
-                dataContext.SaveChanges();
-                return Ok();
+                catalogAdministration.UpdateProduct(new Product
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Price = product.Price
+                });
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
             }
 
-            return NotFound();
+            return Ok();
         }
 
         [HttpDelete]
         [SimpleAuthorize]
         public IHttpActionResult RemoveProduct([FromBody]ProductIdRequestModel product)
         {
-            dataContext.Products.Remove(product.Id);
-            dataContext.SaveChanges();
+            try
+            {
+                catalogAdministration.RemoveProduct(product.Id);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+
             return Ok();
         }
     }
