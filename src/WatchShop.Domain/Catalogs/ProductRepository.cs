@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WatchShop.Domain.Catalog.Extensibility;
-using WatchShop.Domain.Catalog.Extensibility.Entities;
+using WatchShop.Domain.Catalogs.Extensibility;
+using WatchShop.Domain.Catalogs.Extensibility.Entities;
 using WatchShop.Domain.Common;
 using WatchShop.Domain.Database;
 
-namespace WatchShop.Domain.Catalog
+namespace WatchShop.Domain.Catalogs
 {
     internal class ProductRepository : RepositoryBase, IProductRepository
     {

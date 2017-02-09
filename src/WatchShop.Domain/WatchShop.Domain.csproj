@@ -58,27 +58,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Catalog\CatalogAdministration.cs" />
-    <Compile Include="Catalog\Extensibility\ICatalogAdministration.cs" />
+    <Compile Include="Catalogs\Catalog.cs" />
+    <Compile Include="Catalogs\Extensibility\ICatalog.cs" />
     <Compile Include="Common\BaseRepository.cs" />
     <Compile Include="Carts\Extensibility\Entities\Cart.cs" />
     <Compile Include="Carts\Extensibility\Entities\CartItem.cs" />
     <Compile Include="Carts\CartRepository.cs" />
     <Compile Include="Common\Exceptions\NotFoundException.cs" />
     <Compile Include="Common\ShopDataContext.cs" />
-    <Compile Include="Customers\CheckoutProcess.cs" />
-    <Compile Include="Customers\Extensibility\ICheckoutProcess.cs" />
-    <Compile Include="Customers\Extensibility\IOrderRepository.cs" />
-    <Compile Include="Customers\OrderRepository.cs" />
-    <Compile Include="Customers\CustomerRepository.cs" />
-    <Compile Include="Customers\CustomerRegistration.cs" />
+    <Compile Include="Accounts\CheckoutProcess.cs" />
+    <Compile Include="Accounts\Extensibility\ICheckoutProcess.cs" />
+    <Compile Include="Accounts\Extensibility\IOrderRepository.cs" />
+    <Compile Include="Accounts\OrderRepository.cs" />
+    <Compile Include="Accounts\CustomerRepository.cs" />
+    <Compile Include="Accounts\Account.cs" />
     <Compile Include="Carts\Extensibility\ICartRepository.cs" />
-    <Compile Include="Customers\Extensibility\ICustomerRepository.cs" />
-    <Compile Include="Customers\Extensibility\Entities\Customer.cs" />
-    <Compile Include="Customers\Extensibility\ICustomerRegistration.cs" />
-    <Compile Include="Customers\Extensibility\Entities\Order.cs" />
-    <Compile Include="Customers\Extensibility\Entities\OrderProduct.cs" />
-    <Compile Include="Catalog\Extensibility\Entities\Product.cs" />
+    <Compile Include="Accounts\Extensibility\ICustomerRepository.cs" />
+    <Compile Include="Accounts\Extensibility\Entities\Customer.cs" />
+    <Compile Include="Accounts\Extensibility\IAccount.cs" />
+    <Compile Include="Accounts\Extensibility\Entities\Order.cs" />
+    <Compile Include="Accounts\Extensibility\Entities\OrderProduct.cs" />
+    <Compile Include="Catalogs\Extensibility\Entities\Product.cs" />
     <Compile Include="Common\Extensibility\IShopDataContext.cs" />
     <Compile Include="Database\ISaveContext.cs" />
     <Compile Include="Database\IShopDbContext.cs" />
@@ -124,13 +124,13 @@
       <DependentUpon>201702041704195_UpdateOrdersToCustomerReference.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Catalog\Extensibility\IProductRepository.cs" />
+    <Compile Include="Catalogs\Extensibility\IProductRepository.cs" />
     <Compile Include="Migrations\SqlScripts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SqlScripts.resx</DependentUpon>
     </Compile>
-    <Compile Include="Catalog\ProductRepository.cs" />
+    <Compile Include="Catalogs\ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Database\ShopDbContext.cs" />
   </ItemGroup>

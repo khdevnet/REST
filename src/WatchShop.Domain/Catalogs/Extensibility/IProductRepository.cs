@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using WatchShop.Domain.Catalog.Extensibility.Entities;
+using WatchShop.Domain.Catalogs.Extensibility.Entities;
 
-namespace WatchShop.Domain.Catalog.Extensibility
+namespace WatchShop.Domain.Catalogs.Extensibility
 {
     public interface IProductRepository
     {

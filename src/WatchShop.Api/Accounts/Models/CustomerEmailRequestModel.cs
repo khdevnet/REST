@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WatchShop.Api.Customers.Models
+namespace WatchShop.Api.Accounts.Models
 {
     public class CustomerEmailRequestModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WatchShop.Domain.Customers.Extensibility.Entities;
+using WatchShop.Domain.Accounts.Extensibility.Entities;
 
 namespace WatchShop.Domain.Carts.Extensibility.Entities
 {

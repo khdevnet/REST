@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WatchShop.Domain.Customers.Extensibility.Entities
+namespace WatchShop.Domain.Accounts.Extensibility.Entities
 {
     public class Order
     {

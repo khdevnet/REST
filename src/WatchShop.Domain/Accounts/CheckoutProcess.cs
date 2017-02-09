@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using WatchShop.Domain.Accounts.Extensibility;
+using WatchShop.Domain.Accounts.Extensibility.Entities;
 using WatchShop.Domain.Carts.Extensibility.Entities;
 using WatchShop.Domain.Common.Extensibility;
-using WatchShop.Domain.Customers.Extensibility;
-using WatchShop.Domain.Customers.Extensibility.Entities;
 
-namespace WatchShop.Domain.Customers
+namespace WatchShop.Domain.Accounts
 {
     internal class CheckoutProcess : ICheckoutProcess
     {

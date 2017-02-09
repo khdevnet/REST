@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using WatchShop.Domain.Accounts.Extensibility;
+using WatchShop.Domain.Accounts.Extensibility.Entities;
 using WatchShop.Domain.Common;
-using WatchShop.Domain.Customers.Extensibility;
-using WatchShop.Domain.Customers.Extensibility.Entities;
 using WatchShop.Domain.Database;
 
-namespace WatchShop.Domain.Customers
+namespace WatchShop.Domain.Accounts
 {
     internal class CustomerRepository : RepositoryBase, ICustomerRepository
     {

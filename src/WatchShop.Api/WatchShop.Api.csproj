@@ -158,9 +158,10 @@
     <Compile Include="Carts\Models\CartResponseModel.cs" />
     <Compile Include="Catalog\Models\ProductIdRequestModel.cs" />
     <Compile Include="Catalog\Models\ProductRequestModel.cs" />
-    <Compile Include="Customers\Models\CustomerEmailRequestModel.cs" />
-    <Compile Include="Customers\Models\CustomerRequestModel.cs" />
-    <Compile Include="Customers\CustomersController.cs" />
+    <Compile Include="Accounts\AccountsController.cs" />
+    <Compile Include="Accounts\Models\CustomerEmailRequestModel.cs" />
+    <Compile Include="Accounts\Models\CustomerRequestModel.cs" />
+    <Compile Include="Accounts\CustomersController.cs" />
     <Compile Include="Infrastructure\Validation\ModelValidatorAttribute.cs" />
     <Compile Include="Home\HomeController.cs" />
     <Compile Include="Global.asax.cs">

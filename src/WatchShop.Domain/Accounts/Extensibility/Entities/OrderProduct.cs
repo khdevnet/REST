@@ -1,7 +1,7 @@
-﻿using WatchShop.Domain.Catalog;
-using WatchShop.Domain.Catalog.Extensibility.Entities;
+﻿using WatchShop.Domain.Catalogs;
+using WatchShop.Domain.Catalogs.Extensibility.Entities;
 
-namespace WatchShop.Domain.Customers.Extensibility.Entities
+namespace WatchShop.Domain.Accounts.Extensibility.Entities
 {
     public class OrderProduct
     {

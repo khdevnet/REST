@@ -2,7 +2,7 @@
 using WatchShop.Domain.Carts;
 using WatchShop.Domain.Carts.Extensibility.Entities;
 
-namespace WatchShop.Domain.Customers.Extensibility.Entities
+namespace WatchShop.Domain.Accounts.Extensibility.Entities
 {
     public class Customer
     {

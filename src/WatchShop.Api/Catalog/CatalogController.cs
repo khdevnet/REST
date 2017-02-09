@@ -3,28 +3,24 @@ using System.Linq;
 using System.Web.Http;
 using WatchShop.Api.Catalog.Models;
 using WatchShop.Api.Infrastructure.Authorization;
-using WatchShop.Domain.Catalog.Extensibility;
-using WatchShop.Domain.Catalog.Extensibility.Entities;
+using WatchShop.Domain.Catalogs.Extensibility;
+using WatchShop.Domain.Catalogs.Extensibility.Entities;
 using WatchShop.Domain.Common.Exceptions;
-using WatchShop.Domain.Common.Extensibility;
 
 namespace WatchShop.Api.Catalog
 {
     public class CatalogController : ApiController
     {
-        private readonly IShopDataContext dataContext;
-        private readonly ICatalogAdministration catalogAdministration;
+        private readonly ICatalog catalog;
 
-        public CatalogController(IShopDataContext dataContext, ICatalogAdministration catalogAdministration)
+        public CatalogController(ICatalog catalog)
         {
-            this.dataContext = dataContext;
-            this.catalogAdministration = catalogAdministration;
+            this.catalog = catalog;
         }
 
         public CatalogRepresentation Get()
         {
-            IEnumerable<ProductRepresentation> products = dataContext.Products
-                .GetProducts()
+            IEnumerable<ProductRepresentation> products = catalog.GetProducts()
                 .Select(product => new ProductRepresentation
                 {
                     Id = product.Id,
@@ -37,17 +33,17 @@ namespace WatchShop.Api.Catalog
 
         public IHttpActionResult GetProduct(int id)
         {
-            if (dataContext.Products.IsExist(id))
+            if (catalog.IsProductExist(id))
             {
-                ProductRepresentation result = dataContext.Products
-                .GetProducts()
-                .Where(product => product.Id == id)
-                .Select(product => new ProductRepresentation
-                {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Price = product.Price
-                }).Single();
+                ProductRepresentation result = catalog
+                    .GetProducts()
+                    .Where(product => product.Id == id)
+                    .Select(product => new ProductRepresentation
+                    {
+                        Id = product.Id,
+                        Name = product.Name,
+                        Price = product.Price
+                    }).Single();
 
                 return Ok(result);
             }
@@ -59,7 +55,7 @@ namespace WatchShop.Api.Catalog
         [SimpleAuthorize]
         public IHttpActionResult AddProduct([FromBody]ProductRequestModel product)
         {
-            catalogAdministration.AddProduct(product.Name, product.Price);
+            catalog.AddProduct(product.Name, product.Price);
             return Ok();
         }
 
@@ -69,7 +65,7 @@ namespace WatchShop.Api.Catalog
         {
             try
             {
-                catalogAdministration.UpdateProduct(new Product
+                catalog.UpdateProduct(new Product
                 {
                     Id = product.Id,
                     Name = product.Name,
@@ -90,7 +86,7 @@ namespace WatchShop.Api.Catalog
         {
             try
             {
-                catalogAdministration.RemoveProduct(product.Id);
+                catalog.RemoveProduct(product.Id);
             }
             catch (NotFoundException)
             {

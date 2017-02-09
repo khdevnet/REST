@@ -1,15 +1,16 @@
-﻿using WatchShop.Domain.Catalog.Extensibility;
-using WatchShop.Domain.Catalog.Extensibility.Entities;
+﻿using System.Collections.Generic;
+using WatchShop.Domain.Catalogs.Extensibility;
+using WatchShop.Domain.Catalogs.Extensibility.Entities;
 using WatchShop.Domain.Common.Exceptions;
 using WatchShop.Domain.Common.Extensibility;
 
-namespace WatchShop.Domain.Catalog
+namespace WatchShop.Domain.Catalogs
 {
-    internal class CatalogAdministration : ICatalogAdministration
+    internal class Catalog : ICatalog
     {
         private readonly IShopDataContext dataContext;
 
-        public CatalogAdministration(IShopDataContext dataContext)
+        public Catalog(IShopDataContext dataContext)
         {
             this.dataContext = dataContext;
         }
@@ -22,6 +23,16 @@ namespace WatchShop.Domain.Catalog
                 Price = price
             });
             dataContext.SaveChanges();
+        }
+
+        public IEnumerable<Product> GetProducts()
+        {
+            return dataContext.Products.GetProducts();
+        }
+
+        public bool IsProductExist(int productId)
+        {
+            return dataContext.Products.IsExist(productId);
         }
 
         public void RemoveProduct(int productId)

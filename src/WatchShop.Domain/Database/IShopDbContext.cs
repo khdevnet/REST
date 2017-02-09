@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
+using WatchShop.Domain.Accounts.Extensibility.Entities;
 using WatchShop.Domain.Carts.Extensibility.Entities;
-using WatchShop.Domain.Catalog.Extensibility.Entities;
-using WatchShop.Domain.Customers.Extensibility.Entities;
+using WatchShop.Domain.Catalogs.Extensibility.Entities;
 
 namespace WatchShop.Domain.Database
 {

@@ -1,4 +1,4 @@
-﻿namespace WatchShop.Domain.Customers.Extensibility
+﻿namespace WatchShop.Domain.Accounts.Extensibility
 {
     public interface ICheckoutProcess
     {

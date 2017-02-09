@@ -1,4 +1,4 @@
-﻿using WatchShop.Domain.Catalog.Extensibility.Entities;
+﻿using WatchShop.Domain.Catalogs.Extensibility.Entities;
 
 namespace WatchShop.Domain.Carts.Extensibility.Entities
 {

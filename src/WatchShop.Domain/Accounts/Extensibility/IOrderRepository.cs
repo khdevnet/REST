@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using WatchShop.Domain.Customers.Extensibility.Entities;
+using WatchShop.Domain.Accounts.Extensibility.Entities;
 
-namespace WatchShop.Domain.Customers.Extensibility
+namespace WatchShop.Domain.Accounts.Extensibility
 {
     public interface IOrderRepository
     {

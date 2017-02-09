@@ -1,7 +1,7 @@
-﻿using WatchShop.Domain.Carts.Extensibility;
-using WatchShop.Domain.Catalog.Extensibility;
+﻿using WatchShop.Domain.Accounts.Extensibility;
+using WatchShop.Domain.Carts.Extensibility;
+using WatchShop.Domain.Catalogs.Extensibility;
 using WatchShop.Domain.Common.Extensibility;
-using WatchShop.Domain.Customers.Extensibility;
 using WatchShop.Domain.Database;
 
 namespace WatchShop.Domain.Common
