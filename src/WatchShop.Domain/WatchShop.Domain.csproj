@@ -66,8 +66,8 @@
     <Compile Include="Carts\CartRepository.cs" />
     <Compile Include="Common\Exceptions\NotFoundException.cs" />
     <Compile Include="Common\ShopDataContext.cs" />
-    <Compile Include="Accounts\CheckoutProcess.cs" />
-    <Compile Include="Accounts\Extensibility\ICheckoutProcess.cs" />
+    <Compile Include="Checkout\CheckoutProcessor.cs" />
+    <Compile Include="Accounts\Extensibility\ICheckoutProcessor.cs" />
     <Compile Include="Accounts\Extensibility\IOrderRepository.cs" />
     <Compile Include="Accounts\OrderRepository.cs" />
     <Compile Include="Accounts\CustomerRepository.cs" />

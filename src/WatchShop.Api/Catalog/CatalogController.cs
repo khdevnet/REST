@@ -52,7 +52,7 @@ namespace WatchShop.Api.Catalog
         }
 
         [HttpPost]
-        [SimpleAuthorize]
+        [TokenAuthorize]
         public IHttpActionResult AddProduct([FromBody]ProductRequestModel product)
         {
             catalog.AddProduct(product.Name, product.Price);
@@ -60,7 +60,7 @@ namespace WatchShop.Api.Catalog
         }
 
         [HttpPut]
-        [SimpleAuthorize]
+        [TokenAuthorize]
         public IHttpActionResult UpdateProduct([FromBody]ProductRequestModel product)
         {
             try
@@ -81,7 +81,7 @@ namespace WatchShop.Api.Catalog
         }
 
         [HttpDelete]
-        [SimpleAuthorize]
+        [TokenAuthorize]
         public IHttpActionResult RemoveProduct([FromBody]ProductIdRequestModel product)
         {
             try

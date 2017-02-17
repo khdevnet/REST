@@ -17,7 +17,7 @@ namespace WatchShop.Api.Accounts
         }
 
         [HttpPost]
-        public IHttpActionResult Register(CustomerRequestModel customer)
+        public IHttpActionResult Authentication(RegistrationRequestModel customer)
         {
             if (account.IsRegistered(customer.Email))
             {
@@ -36,7 +36,26 @@ namespace WatchShop.Api.Accounts
         }
 
         [HttpPost]
-        [SimpleAuthorize]
+        public IHttpActionResult Register(RegistrationRequestModel registrationModel)
+        {
+            if (account.IsRegistered(registrationModel.Email))
+            {
+                return new FoundResult($"Customer with email: {registrationModel.Email} already registered!");
+            }
+
+            account.Register(new Customer
+            {
+                Email = registrationModel.Email,
+                Address = registrationModel.Address,
+                Name = registrationModel.Name,
+                Phone = registrationModel.Phone
+            });
+
+            return Ok(registrationModel.Email);
+        }
+
+        [HttpPost]
+        [TokenAuthorize]
         public IHttpActionResult UnRegister(CustomerEmailRequestModel customer)
         {
             if (account.IsRegistered(customer.Email))
@@ -49,8 +68,8 @@ namespace WatchShop.Api.Accounts
         }
 
         [HttpPut]
-        [SimpleAuthorize]
-        public IHttpActionResult Update(CustomerRequestModel customerModel)
+        [TokenAuthorize]
+        public IHttpActionResult Update(RegistrationRequestModel customerModel)
         {
             if (account.IsRegistered(customerModel.Email))
             {

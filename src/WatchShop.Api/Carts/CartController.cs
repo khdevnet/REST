@@ -7,7 +7,7 @@ using WatchShop.Domain.Common.Extensibility;
 
 namespace WatchShop.Api.Carts
 {
-    [SimpleAuthorize]
+    [TokenAuthorize]
     public class CartController : ApiController
     {
         private readonly IShopDataContext dataContext;

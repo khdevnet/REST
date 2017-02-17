@@ -2,7 +2,7 @@
 
 namespace WatchShop.Api.Accounts.Models
 {
-    public class CustomerRequestModel
+    public class RegistrationRequestModel
     {
         [Required]
         [MinLength(4)]

@@ -5,6 +5,7 @@ using WatchShop.Domain.Carts;
 using WatchShop.Domain.Carts.Extensibility;
 using WatchShop.Domain.Catalogs;
 using WatchShop.Domain.Catalogs.Extensibility;
+using WatchShop.Domain.Checkout;
 using WatchShop.Domain.Common;
 using WatchShop.Domain.Common.Extensibility;
 using WatchShop.Domain.Database;
@@ -25,7 +26,7 @@ namespace WatchShop.Domain
 
             Bind<IAccount>().To<Account>();
             Bind<ICatalog>().To<Catalog>();
-            Bind<ICheckoutProcess>().To<CheckoutProcess>();
+            Bind<ICheckoutProcessor>().To<CheckoutProcessor>();
         }
     }
 }

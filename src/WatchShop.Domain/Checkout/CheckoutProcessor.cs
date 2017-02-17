@@ -5,18 +5,18 @@ using WatchShop.Domain.Accounts.Extensibility.Entities;
 using WatchShop.Domain.Carts.Extensibility.Entities;
 using WatchShop.Domain.Common.Extensibility;
 
-namespace WatchShop.Domain.Accounts
+namespace WatchShop.Domain.Checkout
 {
-    internal class CheckoutProcess : ICheckoutProcess
+    internal class CheckoutProcessor : ICheckoutProcessor
     {
         private readonly IShopDataContext dataContext;
 
-        public CheckoutProcess(IShopDataContext dataContext)
+        public CheckoutProcessor(IShopDataContext dataContext)
         {
             this.dataContext = dataContext;
         }
 
-        public void Checkout(string customerEmail)
+        public void Process(string customerEmail)
         {
             var cart = dataContext.Carts.GetCart(customerEmail);
 

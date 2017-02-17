@@ -160,8 +160,9 @@
     <Compile Include="Catalog\Models\ProductRequestModel.cs" />
     <Compile Include="Accounts\AccountsController.cs" />
     <Compile Include="Accounts\Models\CustomerEmailRequestModel.cs" />
-    <Compile Include="Accounts\Models\CustomerRequestModel.cs" />
-    <Compile Include="Accounts\CustomersController.cs" />
+    <Compile Include="Accounts\Models\RegistrationRequestModel.cs" />
+    <Compile Include="Checkout\CheckoutController.cs" />
+    <Compile Include="Infrastructure\Authentication\TokenAuthentication.cs" />
     <Compile Include="Infrastructure\Validation\ModelValidatorAttribute.cs" />
     <Compile Include="Home\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -173,7 +174,7 @@
     <Compile Include="Infrastructure\Authorization\UserIdentity.cs" />
     <Compile Include="Infrastructure\Authorization\UserPrincipal.cs" />
     <Compile Include="Infrastructure\DomainHttpControllerSelector.cs" />
-    <Compile Include="Infrastructure\Authorization\SimpleAuthorizeAttribute.cs" />
+    <Compile Include="Infrastructure\Authorization\TokenAuthorizeAttribute.cs" />
     <Compile Include="Infrastructure\HttpActionResults\FoundResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

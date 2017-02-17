@@ -11,7 +11,7 @@ using System.Web.Http.Controllers;
 
 namespace WatchShop.Api.Infrastructure.Authorization
 {
-    public class SimpleAuthorizeAttribute : AuthorizeAttribute
+    public class TokenAuthorizeAttribute : AuthorizeAttribute
     {
         private const string CustomerEmailHeaderKey = "HTTP_CUSTOMER_EMAIL";
         private const string AuthorithationType = "simple";
