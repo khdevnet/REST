@@ -65,6 +65,9 @@
     <Compile Include="Carts\Extensibility\Entities\CartItem.cs" />
     <Compile Include="Carts\CartRepository.cs" />
     <Compile Include="Common\Exceptions\NotFoundException.cs" />
+    <Compile Include="Identities\Cryptographer.cs" />
+    <Compile Include="Identities\Extensibility\IIdentityRepository.cs" />
+    <Compile Include="Identities\IdentityRepository.cs" />
     <Compile Include="Identities\Token.cs" />
     <Compile Include="Identities\Identity.cs" />
     <Compile Include="Common\ShopDataContext.cs" />

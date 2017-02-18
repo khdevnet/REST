@@ -162,6 +162,8 @@
     <Compile Include="Accounts\Models\CustomerEmailRequestModel.cs" />
     <Compile Include="Accounts\Models\RegistrationRequestModel.cs" />
     <Compile Include="Checkout\CheckoutController.cs" />
+    <Compile Include="Identity\IdentityController.cs" />
+    <Compile Include="Identity\Models\IdentityRequestModel.cs" />
     <Compile Include="Infrastructure\Authentication\TokenAuthentication.cs" />
     <Compile Include="Infrastructure\Validation\ModelValidatorAttribute.cs" />
     <Compile Include="Home\HomeController.cs" />

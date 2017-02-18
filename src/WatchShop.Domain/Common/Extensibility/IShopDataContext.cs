@@ -2,6 +2,7 @@
 using WatchShop.Domain.Carts.Extensibility;
 using WatchShop.Domain.Catalogs.Extensibility;
 using WatchShop.Domain.Database;
+using WatchShop.Domain.Identities.Extensibility;
 
 namespace WatchShop.Domain.Common.Extensibility
 {
@@ -14,5 +15,7 @@ namespace WatchShop.Domain.Common.Extensibility
         IOrderRepository Orders { get; }
 
         ICartRepository Carts { get; }
+
+        IIdentityRepository Identities { get; }
     }
 }

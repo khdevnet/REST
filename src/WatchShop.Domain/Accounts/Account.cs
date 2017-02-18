@@ -2,6 +2,7 @@
 using WatchShop.Domain.Accounts.Extensibility;
 using WatchShop.Domain.Accounts.Extensibility.Entities;
 using WatchShop.Domain.Common.Extensibility;
+using WatchShop.Domain.Identities;
 
 namespace WatchShop.Domain.Accounts
 {
@@ -19,10 +20,11 @@ namespace WatchShop.Domain.Accounts
             return dataContext.Customers.GetCustomers().Any(c => c.Email == email);
         }
 
-        public void Register(Customer customer)
+        public void Register(Customer customer, string password)
         {
             if (!IsRegistered(customer.Email))
             {
+                dataContext.Identities.Add(new Identity { Id = customer.Id, Password = password });
                 dataContext.Customers.Add(customer);
                 dataContext.SaveChanges();
             }

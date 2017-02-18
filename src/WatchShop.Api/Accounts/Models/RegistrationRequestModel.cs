@@ -18,6 +18,11 @@ namespace WatchShop.Api.Accounts.Models
         [Required]
         [MinLength(4)]
         [MaxLength(256)]
+        public string Password { get; set; }
+
+        [Required]
+        [MinLength(4)]
+        [MaxLength(256)]
         public string Phone { get; set; }
 
         [Required]

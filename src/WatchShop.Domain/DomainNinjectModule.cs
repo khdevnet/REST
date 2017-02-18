@@ -9,6 +9,8 @@ using WatchShop.Domain.Checkout;
 using WatchShop.Domain.Common;
 using WatchShop.Domain.Common.Extensibility;
 using WatchShop.Domain.Database;
+using WatchShop.Domain.Identities;
+using WatchShop.Domain.Identities.Extensibility;
 
 namespace WatchShop.Domain
 {
@@ -20,6 +22,7 @@ namespace WatchShop.Domain
             Bind<ICartRepository>().To<CartRepository>();
             Bind<ICustomerRepository>().To<CustomerRepository>();
             Bind<IOrderRepository>().To<OrderRepository>();
+            Bind<IIdentityRepository>().To<IdentityRepository>();
             Bind<IShopDataContext>().To<ShopDataContext>();
 
             Bind<IShopDbContext>().To<ShopDbContext>().InSingletonScope();

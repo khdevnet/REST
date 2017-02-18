@@ -6,7 +6,7 @@ namespace WatchShop.Domain.Accounts.Extensibility
     {
         bool IsRegistered(string email);
 
-        void Register(Customer customer);
+        void Register(Customer customer, string password);
 
         void Update(Customer customer);
 
