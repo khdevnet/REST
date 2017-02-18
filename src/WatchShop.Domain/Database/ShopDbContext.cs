@@ -4,6 +4,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using WatchShop.Domain.Accounts.Extensibility.Entities;
 using WatchShop.Domain.Carts.Extensibility.Entities;
 using WatchShop.Domain.Catalogs.Extensibility.Entities;
+using WatchShop.Domain.Identities;
 
 namespace WatchShop.Domain.Database
 {
@@ -23,6 +24,10 @@ namespace WatchShop.Domain.Database
 
         public IDbSet<Cart> Carts { get; set; }
 
+        public IDbSet<Token> Tokens { get; set; }
+
+        public IDbSet<Identity> Identities { get; set; }
+
         public IDbSet<CartItem> CartItems { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -35,6 +40,8 @@ namespace WatchShop.Domain.Database
             BuildProduct(modelBuilder);
             BuildOrder(modelBuilder);
             BuildOrderProduct(modelBuilder);
+            BuildIdentity(modelBuilder);
+            BuildToken(modelBuilder);
         }
 
         #region
@@ -63,6 +70,39 @@ namespace WatchShop.Domain.Database
             modelBuilder.Entity<Customer>()
                 .HasOptional(customer => customer.Cart)
                 .WithRequired(cart => cart.Customer);
+
+            modelBuilder.Entity<Customer>()
+                .HasOptional(customer => customer.Identity)
+                .WithRequired(identity => identity.Customer);
+
+            modelBuilder.Entity<Customer>()
+                .HasOptional(customer => customer.Token)
+                .WithRequired(token => token.Customer);
+        }
+
+        private static void BuildIdentity(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Identity>()
+                .Property(p => p.Password)
+                .HasMaxLength(256)
+                .IsRequired();
+
+        }
+
+        private static void BuildToken(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Token>()
+                .Property(p => p.ExpiredTime)
+                .IsRequired();
+
+            modelBuilder.Entity<Token>()
+                .Property(p => p.GenerationTime)
+                .IsRequired();
+
+            modelBuilder.Entity<Token>()
+                .Property(p => p.Value)
+                .HasMaxLength(256)
+                .IsRequired();
         }
 
         private static void BuildCart(DbModelBuilder modelBuilder)

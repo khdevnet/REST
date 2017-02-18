@@ -65,6 +65,8 @@
     <Compile Include="Carts\Extensibility\Entities\CartItem.cs" />
     <Compile Include="Carts\CartRepository.cs" />
     <Compile Include="Common\Exceptions\NotFoundException.cs" />
+    <Compile Include="Identities\Token.cs" />
+    <Compile Include="Identities\Identity.cs" />
     <Compile Include="Common\ShopDataContext.cs" />
     <Compile Include="Checkout\CheckoutProcessor.cs" />
     <Compile Include="Accounts\Extensibility\ICheckoutProcessor.cs" />
@@ -123,6 +125,14 @@
     <Compile Include="Migrations\201702041704195_UpdateOrdersToCustomerReference.Designer.cs">
       <DependentUpon>201702041704195_UpdateOrdersToCustomerReference.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702182031546_AddIdentity.cs" />
+    <Compile Include="Migrations\201702182031546_AddIdentity.Designer.cs">
+      <DependentUpon>201702182031546_AddIdentity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702182034522_RemoveCustomerId.cs" />
+    <Compile Include="Migrations\201702182034522_RemoveCustomerId.Designer.cs">
+      <DependentUpon>201702182034522_RemoveCustomerId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Catalogs\Extensibility\IProductRepository.cs" />
     <Compile Include="Migrations\SqlScripts.Designer.cs">
@@ -169,6 +179,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702041704195_UpdateOrdersToCustomerReference.resx">
       <DependentUpon>201702041704195_UpdateOrdersToCustomerReference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702182031546_AddIdentity.resx">
+      <DependentUpon>201702182031546_AddIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702182034522_RemoveCustomerId.resx">
+      <DependentUpon>201702182034522_RemoveCustomerId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\SqlScripts.resx">
       <Generator>ResXFileCodeGenerator</Generator>
