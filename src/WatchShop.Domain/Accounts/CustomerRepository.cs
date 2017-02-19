@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using WatchShop.Domain.Accounts.Extensibility;
@@ -31,6 +32,11 @@ namespace WatchShop.Domain.Accounts
                 .Include("Cart.Items.Product")
                 .Include(x => x.Orders)
                 .ToList();
+        }
+
+        public bool IsIdentified(string email, string hashPassword)
+        {
+            return context.Customers.Any(c => c.Email == email && c.Identity.Password == hashPassword);
         }
 
         public void Remove(Customer customer)

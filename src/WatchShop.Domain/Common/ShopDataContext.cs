@@ -1,4 +1,5 @@
-﻿using WatchShop.Domain.Accounts.Extensibility;
+﻿using System;
+using WatchShop.Domain.Accounts.Extensibility;
 using WatchShop.Domain.Carts.Extensibility;
 using WatchShop.Domain.Catalogs.Extensibility;
 using WatchShop.Domain.Common.Extensibility;
@@ -17,7 +18,8 @@ namespace WatchShop.Domain.Common
             ICustomerRepository customerRepository,
             IOrderRepository orderRepository,
             IProductRepository productRepository,
-            IIdentityRepository identityRepository)
+            IIdentityRepository identityRepository,
+            ITokenRepository tokenRepository)
         {
             this.context = context;
 
@@ -26,6 +28,7 @@ namespace WatchShop.Domain.Common
             Orders = orderRepository;
             Products = productRepository;
             Identities = identityRepository;
+            Tokens = tokenRepository;
         }
 
         public ICartRepository Carts { get; }
@@ -37,6 +40,8 @@ namespace WatchShop.Domain.Common
         public IProductRepository Products { get; }
 
         public IIdentityRepository Identities { get; }
+
+        public ITokenRepository Tokens { get; }
 
         public int SaveChanges()
         {

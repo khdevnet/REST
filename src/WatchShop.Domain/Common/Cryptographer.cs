@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace WatchShop.Domain.Identities
+namespace WatchShop.Domain.Common
 {
     internal static class Cryptographer
     {

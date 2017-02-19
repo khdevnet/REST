@@ -2,8 +2,10 @@
 
 namespace WatchShop.Domain.Identities.Extensibility
 {
-    public interface IIdentityRepository
+    public interface ITokenRepository
     {
-        void Add(Identity identity);
+        void Add(Token token);
+
+        void Remove(Token token);
     }
 }

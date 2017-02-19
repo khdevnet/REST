@@ -23,12 +23,16 @@ namespace WatchShop.Domain
             Bind<ICustomerRepository>().To<CustomerRepository>();
             Bind<IOrderRepository>().To<OrderRepository>();
             Bind<IIdentityRepository>().To<IdentityRepository>();
+            Bind<ITokenRepository>().To<TokenRepository>();
             Bind<IShopDataContext>().To<ShopDataContext>();
 
             Bind<IShopDbContext>().To<ShopDbContext>().InSingletonScope();
 
             Bind<IAccount>().To<Account>();
             Bind<ICatalog>().To<Catalog>();
+            Bind<ITokenIdentifier>().To<TokenIdentifier>();
+            Bind<ITokenGenerator>().To<TokenGenerator>();
+
             Bind<ICheckoutProcessor>().To<CheckoutProcessor>();
         }
     }

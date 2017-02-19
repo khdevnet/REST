@@ -17,5 +17,7 @@ namespace WatchShop.Domain.Common.Extensibility
         ICartRepository Carts { get; }
 
         IIdentityRepository Identities { get; }
+
+        ITokenRepository Tokens { get; }
     }
 }

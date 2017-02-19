@@ -1,13 +1,19 @@
-﻿using System;
+﻿using WatchShop.Domain.Common;
+using WatchShop.Domain.Database;
 using WatchShop.Domain.Identities.Extensibility;
+using WatchShop.Domain.Identities.Extensibility.Entities;
 
 namespace WatchShop.Domain.Identities
 {
-    internal class IdentityRepository : IIdentityRepository
+    internal class IdentityRepository : RepositoryBase, IIdentityRepository
     {
+        public IdentityRepository(IShopDbContext context) : base(context)
+        {
+        }
+
         public void Add(Identity identity)
         {
-            throw new NotImplementedException();
+            context.Identities.Add(identity);
         }
     }
 }

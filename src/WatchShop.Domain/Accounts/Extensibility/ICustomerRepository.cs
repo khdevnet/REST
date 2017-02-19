@@ -11,6 +11,8 @@ namespace WatchShop.Domain.Accounts.Extensibility
 
         Customer GetCustomer(string email);
 
+        bool IsIdentified(string email, string hashPassword);
+
         IEnumerable<Customer> GetCustomers();
     }
 }

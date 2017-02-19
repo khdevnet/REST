@@ -4,7 +4,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using WatchShop.Domain.Accounts.Extensibility.Entities;
 using WatchShop.Domain.Carts.Extensibility.Entities;
 using WatchShop.Domain.Catalogs.Extensibility.Entities;
-using WatchShop.Domain.Identities;
+using WatchShop.Domain.Identities.Extensibility.Entities;
 
 namespace WatchShop.Domain.Database
 {
@@ -86,7 +86,6 @@ namespace WatchShop.Domain.Database
                 .Property(p => p.Password)
                 .HasMaxLength(256)
                 .IsRequired();
-
         }
 
         private static void BuildToken(DbModelBuilder modelBuilder)

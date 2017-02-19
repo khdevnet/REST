@@ -13,7 +13,7 @@ namespace WatchShop.Domain.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201702182031546_AddIdentity"; }
+            get { return "201702190813030_AddIdentity"; }
         }
         
         string IMigrationMetadata.Source

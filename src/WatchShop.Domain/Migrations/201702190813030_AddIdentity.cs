@@ -11,7 +11,6 @@ namespace WatchShop.Domain.Migrations
                 c => new
                 {
                     Id = c.Int(nullable: false),
-                    CustomerId = c.Int(nullable: false),
                     Password = c.String(nullable: false, maxLength: 256),
                 })
                 .PrimaryKey(t => t.Id)
@@ -23,7 +22,6 @@ namespace WatchShop.Domain.Migrations
                 c => new
                 {
                     Id = c.Int(nullable: false),
-                    CustomerId = c.Int(nullable: false),
                     Value = c.String(nullable: false, maxLength: 256),
                     GenerationTime = c.DateTime(nullable: false),
                     ExpiredTime = c.DateTime(nullable: false),
@@ -31,7 +29,6 @@ namespace WatchShop.Domain.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Customer", t => t.Id)
                 .Index(t => t.Id);
-
         }
 
         public override void Down()

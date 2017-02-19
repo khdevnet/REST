@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 using WatchShop.Domain.Accounts.Extensibility;
 using WatchShop.Domain.Accounts.Extensibility.Entities;
+using WatchShop.Domain.Common;
 using WatchShop.Domain.Common.Extensibility;
-using WatchShop.Domain.Identities;
+using WatchShop.Domain.Identities.Extensibility.Entities;
 
 namespace WatchShop.Domain.Accounts
 {
@@ -15,6 +16,16 @@ namespace WatchShop.Domain.Accounts
             this.dataContext = dataContext;
         }
 
+        public int GetAccountId(string email)
+        {
+            return dataContext.Customers.GetCustomer(email).Id;
+        }
+
+        public bool IsIdentified(string email, string password)
+        {
+            return dataContext.Customers.IsIdentified(email, Cryptographer.Encode(password));
+        }
+
         public bool IsRegistered(string email)
         {
             return dataContext.Customers.GetCustomers().Any(c => c.Email == email);
@@ -24,7 +35,11 @@ namespace WatchShop.Domain.Accounts
         {
             if (!IsRegistered(customer.Email))
             {
-                dataContext.Identities.Add(new Identity { Id = customer.Id, Password = password });
+                dataContext.Identities.Add(new Identity
+                {
+                    Id = customer.Id,
+                    Password = Cryptographer.Encode(password)
+                });
                 dataContext.Customers.Add(customer);
                 dataContext.SaveChanges();
             }

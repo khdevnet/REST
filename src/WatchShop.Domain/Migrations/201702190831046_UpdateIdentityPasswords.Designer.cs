@@ -7,13 +7,13 @@ namespace WatchShop.Domain.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class RemoveCustomerId : IMigrationMetadata
+    public sealed partial class UpdateIdentityPasswords : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RemoveCustomerId));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateIdentityPasswords));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702182034522_RemoveCustomerId"; }
+            get { return "201702190831046_UpdateIdentityPasswords"; }
         }
         
         string IMigrationMetadata.Source

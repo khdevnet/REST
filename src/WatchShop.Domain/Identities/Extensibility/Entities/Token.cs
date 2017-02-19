@@ -1,7 +1,7 @@
 ﻿using System;
 using WatchShop.Domain.Accounts.Extensibility.Entities;
 
-namespace WatchShop.Domain.Identities
+namespace WatchShop.Domain.Identities.Extensibility.Entities
 {
     public class Token
     {

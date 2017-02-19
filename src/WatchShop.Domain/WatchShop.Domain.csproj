@@ -65,11 +65,16 @@
     <Compile Include="Carts\Extensibility\Entities\CartItem.cs" />
     <Compile Include="Carts\CartRepository.cs" />
     <Compile Include="Common\Exceptions\NotFoundException.cs" />
-    <Compile Include="Identities\Cryptographer.cs" />
+    <Compile Include="Common\Cryptographer.cs" />
+    <Compile Include="Common\TimeProvider.cs" />
+    <Compile Include="Identities\Extensibility\ITokenGenerator.cs" />
+    <Compile Include="Identities\Extensibility\ITokenIdentifier.cs" />
     <Compile Include="Identities\Extensibility\IIdentityRepository.cs" />
+    <Compile Include="Identities\Extensibility\ITokenRepository.cs" />
+    <Compile Include="Identities\TokenRepository.cs" />
     <Compile Include="Identities\IdentityRepository.cs" />
-    <Compile Include="Identities\Token.cs" />
-    <Compile Include="Identities\Identity.cs" />
+    <Compile Include="Identities\Extensibility\Entities\Token.cs" />
+    <Compile Include="Identities\Extensibility\Entities\Identity.cs" />
     <Compile Include="Common\ShopDataContext.cs" />
     <Compile Include="Checkout\CheckoutProcessor.cs" />
     <Compile Include="Accounts\Extensibility\ICheckoutProcessor.cs" />
@@ -88,6 +93,8 @@
     <Compile Include="Database\ISaveContext.cs" />
     <Compile Include="Database\IShopDbContext.cs" />
     <Compile Include="DomainNinjectModule.cs" />
+    <Compile Include="Identities\TokenGenerator.cs" />
+    <Compile Include="Identities\TokenIdentifier.cs" />
     <Compile Include="Migrations\201701201955550_Init.cs" />
     <Compile Include="Migrations\201701201955550_Init.Designer.cs">
       <DependentUpon>201701201955550_Init.cs</DependentUpon>
@@ -128,13 +135,13 @@
     <Compile Include="Migrations\201702041704195_UpdateOrdersToCustomerReference.Designer.cs">
       <DependentUpon>201702041704195_UpdateOrdersToCustomerReference.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702182031546_AddIdentity.cs" />
-    <Compile Include="Migrations\201702182031546_AddIdentity.Designer.cs">
-      <DependentUpon>201702182031546_AddIdentity.cs</DependentUpon>
+    <Compile Include="Migrations\201702190813030_AddIdentity.cs" />
+    <Compile Include="Migrations\201702190813030_AddIdentity.Designer.cs">
+      <DependentUpon>201702190813030_AddIdentity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702182034522_RemoveCustomerId.cs" />
-    <Compile Include="Migrations\201702182034522_RemoveCustomerId.Designer.cs">
-      <DependentUpon>201702182034522_RemoveCustomerId.cs</DependentUpon>
+    <Compile Include="Migrations\201702190831046_UpdateIdentityPasswords.cs" />
+    <Compile Include="Migrations\201702190831046_UpdateIdentityPasswords.Designer.cs">
+      <DependentUpon>201702190831046_UpdateIdentityPasswords.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Catalogs\Extensibility\IProductRepository.cs" />
@@ -183,11 +190,11 @@
     <EmbeddedResource Include="Migrations\201702041704195_UpdateOrdersToCustomerReference.resx">
       <DependentUpon>201702041704195_UpdateOrdersToCustomerReference.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702182031546_AddIdentity.resx">
-      <DependentUpon>201702182031546_AddIdentity.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702190813030_AddIdentity.resx">
+      <DependentUpon>201702190813030_AddIdentity.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702182034522_RemoveCustomerId.resx">
-      <DependentUpon>201702182034522_RemoveCustomerId.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702190831046_UpdateIdentityPasswords.resx">
+      <DependentUpon>201702190831046_UpdateIdentityPasswords.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\SqlScripts.resx">
       <Generator>ResXFileCodeGenerator</Generator>
