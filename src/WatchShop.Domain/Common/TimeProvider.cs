@@ -2,8 +2,39 @@
 
 namespace WatchShop.Domain.Common
 {
-    public static class TimeProvider
+    public abstract class TimeProvider
     {
-        public static DateTime Now => DateTime.Now;
+        private static TimeProvider current;
+
+        static TimeProvider()
+        {
+            TimeProvider.current =
+                new DefaultTimeProvider();
+        }
+
+        public static TimeProvider Current
+        {
+            get
+            {
+                return current;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("value");
+                }
+                current = value;
+            }
+        }
+
+        public abstract DateTime Now { get; }
+
+        public static void ResetToDefault()
+        {
+            TimeProvider.current =
+                new DefaultTimeProvider();
+        }
     }
 }

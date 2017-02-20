@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using WatchShop.Domain.Accounts.Extensibility;
@@ -22,7 +21,12 @@ namespace WatchShop.Domain.Accounts
 
         public Customer GetCustomer(string email)
         {
-            return GetCustomers().Single(c => c.Email == email);
+            return context.Customers.Single(c => c.Email == email);
+        }
+
+        public Customer GetCustomerByToken(string token)
+        {
+            return context.Customers.Single(c => c.Token.Value == token);
         }
 
         public IEnumerable<Customer> GetCustomers()

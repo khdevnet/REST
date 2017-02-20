@@ -4,6 +4,6 @@
     {
         string GenerateToken(string email, string password);
 
-        bool IsTokenExpired(string token);
+        bool ValidateToken(string token);
     }
 }

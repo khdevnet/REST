@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,22 +7,28 @@ using System.Threading;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+using Ninject;
+using WatchShop.Domain.Common.Extensibility;
+using WatchShop.Domain.Identities.Extensibility;
 
 namespace WatchShop.Api.Infrastructure.Authorization
 {
     public class TokenAuthorizeAttribute : AuthorizeAttribute
     {
-        private const string CustomerEmailHeaderKey = "HTTP_CUSTOMER_EMAIL";
-        private const string AuthorithationType = "simple";
-        private readonly IEnumerable<string> allowedUsers = new[] { "anton@gmail.com", "petro@gmail.com" };
+        private const string HttpTokenKey = "HTTP_TOKEN";
+        private const string AuthorithationType = "TokenAuthorization";
+        [Inject]
+        public ITokenIdentifier TokenIdentifier { get; set; }
+        [Inject]
+        public IShopDataContext DataContext { get; set; }
 
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            string userIdentity = GetUserIdentity(actionContext.Request.Headers);
+            string accountToken = GetToken(actionContext.Request.Headers);
 
-            if (IsAuthorizedUser(userIdentity))
+            if (IsAuthorizedUser(accountToken))
             {
-                HandleAuthorizationRequest(userIdentity);
+                HandleAuthorizationRequest(accountToken);
             }
             else
             {
@@ -36,9 +41,10 @@ namespace WatchShop.Api.Infrastructure.Authorization
             actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
         }
 
-        private static void HandleAuthorizationRequest(string userName)
+        private void HandleAuthorizationRequest(string token)
         {
-            var identity = new UserIdentity(AuthorithationType, true, userName);
+            var customer = DataContext.Customers.GetCustomerByToken(token);
+            var identity = new UserIdentity(AuthorithationType, true, customer.Email);
             var userPrincipal = new UserPrincipal(identity);
 
             Thread.CurrentPrincipal = userPrincipal;
@@ -48,19 +54,19 @@ namespace WatchShop.Api.Infrastructure.Authorization
             }
         }
 
-        private static string GetUserIdentity(HttpRequestHeaders httpRequestHeaders)
+        private static string GetToken(HttpRequestHeaders httpRequestHeaders)
         {
-            string userIdentity = String.Empty;
-            if (httpRequestHeaders.Contains(CustomerEmailHeaderKey))
+            string userToken = String.Empty;
+            if (httpRequestHeaders.Contains(HttpTokenKey))
             {
-                userIdentity = httpRequestHeaders.GetValues(CustomerEmailHeaderKey).First();
+                userToken = httpRequestHeaders.GetValues(HttpTokenKey).First();
             }
-            return userIdentity;
+            return userToken;
         }
 
-        private bool IsAuthorizedUser(string userIdentity)
+        private bool IsAuthorizedUser(string accountToken)
         {
-            return !String.IsNullOrWhiteSpace(userIdentity) && allowedUsers.Contains(userIdentity);
+            return !String.IsNullOrWhiteSpace(accountToken) && TokenIdentifier.ValidateToken(accountToken);
         }
     }
 }

@@ -22,12 +22,17 @@ namespace WatchShop.Domain.Identities
 
         public string GenerateToken(string email, string password)
         {
+            if (dataContext.Tokens.IsExist(email))
+            {
+                return dataContext.Tokens.GetTokenByEmail(email);
+            }
+
             if (account.IsIdentified(email, password))
             {
                 var token = new Token
                 {
                     Value = tokenGenerator.Generate(),
-                    GenerationTime = TimeProvider.Now,
+                    GenerationTime = TimeProvider.Current.Now,
                     ExpiredTime = GetExpiredTime(),
                     Id = account.GetAccountId(email)
                 };
@@ -40,14 +45,30 @@ namespace WatchShop.Domain.Identities
             return String.Empty;
         }
 
-        public bool IsTokenExpired(string token)
+        public bool ValidateToken(string token)
         {
-            throw new NotImplementedException();
+            if (dataContext.Tokens.IsTokenExist(token))
+            {
+                var tokenEntity = dataContext.Tokens.GetToken(token);
+                if (tokenEntity.ExpiredTime >= TimeProvider.Current.Now)
+                {
+                    return true;
+                }
+                RemoveToken(tokenEntity);
+            }
+
+            return false;
+        }
+
+        private void RemoveToken(Token tokenEntity)
+        {
+            dataContext.Tokens.Remove(tokenEntity);
+            dataContext.SaveChanges();
         }
 
         private static DateTime GetExpiredTime()
         {
-            return TimeProvider.Now + TimeSpan.FromDays(1);
+            return TimeProvider.Current.Now + TimeSpan.FromDays(1);
         }
     }
 }

@@ -6,6 +6,14 @@ namespace WatchShop.Domain.Identities.Extensibility
     {
         void Add(Token token);
 
+        bool IsExist(string email);
+
+        string GetTokenByEmail(string email);
+
+        Token GetToken(string token);
+
+        bool IsTokenExist(string token);
+
         void Remove(Token token);
     }
 }

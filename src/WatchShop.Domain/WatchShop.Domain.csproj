@@ -64,6 +64,7 @@
     <Compile Include="Carts\Extensibility\Entities\Cart.cs" />
     <Compile Include="Carts\Extensibility\Entities\CartItem.cs" />
     <Compile Include="Carts\CartRepository.cs" />
+    <Compile Include="Common\DefaultTimeProvider.cs" />
     <Compile Include="Common\Exceptions\NotFoundException.cs" />
     <Compile Include="Common\Cryptographer.cs" />
     <Compile Include="Common\TimeProvider.cs" />
