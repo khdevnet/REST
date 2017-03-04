@@ -8,7 +8,7 @@
   </PropertyGroup>
   <ItemGroup>
     <BuildArtifacts Include=".\buildartifacts\"/>
-    <SolutionFile Include=".\watchshop.sln"/>
+    <SolutionFile Include=".\.\watchshop.sln"/>
   </ItemGroup>
   <Target Name="Clean">
     <RemoveDir Directories="@(BuildArtifacts)"/>
