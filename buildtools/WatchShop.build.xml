@@ -7,8 +7,8 @@
     <DeployEnvironment Condition=" '$(DeployEnvironment)' == ''">dev</DeployEnvironment>
   </PropertyGroup>
   <ItemGroup>
-    <BuildArtifacts Include=".\buildartifacts\"/>
-    <SolutionFile Include=".\.\watchshop.sln"/>
+    <BuildArtifacts Include=".\..\buildartifacts\"/>
+    <SolutionFile Include=".\..\watchshop.sln"/>
   </ItemGroup>
   <Target Name="Clean">
     <RemoveDir Directories="@(BuildArtifacts)"/>
