@@ -17,7 +17,7 @@
     <MakeDir Directories="@(BuildArtifacts)"/>
   </Target>
   <Target Name="InstallPackages">
-   <Exec Command=".\buildtools\.nuget\NuGet.exe restore %(SolutionFile.FullPath)"/>
+   <Exec Command=".nuget\NuGet.exe restore %(SolutionFile.FullPath)"/>
   </Target>
   <Target Name="Compile" DependsOnTargets="Init;InstallPackages">
     <MSBuild Projects="@(SolutionFile)" Targets="Rebuild" Properties="OutDir=%(BuildArtifacts.FullPath);VisualStudioVersion=14.0;Configuration=$(Configuration)" />
