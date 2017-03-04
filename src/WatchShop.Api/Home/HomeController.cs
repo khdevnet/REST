@@ -5,9 +5,9 @@ namespace WatchShop.Api.Home
     public class HomeController : ApiController
     {
         // GET Home
-        public HomeRepresentation Get()
+        public HomeResponseModel Get()
         {
-            return new HomeRepresentation
+            return new HomeResponseModel
             {
                 Title = "Mens Shop.",
                 Welcome = "Mens Shop. Be A man buy for pleasure!!!"

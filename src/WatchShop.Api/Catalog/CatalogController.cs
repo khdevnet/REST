@@ -18,27 +18,25 @@ namespace WatchShop.Api.Catalog
             this.catalog = catalog;
         }
 
-        public CatalogRepresentation Get()
+        public IEnumerable<Product> Get()
         {
-            IEnumerable<ProductRepresentation> products = catalog.GetProducts()
-                .Select(product => new ProductRepresentation
+            return catalog.GetProducts()
+                .Select(product => new Product
                 {
                     Id = product.Id,
                     Name = product.Name,
                     Price = product.Price
                 }).ToList();
-
-            return new CatalogRepresentation(products);
         }
 
         public IHttpActionResult GetProduct(int id)
         {
             if (catalog.IsProductExist(id))
             {
-                ProductRepresentation result = catalog
+                var result = catalog
                     .GetProducts()
                     .Where(product => product.Id == id)
-                    .Select(product => new ProductRepresentation
+                    .Select(product => new Product
                     {
                         Id = product.Id,
                         Name = product.Name,

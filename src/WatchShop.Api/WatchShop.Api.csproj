@@ -151,7 +151,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Catalog\CatalogController.cs" />
     <Compile Include="Catalog\CatalogRouters.cs" />
-    <Compile Include="Carts\CartController.cs" />
+    <Compile Include="Carts\CartsController.cs" />
     <Compile Include="Carts\Models\ProductCartItemRequestModel.cs" />
     <Compile Include="Carts\Models\CartItemResponseModel.cs" />
     <Compile Include="Carts\Models\AddCartItemRequestModel.cs" />
@@ -169,9 +169,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Catalog\CatalogRepresentation.cs" />
-    <Compile Include="Catalog\ProductRepresentation.cs" />
-    <Compile Include="Home\HomeRepresentation.cs" />
+    <Compile Include="Home\HomeResponseModel.cs" />
     <Compile Include="Infrastructure\Authorization\UserIdentity.cs" />
     <Compile Include="Infrastructure\Authorization\UserPrincipal.cs" />
     <Compile Include="Infrastructure\DomainHttpControllerSelector.cs" />
@@ -196,10 +194,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hal.Engine\Hal.Engine.csproj">
-      <Project>{881B8AAA-28F1-43A6-9800-5DFBB4F7B440}</Project>
-      <Name>Hal.Engine</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WatchShop.Domain\WatchShop.Domain.csproj">
       <Project>{8c009437-4fc6-4535-a27b-2afe6e47e50e}</Project>
       <Name>WatchShop.Domain</Name>

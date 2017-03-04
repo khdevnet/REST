@@ -8,11 +8,11 @@ using WatchShop.Domain.Common.Extensibility;
 namespace WatchShop.Api.Carts
 {
     [TokenAuthorize]
-    public class CartController : ApiController
+    public class CartsController : ApiController
     {
         private readonly IShopDataContext dataContext;
 
-        public CartController(IShopDataContext dataContext)
+        public CartsController(IShopDataContext dataContext)
         {
             this.dataContext = dataContext;
         }

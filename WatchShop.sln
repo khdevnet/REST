@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchShop.Api", "src\WatchS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchShop.Domain", "src\WatchShop.Domain\WatchShop.Domain.csproj", "{8C009437-4FC6-4535-A27B-2AFE6E47E50E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hal.Engine", "src\Hal.Engine\Hal.Engine.csproj", "{881B8AAA-28F1-43A6-9800-5DFBB4F7B440}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B8FBED5D-E844-40EF-B263-8E9552C85D4F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchShop.Tests", "src\WatchShop.Tests\WatchShop.Tests.csproj", "{30178CE4-C74D-451A-9E44-F2BC25C93A7E}"
 EndProject
 Global
@@ -27,10 +23,6 @@ Global
 		{8C009437-4FC6-4535-A27B-2AFE6E47E50E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C009437-4FC6-4535-A27B-2AFE6E47E50E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C009437-4FC6-4535-A27B-2AFE6E47E50E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{881B8AAA-28F1-43A6-9800-5DFBB4F7B440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{881B8AAA-28F1-43A6-9800-5DFBB4F7B440}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{881B8AAA-28F1-43A6-9800-5DFBB4F7B440}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{881B8AAA-28F1-43A6-9800-5DFBB4F7B440}.Release|Any CPU.Build.0 = Release|Any CPU
 		{30178CE4-C74D-451A-9E44-F2BC25C93A7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{30178CE4-C74D-451A-9E44-F2BC25C93A7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30178CE4-C74D-451A-9E44-F2BC25C93A7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -38,8 +30,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{881B8AAA-28F1-43A6-9800-5DFBB4F7B440} = {B8FBED5D-E844-40EF-B263-8E9552C85D4F}
 	EndGlobalSection
 EndGlobal

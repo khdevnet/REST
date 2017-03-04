@@ -48,9 +48,6 @@ namespace WatchShop.Api
             };
 
             GlobalConfiguration.Configuration.Formatters.Remove(formatters.XmlFormatter);
-
-            // GlobalConfiguration.Configuration.Formatters.Remove(formatters.JsonFormatter);
-            // GlobalConfiguration.Configuration.Formatters.Add(new JsonHalMediaTypeFormatter());
         }
     }
 }
