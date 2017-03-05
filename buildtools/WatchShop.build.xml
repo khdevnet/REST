@@ -9,6 +9,8 @@
   <ItemGroup>
     <BuildArtifacts Include=".\..\buildartifacts\"/>
     <SolutionFile Include=".\..\watchshop.sln"/>
+	<RoslynFiles Include=".\roslyn\*" />
+	<WebProjectRoslynOutputDir Include=".\..\buildartifacts\_PublishedWebsites\WatchShop.Api\bin\roslyn\"/>
   </ItemGroup>
   <Target Name="Clean">
     <RemoveDir Directories="@(BuildArtifacts)"/>
@@ -18,6 +20,10 @@
   </Target>
   <Target Name="InstallPackages">
    <Exec Command=".nuget\NuGet.exe restore %(SolutionFile.FullPath)"/>
+  </Target>
+  <Target Name="CopyRoslynFiles" AfterTargets="Compile">
+    <MakeDir Directories="@(WebProjectRoslynOutputDir)" />
+     <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="@(WebProjectRoslynOutputDir)"/>
   </Target>
   <Target Name="Compile" DependsOnTargets="Init;InstallPackages">
     <MSBuild Projects="@(SolutionFile)" Targets="Rebuild" Properties="OutDir=%(BuildArtifacts.FullPath);VisualStudioVersion=14.0;Configuration=$(Configuration)" />
