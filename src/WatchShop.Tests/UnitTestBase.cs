@@ -1,14 +1,26 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace WatchShop.Tests
 {
-    internal class UnitTestBase
+    public class UnitTestBase
     {
+        protected MockRepository MockRepository { get; private set; }
 
         [OneTimeSetUp]
-        protected virtual void TestInitilize()
+        public void TestSetUp()
         {
+            MockRepository = new MockRepository(MockBehavior.Strict);
+        }
 
+        [TearDown]
+        public void TestTearDown()
+        {
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed)
+            {
+                MockRepository.VerifyAll();
+            }
         }
     }
 }

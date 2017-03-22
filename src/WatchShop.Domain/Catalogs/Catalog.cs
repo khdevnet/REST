@@ -41,8 +41,8 @@ namespace WatchShop.Domain.Catalogs
             {
                 dataContext.Products.Remove(productId);
                 dataContext.SaveChanges();
+                return;
             }
-
             throw new NotFoundException($"{nameof(Product)} with id {productId} not found!");
         }
 
