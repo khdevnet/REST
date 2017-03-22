@@ -1,7 +1,9 @@
 ﻿using Moq;
 using NUnit.Framework;
+using System;
 using WatchShop.Domain.Catalogs;
 using WatchShop.Domain.Catalogs.Extensibility;
+using WatchShop.Domain.Catalogs.Extensibility.Entities;
 using WatchShop.Domain.Common.Exceptions;
 using WatchShop.Domain.Common.Extensibility;
 
@@ -51,9 +53,7 @@ namespace WatchShop.Tests.Domain.Catalogs
             shopDataContextMock
                 .SetupGet(context => context.Products)
                 .Returns(productRepositoryMock.Object);
-
-            catalog.RemoveProduct(ProductId);
-            Assert.That(true, Throws.Exception.TypeOf<NotFoundException>());
+            Assert.That(() => catalog.RemoveProduct(ProductId), Throws.Exception.TypeOf<NotFoundException>().With.Property("Message").EqualTo($"{nameof(Product)} with id {ProductId} not found!"));
         }
     }
 }
