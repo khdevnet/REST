@@ -22,7 +22,7 @@ pipeline {
                    For /F "tokens=*" %%F IN (\'dir /b /s %WORKSPACE%\\buildartifacts\\*.Tests.dll\') DO (
 		                   set testFiles=!testFiles! %%F
 	                       )
-                   %WORKSPACE%\\buildtools\\nunit\\nunit3-console.exe %testFiles%'''
+                   %{tool 'msbuild'}% %testFiles%'''
             }
         }
         stage('Archive') {
