@@ -12,7 +12,7 @@ pipeline {
             steps {
                 bat "if exist \"buildartifacts\" rd /s /q \"buildartifacts\""
              	bat "\"${tool 'nuget'}\" restore watchshop.sln"
-	            bat "\"${tool 'msbuild'}\" watchshop.sln /p:Configuration=Release;OutputPath=\"..\\..\\buildartifacts\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+	        bat "\"${tool 'msbuild'}\" watchshop.sln /p:Configuration=Release;OutputPath=\"..\\..\\buildartifacts\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
             }
         }
         stage('Tests') {
@@ -22,7 +22,7 @@ pipeline {
                    For /F "tokens=*" %%F IN (\'dir /b /s %WORKSPACE%\\buildartifacts\\*.Tests.dll\') DO (
 		                   set testFiles=!testFiles! %%F
 	                       )
-                   ${tool \'nunit\'} %testFiles%'''
+                   ''${tool \'nunit\'}'' %testFiles%'''
             }
         }
         stage('Archive') {
