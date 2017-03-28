@@ -1,11 +1,12 @@
 #!groovy
 pipeline {
     agent any
-    println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmm")));
+    
    	
     stages {
         stage('Checkout') {
             steps {
+		    println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmm")));
                 git 'https://github.com/khdevnet/REST.git'
             }
         }
