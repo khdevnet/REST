@@ -8,13 +8,14 @@ pipeline {
             }
         }
         stage('Build') {
-            steps {
-		    
-		   println(new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone('UTC')))
+		 println(new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone('UTC')))
 		   def dateTimeNow = new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET"))
                    bat '''set buildLabel=${dateTimeNow}
                    set > build.properties
                    echo %buildLabel%'''
+            steps {
+		    
+		  
 		    
                 bat "if exist \"buildartifacts\" rd /s /q \"buildartifacts\""
              	bat "\"${tool 'nuget'}\" restore watchshop.sln"
