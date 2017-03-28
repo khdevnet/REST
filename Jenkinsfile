@@ -1,4 +1,5 @@
 #!groovy
+def dateTimeNow  = new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET"))
 pipeline {
     agent any
     stages {
@@ -12,8 +13,7 @@ pipeline {
 		  //   def dateTimeNow = 
 		   println(new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET")))
 		   println("""${new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET"))}""")
-		   def dateTimeNow  = new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET"))
-                   bat """set buildLabel=$dateTimeNow
+		   bat """set buildLabel=$dateTimeNow
                           echo %buildLabel%""".toString()
                 bat "if exist \"buildartifacts\" rd /s /q \"buildartifacts\""
              	bat "\"${tool 'nuget'}\" restore watchshop.sln"
