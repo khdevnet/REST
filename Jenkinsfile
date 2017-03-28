@@ -1,7 +1,8 @@
 #!groovy
 pipeline {
     agent any
-
+    println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmm")));
+   	
     stages {
         stage('Checkout') {
             steps {
@@ -17,6 +18,8 @@ pipeline {
         }
         stage('Tests') {
             steps {
+		    
+	           
                bat '''setlocal enableDelayedExpansion
                    set testFiles= 
                    For /F "tokens=*" %%F IN (\'dir /b /s %WORKSPACE%\\buildartifacts\\*.Tests.dll\') DO (
