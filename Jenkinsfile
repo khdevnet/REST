@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-		println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmm")))
+		println(new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone('UTC')))
                 git 'https://github.com/khdevnet/REST.git'
             }
         }
