@@ -5,6 +5,10 @@ pipeline {
         stage('Checkout') {
             steps {
 		println(new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone('UTC')))
+		   def dateTimeNow = new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET"))
+                   bat '''set buildLabel=${dateTimeNow}
+                   set > build.properties
+                   echo %buildLabel%'''
                 git 'https://github.com/khdevnet/REST.git'
             }
         }
