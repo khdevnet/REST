@@ -12,6 +12,7 @@ pipeline {
 		  //   def dateTimeNow = 
 		   println(new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET")))
 		   println("""${new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET"))}""")
+		   def dateTimeNow  = new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET"))
                    bat """set buildLabel=$dateTimeNow
                           echo %buildLabel%""".toString()
                 bat "if exist \"buildartifacts\" rd /s /q \"buildartifacts\""
