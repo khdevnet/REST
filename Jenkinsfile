@@ -4,16 +4,18 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-		println(new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone('UTC')))
-		   def dateTimeNow = new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET"))
-                   bat '''set buildLabel=${dateTimeNow}
-                   set > build.properties
-                   echo %buildLabel%'''
                 git 'https://github.com/khdevnet/REST.git'
             }
         }
         stage('Build') {
             steps {
+		    
+		   println(new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone('UTC')))
+		   def dateTimeNow = new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET"))
+                   bat '''set buildLabel=${dateTimeNow}
+                   set > build.properties
+                   echo %buildLabel%'''
+		    
                 bat "if exist \"buildartifacts\" rd /s /q \"buildartifacts\""
              	bat "\"${tool 'nuget'}\" restore watchshop.sln"
 	        bat "\"${tool 'msbuild'}\" watchshop.sln  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"..\\..\\buildartifacts\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
