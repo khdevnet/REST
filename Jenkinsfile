@@ -17,14 +17,12 @@ pipeline {
         }
         stage('Tests') {
             steps {
-		    
-	           
-               bat '''setlocal enableDelayedExpansion
-                   set testFiles= 
-                   For /F "tokens=*" %%F IN (\'dir /b /s %WORKSPACE%\\buildartifacts\\*.Tests.dll\') DO (
+                bat """setlocal enableDelayedExpansion
+                    set testFiles= 
+                    For /F "tokens=*" %%F IN (\'dir /b /s %WORKSPACE%\\buildartifacts\\*.Tests.dll\') DO (
 		                   set testFiles=!testFiles! %%F
 	                       )
-                    %WORKSPACE%\\buildtools\\nunit\\nunit3-console.exe %testFiles%'''
+                    ${tool 'nunit'} %testFiles%"""
             }
         }
         stage('Archive') {
