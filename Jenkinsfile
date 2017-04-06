@@ -1,8 +1,7 @@
 #!groovy
-
 node { 
 	timestamps {
-		stages {
+
 				stage('Checkout') {
 					steps {
 						git 'https://github.com/khdevnet/REST.git'
@@ -35,6 +34,5 @@ node {
 						emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com'
 					}
 				}
-		}
 	}
 }
