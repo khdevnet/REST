@@ -1,7 +1,7 @@
 #!groovy
 def dateTimeNow  = new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET"))
 pipeline {
-    agent any
+    agent node
     stages {
         stage('Checkout') {
             steps {
