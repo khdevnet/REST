@@ -1,9 +1,8 @@
 #!groovy
-def dateTimeNow  = new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET"))
-pipeline {
-	agent node { 
-		timestamps {
-			stages {
+
+node { 
+	timestamps {
+		stages {
 				stage('Checkout') {
 					steps {
 						git 'https://github.com/khdevnet/REST.git'
@@ -36,7 +35,6 @@ pipeline {
 						emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com'
 					}
 				}
-			}
 		}
 	}
 }
