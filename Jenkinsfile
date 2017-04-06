@@ -1,7 +1,8 @@
 #!groovy
 def dateTimeNow  = new Date().format("yyyyMMdd-HHmm", TimeZone.getTimeZone("CET"))
 pipeline {
-	agent node {
+	agent node { 
+		timestamps {
 			stages {
 				stage('Checkout') {
 					steps {
@@ -37,4 +38,5 @@ pipeline {
 				}
 			}
 		}
+	}
 }
