@@ -7,10 +7,10 @@ node {
         }
 
         stage('Build') {
-            println "$buildArtifactsDir"
+            log("Clean buildartifacts: ${buildArtifactsDir}")
             removeDir(buildArtifactsDir)
-           // bat "\"${tool 'nuget'}\" restore watchshop.sln"
-            //bat "\"${tool 'msbuild'}\" watchshop.sln  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"..\\..\\buildartifacts\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+            bat "\"${tool 'nuget'}\" restore watchshop.sln"
+            bat "\"${tool 'msbuild'}\" watchshop.sln  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"..\\..\\buildartifacts\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
         }
 
         stage('Tests') {
@@ -34,6 +34,9 @@ node {
 
 def removeDir(dirPath) {
     def dir = new File(dirPath)
-    println "${dir.getPath()}"
     if (dir.exists()) dir.deleteDir()
 }
+
+def log(message){
+    println message
+} 
