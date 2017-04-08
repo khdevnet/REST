@@ -1,5 +1,5 @@
 #!groovy
-def buildArtifactsDir = "${WORKSPACE}\\buildartifacts"
+def buildArtifactsDir = "${env.WORKSPACE}\\buildartifacts"
 node {
     timestamps {
         stage('Checkout') {
