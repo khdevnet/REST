@@ -32,6 +32,6 @@ node {
 }
 
 def removeDir(dirPath) {
-    def dir = new File('c://temp//test')
+    def dir = new File(dirPath)
     if (dir.exists()) dir.deleteDir()
 }
