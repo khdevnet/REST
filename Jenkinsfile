@@ -1,12 +1,13 @@
 #!groovy
-node { 
- timestamps {
+def buildArtifactsDir = "$WORKSPACE\\buildartifacts"
+node {
+    timestamps {
         stage('Checkout') {
-                git 'https://github.com/khdevnet/REST.git'
+            git 'https://github.com/khdevnet/REST.git'
         }
 
         stage('Build') {
-            bat "if exist \"buildartifacts\" rd /s /q \"buildartifacts\""
+            removeDir(buildArtifactsDir)
             bat "\"${tool 'nuget'}\" restore watchshop.sln"
             bat "\"${tool 'msbuild'}\" watchshop.sln  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"..\\..\\buildartifacts\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
         }
@@ -23,9 +24,14 @@ node {
         stage('Archive') {
             archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
         }
-        
-        stage('Notifications'){
+
+        stage('Notifications') {
             emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com'
         }
- }
+    }
+}
+
+def removeDir(dirPath) {
+    def dir = new File('c://temp//test')
+    if (dir.exists()) dir.deleteDir()
 }
