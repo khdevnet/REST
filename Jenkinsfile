@@ -8,8 +8,8 @@ node {
 
         stage('Build') {
             removeDir(buildArtifactsDir)
-            bat "\"${tool 'nuget'}\" restore watchshop.sln"
-            bat "\"${tool 'msbuild'}\" watchshop.sln  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"..\\..\\buildartifacts\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+           // bat "\"${tool 'nuget'}\" restore watchshop.sln"
+            //bat "\"${tool 'msbuild'}\" watchshop.sln  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"..\\..\\buildartifacts\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
         }
 
         stage('Tests') {
