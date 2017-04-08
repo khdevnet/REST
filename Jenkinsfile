@@ -1,6 +1,6 @@
 #!groovy
-def buildArtifactsDir = "${env.WORKSPACE}\\buildartifacts"
 node {
+    def buildArtifactsDir = "${env.WORKSPACE}\\buildartifacts"
     timestamps {
         stage('Checkout') {
             git 'https://github.com/khdevnet/REST.git'
