@@ -1,6 +1,7 @@
 #!groovy
 node {
-    def buildArtifactsDir = "${env.WORKSPACE}\\buildartifacts"
+    def buildArtifacts = "buildartifacts"
+    def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
     def solutionName = 'watchshop.sln'
     timestamps {
         stage('Checkout') {
@@ -15,7 +16,7 @@ node {
         }
 
         stage('Tests') {
-           def files = findFiles("$buildArtifactsDir/*.Test.dll")
+           def files = findFiles("$buildArtifacts/*.Tests.dll")
             files.each({ println $it})
             bat """setlocal enableDelayedExpansion
                     set testFiles= 
