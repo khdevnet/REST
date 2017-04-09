@@ -10,11 +10,12 @@ node {
         stage('Build') {
             log("Clean buildartifacts: ${buildArtifactsDir}")
             removeDir(buildArtifactsDir)
-            bat "\"${tool 'nuget'}\" restore watchshop.sln"
+            bat "\"${tool 'nuget'}\" restore $solutionName"
             bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
         }
 
         stage('Tests') {
+            findFiles(glob: glob: '**/*.Test.dll').each({ println $it.path});
             bat """setlocal enableDelayedExpansion
                     set testFiles= 
                     For /F "tokens=*" %%F IN (\'dir /b /s %WORKSPACE%\\buildartifacts\\*.Tests.dll\') DO (
@@ -36,6 +37,10 @@ node {
 def removeDir(dirPath) {
     def dir = new File(dirPath)
     if (dir.exists()) dir.deleteDir()
+}
+
+def findFiles(wildcard){
+     findFiles(glob: wildcard)
 }
 
 def log(message){
