@@ -20,12 +20,12 @@ node {
         }
 
         stage('Tests') {
-          def testFilesName = getFiles("$buildArtifacts/*.Tests.dll", buildArtifactsDir).join(' ')
+          def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
           bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""
         }
         
         stage('CodeQuality') {
-          def domainFilesName = getFiles("$buildArtifacts/*.Domain.dll", buildArtifactsDir)
+          def domainFilesName = getFiles(["$buildArtifacts/WatchShop*.Api.dll","$buildArtifacts/*.Domain.dll"], buildArtifactsDir)
           for(def fileName : domainFilesName ) { 
               bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
           }
@@ -40,8 +40,12 @@ node {
         }
     }
 }
-def getFiles(wildcard, rootDir=''){ 
-    def files = findFiles(glob: wildcard)
+def getFiles(wildcards, rootDir=''){
+    def files = []
+    for(def wildcard : wildcards ) { 
+        files.addAll(findFiles(glob: wildcard))
+    }
+    
     def names = []
     def prefix = rootDir == '' ? '' : rootDir + '\\'
     for(def file : files ) { names << prefix + file.name }
