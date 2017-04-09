@@ -16,14 +16,9 @@ node {
         }
 
         stage('Tests') {
-           def files = findFiles(glob: "$buildArtifacts/*.Tests.dll")
-            for(def file : files ) { echo file.path }
-            bat """setlocal enableDelayedExpansion
-                    set testFiles= 
-                    For /F "tokens=*" %%F IN (\'dir /b /s %WORKSPACE%\\buildartifacts\\*.Tests.dll\') DO (
-                            set testFiles=!testFiles! %%F
-                            )
-                    ${tool 'nunit'} %testFiles%"""
+          def testFilesName = getFiles("$buildArtifacts/*.Tests.dll").join(' ')
+             for(def file : testFilesName ) { echo file.name }
+           // bat """${tool 'nunit'} %testFiles%"""
         }
 
         stage('Archive') {
@@ -34,6 +29,12 @@ node {
             emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com'
         }
     }
+}
+def getFiles(wildcard, rootDir){ 
+    def files = findFiles(glob: wildcard)
+    def names = []
+    for(def file : files ) { names << (rootDir?:'') + file.name }
+    return names
 }
 def removeDir(dirPath) {
      def dir = new File(dirPath)
