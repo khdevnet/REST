@@ -5,12 +5,9 @@ node {
     def solutionName = 'watchshop.sln'
     def reportsDir = "${env.WORKSPACE}\\reports"
     timestamps {
-        stage('Clean') {
-          removeDir(buildArtifactsDir)
-          removeDir(reportsDir)
-          makeDir(reportsDir) 
-        }
         stage('Checkout') {
+            cleanDir(buildArtifactsDir)
+            cleanDir(reportsDir)
             git 'https://github.com/khdevnet/REST.git'
         }
 
@@ -53,6 +50,12 @@ def getFiles(wildcards, rootDir=''){
     def prefix = rootDir == '' ? '' : rootDir + '\\'
     for(def file : files ) { names << prefix + file.name }
     return names
+}
+
+def cleanDir(dirPath) {
+     def dir = new File(dirPath)
+     if (dir.exists()) dir.deleteDir()
+     if (!dir.exists()) dir.mkdirs()
 }
 
 def makeDir(dirPath) {
