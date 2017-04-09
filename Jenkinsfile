@@ -30,10 +30,11 @@ node {
         }
     }
 }
-def getFiles(wildcard, rootDir){ 
+def getFiles(wildcard, rootDir=''){ 
     def files = findFiles(glob: wildcard)
     def names = []
-    for(def file : files ) { names << (rootDir?:'') + file.name }
+    def prefix = rootDir == '' ? '' : rootDir
+    for(def file : files ) { names << prefix + file.name }
     return names
 }
 def removeDir(dirPath) {
