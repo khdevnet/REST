@@ -16,7 +16,7 @@ node {
         }
 
         stage('Tests') {
-          def testFilesName = getFiles("$buildArtifacts/*.Tests.dll").join(' ')
+          def testFilesName = getFiles("$buildArtifacts/*.Tests.dll", buildArtifactsDir).join(' ')
           echo testFilesName 
            // bat """${tool 'nunit'} %testFiles%"""
         }
@@ -33,7 +33,7 @@ node {
 def getFiles(wildcard, rootDir=''){ 
     def files = findFiles(glob: wildcard)
     def names = []
-    def prefix = rootDir == '' ? '' : rootDir
+    def prefix = rootDir == '' ? '' : rootDir + '\\'
     for(def file : files ) { names << prefix + file.name }
     return names
 }
