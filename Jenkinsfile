@@ -3,6 +3,7 @@ node {
     def buildArtifacts = "buildartifacts"
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
     def solutionName = 'watchshop.sln'
+    def reportsDir = "${env.WORKSPACE}\\reports"
     timestamps {
         stage('Checkout') {
          //   git 'https://github.com/khdevnet/REST.git'
@@ -16,8 +17,10 @@ node {
         }
 
         stage('Tests') {
+          removeDir(reportsDir)
+          makeDir(reportsDir)
           def testFilesName = getFiles("$buildArtifacts/*.Tests.dll", buildArtifactsDir).join(' ')
-          bat """${tool 'nunit'} $testFilesName --work=$buildArtifactsDir"""
+          bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""
         }
 
         stage('Archive') {
@@ -36,10 +39,16 @@ def getFiles(wildcard, rootDir=''){
     for(def file : files ) { names << prefix + file.name }
     return names
 }
+
+def makeDir(dirPath) {
+     def dir = new File(dirPath)
+     if (!dir.exists()) dir.mkdirs()
+}
+
 def removeDir(dirPath) {
      def dir = new File(dirPath)
      if (dir.exists()) dir.deleteDir()
- }
+}
 def log(message){
     println message
 } 
