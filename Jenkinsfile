@@ -40,10 +40,6 @@ def removeDir(dirPath) {
     if (dir.exists()) dir.deleteDir()
 }
 
-def findFiles(wildcard){
-     findFiles(glob: wildcard)
-}
-
 def log(message){
     println message
 } 
