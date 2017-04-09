@@ -17,7 +17,7 @@ node {
 
         stage('Tests') {
           def testFilesName = getFiles("$buildArtifacts/*.Tests.dll").join(' ')
-             for(def file : testFilesName ) { echo file.name }
+             for(def file : testFilesName ) { echo file }
            // bat """${tool 'nunit'} %testFiles%"""
         }
 
