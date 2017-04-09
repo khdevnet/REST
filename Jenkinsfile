@@ -17,7 +17,7 @@ node {
 
         stage('Tests') {
            def files = findFiles(glob: "$buildArtifacts/*.Tests.dll")
-            files.each({ echo $it.path})
+            for(def file : files ) { echo file.path }
             bat """setlocal enableDelayedExpansion
                     set testFiles= 
                     For /F "tokens=*" %%F IN (\'dir /b /s %WORKSPACE%\\buildartifacts\\*.Tests.dll\') DO (
