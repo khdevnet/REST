@@ -5,22 +5,30 @@ node {
     def solutionName = 'watchshop.sln'
     def reportsDir = "${env.WORKSPACE}\\reports"
     timestamps {
+        stage('Clean') {
+          removeDir(buildArtifactsDir)
+          removeDir(reportsDir)
+          makeDir(reportsDir) 
+        }
         stage('Checkout') {
             git 'https://github.com/khdevnet/REST.git'
         }
 
         stage('Build') {
-            log("Clean: ${buildArtifactsDir}")
-            removeDir(buildArtifactsDir)
             bat "\"${tool 'nuget'}\" restore $solutionName"
             bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
         }
 
         stage('Tests') {
-          removeDir(reportsDir)
-          makeDir(reportsDir)
           def testFilesName = getFiles("$buildArtifacts/*.Tests.dll", buildArtifactsDir).join(' ')
-          bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""
+          bat """${tool 'nunit'} $testFilesName /o:test.xml=$reportsDir"""
+        }
+        
+        stage('CodeQuality') {
+          def domainFilesName = getFiles("$buildArtifacts/*.Domain.dll", buildArtifactsDir)
+          for(def fileName : domainFilesName ) { 
+              bat """${tool 'fxcop'} $fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
+          }
         }
 
         stage('Archive') {
