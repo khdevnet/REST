@@ -5,18 +5,18 @@ node {
     def solutionName = 'watchshop.sln'
     timestamps {
         stage('Checkout') {
-            git 'https://github.com/khdevnet/REST.git'
+         //   git 'https://github.com/khdevnet/REST.git'
         }
 
         stage('Build') {
-            log("Clean buildartifacts: ${buildArtifactsDir}")
-            removeDir(buildArtifactsDir)
-            bat "\"${tool 'nuget'}\" restore $solutionName"
-            bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+           // log("Clean buildartifacts: ${buildArtifactsDir}")
+          //  removeDir(buildArtifactsDir)
+          //  bat "\"${tool 'nuget'}\" restore $solutionName"
+          //  bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
         }
 
         stage('Tests') {
-           def files = findFiles("$buildArtifacts/*.Tests.dll")
+           def files = findFiles(glob: "$buildArtifacts/*.Tests.dll")
             files.each({ println $it})
             bat """setlocal enableDelayedExpansion
                     set testFiles= 
