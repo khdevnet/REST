@@ -9,7 +9,7 @@ node {
 
         stage('Build') {
             log("Clean buildartifacts: ${buildArtifactsDir}")
-            removeDir(buildArtifactsDir)
+            deleteDir(buildArtifactsDir)
             bat "\"${tool 'nuget'}\" restore $solutionName"
             bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
         }
@@ -33,11 +33,6 @@ node {
             emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com'
         }
     }
-}
-
-def removeDir(dirPath) {
-    def dir = new File(dirPath)
-    if (dir.exists()) dir.deleteDir()
 }
 
 def log(message){
