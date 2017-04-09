@@ -29,7 +29,7 @@ node {
           for(def fileName : domainFilesName ) { 
               try { 
                  bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
-              } catch() {
+              } catch(Exception ex) {
               }
           }
         }
