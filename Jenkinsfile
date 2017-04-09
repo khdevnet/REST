@@ -15,7 +15,7 @@ node {
         }
 
         stage('Tests') {
-           def files = findFiles(glob: '**/*.Test.dll')
+           def files = findFiles("$buildArtifactsDir/*.Test.dll")
             prontln $files
             bat """setlocal enableDelayedExpansion
                     set testFiles= 
