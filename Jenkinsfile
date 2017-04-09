@@ -17,8 +17,7 @@ node {
 
         stage('Tests') {
           def testFilesName = getFiles("$buildArtifacts/*.Tests.dll", buildArtifactsDir).join(' ')
-          echo testFilesName 
-           // bat """${tool 'nunit'} %testFiles%"""
+          bat """${tool 'nunit'} $testFilesName"""
         }
 
         stage('Archive') {
