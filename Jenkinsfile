@@ -1,6 +1,7 @@
 #!groovy
 node {
     def buildArtifactsDir = "${env.WORKSPACE}\\buildartifacts"
+    def solutionName = 'watchshop.sln'
     timestamps {
         stage('Checkout') {
             git 'https://github.com/khdevnet/REST.git'
@@ -10,7 +11,7 @@ node {
             log("Clean buildartifacts: ${buildArtifactsDir}")
             removeDir(buildArtifactsDir)
             bat "\"${tool 'nuget'}\" restore watchshop.sln"
-            bat "\"${tool 'msbuild'}\" watchshop.sln  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"..\\..\\buildartifacts\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+            bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
         }
 
         stage('Tests') {
