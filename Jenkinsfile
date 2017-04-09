@@ -27,7 +27,7 @@ node {
         stage('CodeQuality') {
           def domainFilesName = getFiles("$buildArtifacts/*.Domain.dll", buildArtifactsDir)
           for(def fileName : domainFilesName ) { 
-              bat """${tool 'fxcop'} $fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
+              bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
           }
         }
 
