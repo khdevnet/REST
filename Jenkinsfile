@@ -21,7 +21,7 @@ node {
         stage('Tests') {
           def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
           bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""
-          writeTestRunResultToReport(nunitTestReportXmlFilePath)
+          writeTestRunResultToReport(nunitTestReportXmlFilePath, reportsDir + 'NunitTestResultReport.txt')
         }
         
         stage('CodeQuality') {
@@ -43,10 +43,10 @@ node {
     }
 }
 
-def writeTestRunResultToReport(nunitTestReportXmlFilePath){
+def writeTestRunResultToReport(nunitTestReportXmlFilePath,reportFilePath){
     def testXmlRootNode = new XmlParser().parse(new File(nunitTestReportXmlFilePath))
     def resultNode = findlastNode(testXmlRootNode.children(),'test-suite')
-    def testReportFile = new File(reportsDir+'TestResult.txt')
+    def testReportFile = new File(reportFilePath)
     testReportFile << ('total:' + resultNode.@total)
     testReportFile << ('passed:' + resultNode.@passed)
     testReportFile << ('failed:' + resultNode.@failed)
