@@ -47,13 +47,13 @@ def writeTestRunResultToReport(nunitTestReportXmlFilePath,reportFilePath){
     def testXmlRootNode = new XmlParser().parse(new File(nunitTestReportXmlFilePath))
     def resultNode = findlastNode(testXmlRootNode.children(),'test-suite')
     def testReportFile = new File(reportFilePath)
-    println resultNode.attributes()
-    testReportFile << 'total:' + resultNode.@total
-    testReportFile << 'passed:' + resultNode.@passed
-    testReportFile << 'failed:' + resultNode.@failed
-    testReportFile << 'warnings:' + resultNode.@warnings
-    testReportFile << 'inconclusive:' + resultNode.@inconclusive
-    testReportFile << 'skipped:' + resultNode.@skipped
+    def resultNodeAttributes =  resultNode.attributes()
+    testReportFile << 'total:' + resultNodeAttributes.get("total")
+    testReportFile << 'passed:' + resultNodeAttributes.get("passed")
+    testReportFile << 'failed:' + resultNodeAttributes.get("failed")
+    testReportFile << 'warnings:' + resultNodeAttributes.get("warnings")
+    testReportFile << 'inconclusive:' + resultNodeAttributes.get("inconclusive")
+    testReportFile << 'skipped:' + resultNodeAttributes.get("skipped")
 }
 
 def findlastNode(list, nodeName){
