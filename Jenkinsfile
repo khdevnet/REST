@@ -21,7 +21,7 @@ node {
         stage('Tests') {
           def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
           bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""
-          writeTestRunResultToReport(nunitTestReportXmlFilePath, reportsDir + 'NunitTestResultReport.txt')
+          writeTestRunResultToReport(nunitTestReportXmlFilePath, reportsDir + '\\NunitTestResultReport.txt')
         }
         
         stage('CodeQuality') {
@@ -49,11 +49,11 @@ def writeTestRunResultToReport(nunitTestReportXmlFilePath,reportFilePath){
     def testReportFile = new File(reportFilePath)
     def resultNodeAttributes =  resultNode.attributes()
     testReportFile << 'total:' + resultNodeAttributes.get("total")
-    testReportFile << 'passed:' + resultNodeAttributes.get("passed")
-    testReportFile << 'failed:' + resultNodeAttributes.get("failed")
-    testReportFile << 'warnings:' + resultNodeAttributes.get("warnings")
-    testReportFile << 'inconclusive:' + resultNodeAttributes.get("inconclusive")
-    testReportFile << 'skipped:' + resultNodeAttributes.get("skipped")
+    testReportFile << ' passed:' + resultNodeAttributes.get("passed")
+    testReportFile << ' failed:' + resultNodeAttributes.get("failed")
+    testReportFile << ' warnings:' + resultNodeAttributes.get("warnings")
+    testReportFile << ' inconclusive:' + resultNodeAttributes.get("inconclusive")
+    testReportFile << ' skipped:' + resultNodeAttributes.get("skipped")
 }
 
 def findlastNode(list, nodeName){
