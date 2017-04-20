@@ -23,9 +23,11 @@ node {
         }
         
         stage('CodeQuality') {
-          def domainFilesName = getFiles(codeQualityDllWildCards, buildArtifactsDir)
-          for(def fileName : domainFilesName ) { 
+          def codeQualityDllNames = getFiles(codeQualityDllWildCards, buildArtifactsDir)
+          for(def fileName : codeQualityDllNames ) { 
+             try{
               bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
+             } catch(Exception ex) {}
           }
         }
 
