@@ -4,6 +4,7 @@ node {
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
     def solutionName = 'watchshop.sln'
     def reportsDir = "${env.WORKSPACE}\\reports"
+    def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
     timestamps {
         stage('Checkout') {
             cleanDir(buildArtifactsDir)
@@ -22,7 +23,7 @@ node {
         }
         
         stage('CodeQuality') {
-          def domainFilesName = getFiles(["$buildArtifacts/WatchShop*.Api.dll","$buildArtifacts/*.Domain.dll"], buildArtifactsDir)
+          def domainFilesName = getFiles(codeQualityDllWildCards, buildArtifactsDir)
           for(def fileName : domainFilesName ) { 
               bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
           }
