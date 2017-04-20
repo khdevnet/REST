@@ -45,7 +45,7 @@ node {
 
 def writeTestRunResultToReport(nunitTestReportXmlFilePath){
     def testXmlRootNode = new XmlParser().parse(new File(nunitTestReportXmlFilePath))
-    def resultNode = testXmlRootNode.children().findAll{ it.name()=='test-suite'}.last()
+    def resultNode = findlastNode(testXmlRootNode.children(),'test-suite')
     def testReportFile = new File(reportsDir+'TestResult.txt')
     testReportFile << ('total:' + resultNode.@total)
     testReportFile << ('passed:' + resultNode.@passed)
@@ -53,6 +53,14 @@ def writeTestRunResultToReport(nunitTestReportXmlFilePath){
     testReportFile << ('warnings:' + resultNode.@warnings)
     testReportFile << ('inconclusive:' + resultNode.@inconclusive)
     testReportFile << ('skipped:' + resultNode.@skipped)
+}
+
+def findlastNode(list, nodeName){
+    for(def element : list.reverse() ) { 
+       if(element.name()==nodeName){
+           return element
+       }
+    }
 }
 
 def getFiles(wildcards, rootDir=''){
