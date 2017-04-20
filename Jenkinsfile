@@ -4,6 +4,7 @@ node {
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
     def solutionName = 'watchshop.sln'
     def reportsDir = "${env.WORKSPACE}\\reports"
+    def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
     timestamps {
         stage('Checkout') {
@@ -20,6 +21,7 @@ node {
         stage('Tests') {
           def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
           bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""
+          writeTestRunResultToReport()
         }
         
         stage('CodeQuality') {
@@ -40,6 +42,19 @@ node {
         }
     }
 }
+
+def writeTestRunResultToReport(){
+    def testXmlRootNode = new XmlParser().parse(new File(nunitTestReportXmlFilePath))
+    def resultNode = testXmlRootNode.children().findAll({ it.name()=='test-suite'}).last()
+    def testReportFile = new File(reportsDir+'TestResult.txt')
+    testReportFile << ('total:' + resultNode.@total)
+    testReportFile << ('passed:' + resultNode.@passed)
+    testReportFile << ('failed:' + resultNode.@failed)
+    testReportFile << ('warnings:' + resultNode.@warnings)
+    testReportFile << ('inconclusive:' + resultNode.@inconclusive)
+    testReportFile << ('skipped:' + resultNode.@skipped)
+}
+
 def getFiles(wildcards, rootDir=''){
     def files = []
     for(def wildcard : wildcards ) { 
