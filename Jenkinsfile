@@ -45,7 +45,7 @@ node {
 
 def writeTestRunResultToReport(nunitTestReportXmlFilePath){
     def testXmlRootNode = new XmlParser().parse(new File(nunitTestReportXmlFilePath))
-    def resultNode = testXmlRootNode.children().findAll({ it.name()=='test-suite'}).last()
+    def resultNode = testXmlRootNode.children().findAll{ it.name()=='test-suite'}.last()
     def testReportFile = new File(reportsDir+'TestResult.txt')
     testReportFile << ('total:' + resultNode.@total)
     testReportFile << ('passed:' + resultNode.@passed)
