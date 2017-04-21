@@ -11,11 +11,11 @@ node {
     timestamps {
 
         stage('Notifications') {
-          def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": "Ok", 
-                       "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME", 
-                       "total":"1", "passed":"1", "failed":"1", "warnings":"1", "inconclusive":"1", "skipped":"1"]
-          def text = renderTemplete(buildresultTempleteFilePath, model)
-          println text  
+//          def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": "Ok", 
+  //                     "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME", 
+    //                   "total":"1", "passed":"1", "failed":"1", "warnings":"1", "inconclusive":"1", "skipped":"1"]
+      //    def text = renderTemplete(buildresultTempleteFilePath, model)
+
           emailext body: 'test', subject: 'Test', to: 'khdevnet@gmail.com'
         }
     }
