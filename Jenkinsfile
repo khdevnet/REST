@@ -1,7 +1,6 @@
 #!groovy
 pipeline {
 agent any
-    timestamps {
         stages {
 
     def buildArtifacts = "buildartifacts"
@@ -31,7 +30,7 @@ agent any
             }
         }
       
-    }
+    
 }
 def text = 'Dear "$firstname $lastname",\nSo nice to meet you in <% print city %>.\nSee you in ${month},\n${signed}'
 def binding = ["firstname":"Sam", "lastname":"Pullara", "city":"San Francisco", "month":"December", "signed":"Groovy-Dev"]
