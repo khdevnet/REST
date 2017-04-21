@@ -11,10 +11,8 @@ node {
     timestamps {
 
         stage('Notifications') {
-          def text = renderTemplete(buildresultTempleteFilePath, getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath)))
-          echo text
-
-          emailext body: 'test', subject: 'Test', to: 'khdevnet@gmail.com'
+          def emailBody = renderTemplete(buildresultTempleteFilePath, getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath)))
+          emailext body: emailBody, subject: 'Test', to: 'khdevnet@gmail.com'
         }
     }
 }
