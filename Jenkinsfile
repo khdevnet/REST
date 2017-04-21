@@ -11,8 +11,7 @@ node {
     timestamps {
 
         stage('Notifications') {
-          def templateModel = getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath));
-          def text = renderTemplete(buildresultTempleteFilePath, templateModel)
+          def text = renderTemplete(buildresultTempleteFilePath, getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath)))
           echo text
 
           emailext body: 'test', subject: 'Test', to: 'khdevnet@gmail.com'
