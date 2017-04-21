@@ -2,17 +2,44 @@
 node {
     def buildArtifacts = "buildartifacts"
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
-    def buildtoolsDir = "${env.WORKSPACE}\\buildtools"
     def solutionName = 'watchshop.sln'
     def reportsDir = "${env.WORKSPACE}\\reports"
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
-    def buildresultTempleteFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
     timestamps {
+        stage('Checkout') {
+            cleanDir(buildArtifactsDir)
+            cleanDir(reportsDir)
+            git 'https://github.com/khdevnet/REST.git'
+        }
+
+        stage('Build') {
+            bat "\"${tool 'nuget'}\" restore $solutionName"
+            bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+        }
+
+        stage('Tests') {
+          def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
+          bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""
+          writeTestRunResultToReport(nunitTestReportXmlFilePath, reportsDir + '\\NunitTestResultReport.txt')
+        }
+        
+        stage('CodeQuality') {
+          def codeQualityDllNames = getFiles(codeQualityDllWildCards, buildArtifactsDir)
+          for(def fileName : codeQualityDllNames ) { 
+             try{
+              bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
+             } catch(Exception ex) {}
+          }
+        }
+
+        stage('Archive') {
+            archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
+        }
 
         stage('Notifications') {
           def emailBody = renderTemplete(buildresultTempleteFilePath, getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath)))
-          emailext body: emailBody, subject: 'Test', to: 'khdevnet@gmail.com'
+          emailext body: emailBody, to: 'khdevnet@gmail.com'
         }
     }
 }
@@ -26,7 +53,6 @@ def getTemplateModel(nunitResultMap){
 }
 
 def renderTemplete(templateFilePath, model){
-              
     def templateBody =  new File(templateFilePath).text
     def engine = new groovy.text.SimpleTemplateEngine()
     engine.createTemplate(templateBody).make(model).toString()
