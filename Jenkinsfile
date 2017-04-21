@@ -1,5 +1,5 @@
 #!groovy
-
+node {
     def buildArtifacts = "buildartifacts"
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
     def buildtoolsDir = "${env.WORKSPACE}\\buildtools"
@@ -8,36 +8,16 @@
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
     def buildresultTempleteFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
-pipeline {
-agent any
-        stages {
+    timestamps {
 
-
-        
-            stage('Notifications') {
-                steps {  emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com' }
-            }
-
-            
+        stage('Notifications') {
+          def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": "Ok", 
+                       "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME", 
+                       "total":"1", "passed":"1", "failed":"1", "warnings":"1", "inconclusive":"1", "skipped":"1"]
+          println renderTemplete(buildresultTempleteFilePath, model)  
+          emailext body: renderTemplete(buildresultTempleteFilePath, model), subject: 'Test', to: 'khdevnet@gmail.com'
         }
-        post { 
-             success { 
-                      steps {
-                          step {
-                 def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": "Ok", 
-                         "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME", 
-                         "total":"1", "passed":"1", "failed":"1", "warnings":"1", "inconclusive":"1", "skipped":"1"]
-                      println renderTemplete(buildresultTempleteFilePath, model)
-                          }
-                      }
-                  
-             }
-             failure {
-               echo 'I will always say Hello again!'
-             }
-            }
-      
-    
+    }
 }
 def text = 'Dear "$firstname $lastname",\nSo nice to meet you in <% print city %>.\nSee you in ${month},\n${signed}'
 def binding = ["firstname":"Sam", "lastname":"Pullara", "city":"San Francisco", "month":"December", "signed":"Groovy-Dev"]
