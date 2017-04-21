@@ -16,7 +16,7 @@ node {
                        "total":"1", "passed":"1", "failed":"1", "warnings":"1", "inconclusive":"1", "skipped":"1"]
           def text = renderTemplete(buildresultTempleteFilePath, model)
           println text  
-          emailext body: $text, subject: 'Test', to: 'khdevnet@gmail.com'
+          emailext body: "$text", subject: 'Test', to: 'khdevnet@gmail.com'
         }
     }
 }
