@@ -21,8 +21,6 @@ node {
         }
     }
 }
-def text = 'Dear "$firstname $lastname",\nSo nice to meet you in <% print city %>.\nSee you in ${month},\n${signed}'
-def binding = ["firstname":"Sam", "lastname":"Pullara", "city":"San Francisco", "month":"December", "signed":"Groovy-Dev"]
 
 def renderTemplete(templateFilePath, model){
     def templateBody =  new File(templateFilePath).text
