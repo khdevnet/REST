@@ -23,11 +23,11 @@ node {
 def text = 'Dear "$firstname $lastname",\nSo nice to meet you in <% print city %>.\nSee you in ${month},\n${signed}'
 def binding = ["firstname":"Sam", "lastname":"Pullara", "city":"San Francisco", "month":"December", "signed":"Groovy-Dev"]
 
+@NonCPS
 def renderTemplete(templateFilePath, model){
     def templateBody =  new File(templateFilePath).text
     def engine = new groovy.text.SimpleTemplateEngine()
-    String body = engine.createTemplate(templateBody).make(model).toString()
-    return body
+    engine.createTemplate(templateBody).make(model).toString()
 }
 
 def writeTestRunResultToReport(nunitTestReportXmlFilePath,reportFilePath){
