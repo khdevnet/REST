@@ -14,8 +14,9 @@ node {
           def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": "Ok", 
                        "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME", 
                        "total":"1", "passed":"1", "failed":"1", "warnings":"1", "inconclusive":"1", "skipped":"1"]
-          println renderTemplete(buildresultTempleteFilePath, model)  
-          emailext body: renderTemplete(buildresultTempleteFilePath, model), subject: 'Test', to: 'khdevnet@gmail.com'
+          def text = renderTemplete(buildresultTempleteFilePath, model)
+          println text  
+          emailext body: $text, subject: 'Test', to: 'khdevnet@gmail.com'
         }
     }
 }
