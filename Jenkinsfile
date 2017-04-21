@@ -2,9 +2,11 @@
 node {
     def buildArtifacts = "buildartifacts"
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
+    def buildtoolsDir = "${env.WORKSPACE}\\buildtools"
     def solutionName = 'watchshop.sln'
     def reportsDir = "${env.WORKSPACE}\\reports"
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
+    def buildresultTemplateFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
     timestamps {
         stage('Checkout') {
@@ -20,8 +22,7 @@ node {
 
         stage('Tests') {
           def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
-          bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""
-          writeTestRunResultToReport(nunitTestReportXmlFilePath, reportsDir + '\\NunitTestResultReport.txt')
+          bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
         }
         
         stage('CodeQuality') {
@@ -38,13 +39,12 @@ node {
         }
 
         stage('Notifications') {
-          def emailBody = renderTemplete(buildresultTempleteFilePath, getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath)))
+          def emailBody = renderTemplete(buildresultTemplateFilePath, getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath)))
           emailext body: emailBody, to: 'khdevnet@gmail.com'
         }
     }
 }
 
-@NonCPS
 def getTemplateModel(nunitResultMap){
     def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": "Ok", 
                  "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME"]
