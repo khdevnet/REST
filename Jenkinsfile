@@ -1,7 +1,9 @@
 #!groovy
 pipeline {
 agent any
-node {
+    timestamps {
+        stages {
+
     def buildArtifacts = "buildartifacts"
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
     def buildtoolsDir = "${env.WORKSPACE}\\buildtools"
@@ -11,8 +13,7 @@ node {
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
     def buildresultTempleteFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
 
-        timestamps {
-        stages {
+        
             stage('Notifications') {
                emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com'
             }
@@ -29,7 +30,7 @@ node {
              }
             }
         }
-      }
+      
     }
 }
 def text = 'Dear "$firstname $lastname",\nSo nice to meet you in <% print city %>.\nSee you in ${month},\n${signed}'
