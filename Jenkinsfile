@@ -25,7 +25,7 @@ def getTemplateModel(nunitResultMap){
     def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": "Ok", 
                  "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME"]
     for(def result : nunitResultMap ) { model.put(result.key, result.value) }
-   
+    return model
 }
 
 def renderTemplete(templateFilePath, model){
