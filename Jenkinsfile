@@ -11,8 +11,8 @@ node {
     timestamps {
 
         stage('Notifications') {
-            
-          def text = renderTemplete(buildresultTempleteFilePath, getModel())
+          def templateModel = getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath));
+          def text = renderTemplete(buildresultTempleteFilePath, templateModel)
           echo text
 
           emailext body: 'test', subject: 'Test', to: 'khdevnet@gmail.com'
@@ -21,10 +21,11 @@ node {
 }
 
 @NonCPS
-def getModel(){
-    ["buildResultUrl": "$BUILD_URL", "buildStatus": "Ok", 
-     "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME", 
-     "total":"1", "passed":"1", "failed":"1", "warnings":"1", "inconclusive":"1", "skipped":"1"]
+def getTemplateModel(nunitResultMap){
+    def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": "Ok", 
+                 "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME"]
+    for(def result : nunitResultMap ) { model.put(result.key, result.value) }
+   
 }
 
 def renderTemplete(templateFilePath, model){
@@ -34,17 +35,10 @@ def renderTemplete(templateFilePath, model){
     engine.createTemplate(templateBody).make(model).toString()
 }
 
-def writeTestRunResultToReport(nunitTestReportXmlFilePath,reportFilePath){
+def getTestReportResult(nunitTestReportXmlFilePath){
     def testXmlRootNode = new XmlParser().parse(new File(nunitTestReportXmlFilePath))
     def resultNode = findlastNode(testXmlRootNode.children(),'test-suite')
-    def testReportFile = new File(reportFilePath)
-    def resultNodeAttributes =  resultNode.attributes()
-    testReportFile << 'total:' + resultNodeAttributes.get("total")
-    testReportFile << ' passed:' + resultNodeAttributes.get("passed")
-    testReportFile << ' failed:' + resultNodeAttributes.get("failed")
-    testReportFile << ' warnings:' + resultNodeAttributes.get("warnings")
-    testReportFile << ' inconclusive:' + resultNodeAttributes.get("inconclusive")
-    testReportFile << ' skipped:' + resultNodeAttributes.get("skipped")
+    resultNode.attributes()
 }
 
 def findlastNode(list, nodeName){
