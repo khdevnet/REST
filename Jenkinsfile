@@ -25,7 +25,7 @@ def binding = ["firstname":"Sam", "lastname":"Pullara", "city":"San Francisco", 
 def renderTemplete(templateFilePath, model){
     def templateBody =  new File(templateFilePath).text
     def engine = new groovy.text.SimpleTemplateEngine()
-    engine.createTemplate(templateBody).make(model)
+    engine.createTemplate(templateBody).make(model).toString()
 }
 
 def writeTestRunResultToReport(nunitTestReportXmlFilePath,reportFilePath){
