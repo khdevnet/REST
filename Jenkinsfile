@@ -7,36 +7,7 @@ node {
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
     timestamps {
-        stage('Checkout') {
-            cleanDir(buildArtifactsDir)
-            cleanDir(reportsDir)
-            git 'https://github.com/khdevnet/REST.git'
-        }
-
-        stage('Build') {
-            bat "\"${tool 'nuget'}\" restore $solutionName"
-            bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
-        }
-
-        stage('Tests') {
-          def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
-          bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""
-          writeTestRunResultToReport(nunitTestReportXmlFilePath, reportsDir + '\\NunitTestResultReport.txt')
-        }
-        
-        stage('CodeQuality') {
-          def codeQualityDllNames = getFiles(codeQualityDllWildCards, buildArtifactsDir)
-          for(def fileName : codeQualityDllNames ) { 
-             try{
-              bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
-             } catch(Exception ex) {}
-          }
-        }
-
-        stage('Archive') {
-            archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
-        }
-
+    
         stage('Notifications') {
             emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com'
         }
