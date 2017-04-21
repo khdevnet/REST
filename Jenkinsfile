@@ -39,8 +39,9 @@ node {
         }
 
         stage('Notifications') {
+          def subject = JOB_NAME + " ($BUILD_DISPLAY_NAME)"
           def emailBody = renderTemplete(buildresultTemplateFilePath, getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath)))
-          emailext body: emailBody, to: 'khdevnet@gmail.com'
+          emailext body: emailBody, subject: JOB_NAME to: 'khdevnet@gmail.com'
         }
     }
 }
