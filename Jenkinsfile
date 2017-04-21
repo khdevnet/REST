@@ -2,16 +2,29 @@
 node {
     def buildArtifacts = "buildartifacts"
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
+    def buildtoolsDir = "${env.WORKSPACE}\\buildtools"
     def solutionName = 'watchshop.sln'
     def reportsDir = "${env.WORKSPACE}\\reports"
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
+    def buildresultTempleteFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
     timestamps {
-    
-        stage('Notifications') {
-            emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com'
-        }
+        def model = ["buildResultUrl":"urlssss", "buildStatus":"Ok", "applicationName":"WorkShop", 
+                     "total":"1", "passed":"1", "failed":"1", "warnings":"1", "inconclusive":"1", "skipped":"1"]
+        println renderTemplete(buildresultTempleteFilePath, model)
+        
+      //  stage('Notifications') {
+      //      emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com'
+      //  }
     }
+}
+def text = 'Dear "$firstname $lastname",\nSo nice to meet you in <% print city %>.\nSee you in ${month},\n${signed}'
+def binding = ["firstname":"Sam", "lastname":"Pullara", "city":"San Francisco", "month":"December", "signed":"Groovy-Dev"]
+
+def renderTemplete(templateFilePath, model){
+    def templateBody =  new File(templateFilePath).text
+    def engine = new groovy.text.SimpleTemplateEngine()
+    engine.createTemplate(templateBody).make(model)
 }
 
 def writeTestRunResultToReport(nunitTestReportXmlFilePath,reportFilePath){
