@@ -8,9 +8,9 @@ node {
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
     def buildresultTempleteFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
-    timestamps {
-      pipeline {
-      agent any
+    pipeline {
+    agent any
+        timestamps {
         stages {
             stage('Notifications') {
                emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com'
