@@ -26,7 +26,7 @@ def binding = ["firstname":"Sam", "lastname":"Pullara", "city":"San Francisco", 
 def renderTemplete(templateFilePath, model){
     def templateBody =  new File(templateFilePath).text
     def engine = new groovy.text.SimpleTemplateEngine()
-    def body = engine.createTemplate(templateBody).make(model).toString()
+    String body = engine.createTemplate(templateBody).make(model).toString()
     return body
 }
 
