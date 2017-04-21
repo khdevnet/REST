@@ -1,4 +1,6 @@
 #!groovy
+pipeline {
+agent any
 node {
     def buildArtifacts = "buildartifacts"
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
@@ -8,8 +10,7 @@ node {
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
     def buildresultTempleteFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
-    pipeline {
-    agent any
+
         timestamps {
         stages {
             stage('Notifications') {
