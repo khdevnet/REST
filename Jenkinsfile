@@ -18,7 +18,9 @@ agent any
                 steps {  emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com' }
             }
 
-            post { 
+            
+        }
+        post { 
              success { 
                  def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": "Ok", 
                          "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME", 
@@ -29,7 +31,6 @@ agent any
                echo 'I will always say Hello again!'
              }
             }
-        }
       
     
 }
