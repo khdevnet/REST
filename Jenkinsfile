@@ -15,7 +15,7 @@ agent any
 
         
             stage('Notifications') {
-               emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com'
+                steps {  emailext body: 'Test', subject: 'Test', to: 'khdevnet@gmail.com' }
             }
 
             post { 
