@@ -9,7 +9,7 @@ node {
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
     def buildresultTempleteFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
     timestamps {
-        def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": "$BUILD_STATUS", 
+        def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": "Ok", 
                      "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME", 
                      "total":"1", "passed":"1", "failed":"1", "warnings":"1", "inconclusive":"1", "skipped":"1"]
         println renderTemplete(buildresultTempleteFilePath, model)
