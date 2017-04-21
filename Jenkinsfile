@@ -16,14 +16,13 @@ node {
                        "total":"1", "passed":"1", "failed":"1", "warnings":"1", "inconclusive":"1", "skipped":"1"]
           def text = renderTemplete(buildresultTempleteFilePath, model)
           println text  
-          emailext body: "$text", subject: 'Test', to: 'khdevnet@gmail.com'
+          emailext body: "test", subject: 'Test', to: 'khdevnet@gmail.com'
         }
     }
 }
 def text = 'Dear "$firstname $lastname",\nSo nice to meet you in <% print city %>.\nSee you in ${month},\n${signed}'
 def binding = ["firstname":"Sam", "lastname":"Pullara", "city":"San Francisco", "month":"December", "signed":"Groovy-Dev"]
 
-@NonCPS
 def renderTemplete(templateFilePath, model){
     def templateBody =  new File(templateFilePath).text
     def engine = new groovy.text.SimpleTemplateEngine()
