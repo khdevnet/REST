@@ -43,6 +43,9 @@ node {
           def testReportModel = getTestReportResult(nunitTestReportXmlFilePath);
           def templateModel = getTemplateModel(testReportModel);
           def emailBody = renderTemplete(buildResultTemplateFilePath, templateModel)
+          testReportModel = null
+          templateModel = null
+            
           emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
         }
     }
