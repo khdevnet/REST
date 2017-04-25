@@ -8,46 +8,56 @@ node {
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def buildresultTemplateFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
+    def OkBuildStatus = 'OK';
+    def ErrorBuildStatus = 'Error';
     timestamps {
         stage('Checkout') {
             cleanDir(buildArtifactsDir)
             cleanDir(reportsDir)
             git 'https://github.com/khdevnet/REST.git'
         }
+        def buildStatus = OkBuildStatus
+        try {
 
-        stage('Build') {
-            bat "\"${tool 'nuget'}\" restore $solutionName"
-            bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
-        }
+            stage('Build') {
+                bat "\"${tool 'nuget'}\" restore $solutionName"
+                bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+            }
 
-        stage('Tests') {
-          def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
-          bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
-        }
-        
-        stage('CodeQuality') {
-          def codeQualityDllNames = getFiles(codeQualityDllWildCards, buildArtifactsDir)
-          for(def fileName : codeQualityDllNames ) { 
-             try{
-              bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
-             } catch(Exception ex) {}
-          }
-        }
+            stage('Tests') {
+              def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
+              bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
+            }
 
-        stage('Archive') {
-            archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
-        }
+            stage('CodeQuality') {
+              def codeQualityDllNames = getFiles(codeQualityDllWildCards, buildArtifactsDir)
+              for(def fileName : codeQualityDllNames ) { 
+                 try{
+                  bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
+                 } catch(Exception ex) {}
+              }
+            }
 
-        stage('Notifications') {
-          def subject = "Build $JOB_NAME ($BUILD_DISPLAY_NAME)"
-          def emailBody = renderTemplete(buildresultTemplateFilePath, getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath)))
-          emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
-        }
+            stage('Archive') {
+                archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
+            }
+        } catch (error) {
+            buildStatus = ErrorBuildStatus;
+
+       } finally {
+            stage('Notifications') {
+              def subject = "Build $buildStatus - $JOB_NAME ($BUILD_DISPLAY_NAME)"
+              def emailBody = renderTemplete(
+                  buildresultTemplateFilePath, 
+                  getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath), buildStatus))
+              emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
+            }
+       }
     }
 }
 
-def getTemplateModel(nunitResultMap){
-    def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": "Ok", 
+def getTemplateModel(nunitResultMap, buildStatus){
+    def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": buildStatus, 
                  "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME"]
     for(def result : nunitResultMap ) { model.put(result.key, result.value) }
     return model
