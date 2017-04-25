@@ -62,10 +62,10 @@ def renderTemplete(templateFilePath, model){
 }
 
 def getTestReportResult(nunitTestReportXmlFilePath){
-    try (def xmlParser = new XmlParser()) {
+   new XmlParser().withCloseable  {
       def testXmlRootNode = xmlParser.parse(new File(nunitTestReportXmlFilePath))
       def resultNode = findlastNode(testXmlRootNode.children(), 'test-suite')
-      resultNode.attributes()
+      return resultNode.attributes()
     }
 }
 
