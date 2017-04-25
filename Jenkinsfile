@@ -6,7 +6,7 @@ node {
     def solutionName = 'watchshop.sln'
     def reportsDir = "${env.WORKSPACE}\\reports"
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
-    def buildResultTemplateFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
+    def buildresultTemplateFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
     timestamps {
         stage('Checkout') {
@@ -40,8 +40,7 @@ node {
 
         stage('Notifications') {
           def subject = "Build $JOB_NAME ($BUILD_DISPLAY_NAME)"
-          def emailBody = renderTemplete(buildResultTemplateFilePath, getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath)))
-            
+          def emailBody = renderTemplete(buildresultTemplateFilePath, getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath)))
           emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
         }
     }
@@ -55,17 +54,15 @@ def getTemplateModel(nunitResultMap){
 }
 
 def renderTemplete(templateFilePath, model){
-    def templateBody = new File(templateFilePath).text
+    def templateBody =  new File(templateFilePath).text
     def engine = new groovy.text.SimpleTemplateEngine()
     engine.createTemplate(templateBody).make(model).toString()
 }
 
 def getTestReportResult(nunitTestReportXmlFilePath){
-    new File(nunitTestReportXmlFilePath).withInputStream { stream ->
-      def testXmlRootNode = new XmlParser().parse(stream)
-      def resultNode = findlastNode(testXmlRootNode.children(), 'test-suite')
-      return resultNode.attributes()
-    }
+    def testXmlRootNode = new XmlParser().parse(new File(nunitTestReportXmlFilePath))
+    def resultNode = findlastNode(testXmlRootNode.children(),'test-suite')
+    resultNode.attributes()
 }
 
 def findlastNode(list, nodeName){
