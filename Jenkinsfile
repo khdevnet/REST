@@ -9,7 +9,7 @@ node {
     def buildresultTemplateFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
 
-    def OkBuildStatus = BuildStatus.Ok;
+    def OkBuildStatus = 'Ok';
     def ErrorBuildStatus = 'Error';
     def WarningBuildStatus = 'Warning';
     
