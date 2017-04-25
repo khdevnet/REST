@@ -8,7 +8,13 @@ node {
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def buildresultTemplateFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
-    def OkBuildStatus = 'OK';
+    
+    enum BuildStatus{
+       Ok, 
+       Warning,
+       Error
+    }
+    def OkBuildStatus = BuildStatus.Ok;
     def ErrorBuildStatus = 'Error';
     timestamps {
         stage('Checkout') {
@@ -16,7 +22,7 @@ node {
             cleanDir(reportsDir)
             git 'https://github.com/khdevnet/REST.git'
         }
-        def buildStatus = OkBuildStatus
+        def buildStatus = BuildStatus.Ok
         try {
 
             stage('Build') {
@@ -32,9 +38,12 @@ node {
             stage('CodeQuality') {
               def codeQualityDllNames = getFiles(codeQualityDllWildCards, buildArtifactsDir)
               for(def fileName : codeQualityDllNames ) { 
-                // try{
+                 try{
                   bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
-               //  } catch(Exception ex) {}
+                 } catch(Exception ex) {
+                    echo ex.getMessage()
+                    buildStatus = BuildStatus.Warning
+                 }
               }
             }
 
@@ -42,14 +51,15 @@ node {
                 archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
             }
         } catch (error) {
-            buildStatus = ErrorBuildStatus;
+            buildStatus = BuildStatus.Error;
 
-       } finally {
+        } finally {
             stage('Notifications') {
               def subject = "Build $buildStatus - $JOB_NAME ($BUILD_DISPLAY_NAME)"
               def emailBody = renderTemplete(
                   buildresultTemplateFilePath, 
                   getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath), buildStatus))
+                
               emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
             }
        }
