@@ -40,8 +40,7 @@ node {
               }
                 println '========================================='
                 for(def fxCopReportFilePath : getFiles(["reports/*.fxcop.xml"], reportsDir) ) {
-                  println fxCopReportFilePath
-                  println getFxCopReportStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}")   
+                  println getFxCopReportStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}").ErrorsCount  
                }
             }
              
