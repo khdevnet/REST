@@ -63,7 +63,7 @@ node {
     }
 }
 // parse fx cop
-def getFxCopReport(fxCopReportFileWildCards, filePrefix){
+HashMap<String, String> getFxCopReport(fxCopReportFileWildCards, filePrefix){
     def reportMap = new HashMap<String, String>()
     for(def fxCopReportFilePath : getFiles(fxCopReportFileWildCards, filePrefix) ) {
         String dllName = new File(fxCopReportFilePath).name;
