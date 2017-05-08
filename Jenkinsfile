@@ -74,13 +74,13 @@ node {
 def getNamespaceMessagesStatistic(fxCopReportFilePath){
    def testXmlRootNode = new XmlParser().parse(new File(fxCopReportFilePath))
    def count = 0
-   testXmlRootNode.Namespaces.Namespace
-     .each { namespace ->
-              if(namespace.Messages.Message.Issue.@Level.toString() == '[Warning]')
-              {
-                count++ 
-              }
-     }
+   println testXmlRootNode.Namespaces.Namespace
+    // .each { namespace ->
+     //         if(namespace.Messages.Message.Issue.@Level.toString() == '[Warning]')
+    //          {
+  //              count++ 
+    //          }
+   //  }
     return count
 }
 
