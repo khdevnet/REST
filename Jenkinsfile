@@ -42,7 +42,7 @@ node {
                     buildStatus = WarningBuildStatus
                  }
               }
-               for(def fxCopReportFilePath : getFiles(["WatchShop*.fxcop.xml"], "${env.WORKSPACE}") ) {
+                for(def fxCopReportFilePath : getFiles(["${reportsDir}/WatchShop*.fxcop.xml"]) ) {
                   println fxCopReportFilePath
                   println getNamespaceMessagesStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}")   
                }
