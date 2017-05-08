@@ -55,9 +55,10 @@ node {
       //      }
         } catch (ex) {
             buildStatus = ErrorBuildStatus;
-            echo ex.getMessage()
-
+            echo ex
+            exit 1
         } finally {
+            echo '===FINALY==='
             stage('Notifications') {
               def subject = "Build $buildStatus - $JOB_NAME ($BUILD_DISPLAY_NAME)"
               def emailBody = renderTemplete(
