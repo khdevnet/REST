@@ -8,8 +8,12 @@ node {
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def buildresultTemplateFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
-
-    def OkBuildStatus = 'Ok';
+     class BuildStatus {
+           static String Ok = 'Ok'
+           static String Error = 'Error'
+           static String Warning = 'Warning'
+     }
+    def OkBuildStatus = BuildStatus.Ok;
     def ErrorBuildStatus = 'Error';
     def WarningBuildStatus = 'Warning';
     
@@ -74,7 +78,7 @@ node {
 def getNamespaceMessagesStatistic(fxCopReportFilePath){
    def testXmlRootNode = new XmlParser().parse(new File(fxCopReportFilePath))
    def count = 0
-    echo testXmlRootNode.[Namespaces]
+    echo testXmlRootNode
     println "${testXmlRootNode.getClass()}"
     // .Namespaces.Namespace
     // .each { namespace ->
