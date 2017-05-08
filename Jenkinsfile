@@ -69,7 +69,8 @@ node {
 def getFxCopReportStatistic(fxCopReportFilePath){
    def errorsCount = 0
    def warningsCount = 0
-   def namespacesNode = getFirstNodeByName(testXmlRootNode.children(), 'Namespaces')
+   def fxCopRootNode = new XmlParser().parse(new File(fxCopReportFilePath))
+   def namespacesNode = getFirstNodeByName(fxCopRootNode.children(), 'Namespaces')
    def namespaceNodes = getAllNodesByName(namespacesNode.children(), 'Namespace');
    
    for(def node : namespaceNodes ) {
