@@ -64,7 +64,7 @@ node {
 }
 // parse fx cop
 def getFxCopReport(fxCopReportFileWildCards, filePrefix){
-    def reportMap = new Map<String, String>()
+    def reportMap = new HashMap<String, String>()
     for(def fxCopReportFilePath : getFiles(fxCopReportFileWildCards, filePrefix) ) {
         def dllName = new File(fxCopReportFilePath).name;
         def statistic = parseFxCopReportXmlFile("${fxCopReportFilePath}") 
