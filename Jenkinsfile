@@ -40,7 +40,7 @@ node {
               }
                 println '========================================='
                 for(def fxCopReportFilePath : getFiles(["reports/*.fxcop.xml"], reportsDir) ) {
-                  FxCopStatistic fxCop =  getFxCopReportStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}") 
+                  getFxCopReportStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}") 
                   
                }
             }
@@ -67,7 +67,7 @@ node {
     }
 }
 // parse fx cop
-FxCopStatistic getFxCopReportStatistic(fxCopReportFilePath){
+def getFxCopReportStatistic(fxCopReportFilePath){
    def errorsCount = 0
    def warningsCount = 0
    def fxCopRootNode = new XmlParser().parse(new File(fxCopReportFilePath))
@@ -90,7 +90,7 @@ FxCopStatistic getFxCopReportStatistic(fxCopReportFilePath){
     }
     println warningsCount
     println errorsCount
-    return new FxCopStatistic(errorsCount, warningsCount)
+   // return new FxCopStatistic(errorsCount, warningsCount)
 }
 
 def getFirstNodeByName(nodes ,nodeName){
