@@ -8,11 +8,6 @@ node {
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def buildresultTemplateFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
     def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
-     class BuildStatus {
-           static String Ok = 'Ok'
-           static String Error = 'Error'
-           static String Warning = 'Warning'
-     }
     def OkBuildStatus = BuildStatus.Ok;
     def ErrorBuildStatus = 'Error';
     def WarningBuildStatus = 'Warning';
@@ -147,3 +142,8 @@ def removeDir(dirPath) {
 def log(message){
     println message
 } 
+     class BuildStatus {
+           static String Ok = 'Ok'
+           static String Error = 'Error'
+           static String Warning = 'Warning'
+     }
