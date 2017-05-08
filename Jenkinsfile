@@ -22,15 +22,15 @@ node {
         def buildStatus = OkBuildStatus
         try {
 
-            stage('Build') {
-                bat "\"${tool 'nuget'}\" restore $solutionName"
-                bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
-            }
+     //       stage('Build') {
+     //           bat "\"${tool 'nuget'}\" restore $solutionName"
+     //           bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+     //       }
 
-            stage('Tests') {
-              def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
-              bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
-            }
+     //       stage('Tests') {
+     //         def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
+     //         bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
+     //       }
 
             stage('CodeQuality') {
               def codeQualityDllNames = getFiles(codeQualityDllWildCards, buildArtifactsDir)
@@ -42,11 +42,15 @@ node {
                     buildStatus = WarningBuildStatus
                  }
               }
-            }
+              
+              for(def fxCopReportFilePath : getFiles(["WatchShop*.fxcop.xml"], "${env.WORKSPACE}") ) {
+                  println fxCopReportFilePath
+                  println getNamespaceMessagesStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}")   
+              }
 
-            stage('Archive') {
-                archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
-            }
+     //       stage('Archive') {
+     //           archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
+      //      }
         } catch (error) {
             buildStatus = ErrorBuildStatus;
 
@@ -61,6 +65,19 @@ node {
             }
        }
     }
+}
+// parse fx cop
+def getNamespaceMessagesStatistic(fxCopReportFilePath){
+   def testXmlRootNode = new XmlParser().parse(new File(fxCopReportFilePath))
+   def count = 0
+   testXmlRootNode.Namespaces.Namespace
+     .each { namespace ->
+              if(namespace.Messages.Message.Issue.@Level.toString() == '[Warning]')
+              {
+                count++ 
+              }
+     }
+    return count
 }
 
 def getTemplateModel(nunitResultMap, buildStatus){
