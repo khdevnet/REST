@@ -67,7 +67,7 @@ node {
                   buildResultTemplateDir + 'buildresult.template.html', 
                   getBuildCompleteModel(nunitTestBody, fxCopTestBody, buildStatus))
                 
-              //emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
+              emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
             }
        }
     }
