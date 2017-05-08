@@ -67,9 +67,7 @@ def getFxCopReport(fxCopReportFileWildCards, filePrefix){
     def reportMap = []
     for(def fxCopReportFilePath : getFiles(fxCopReportFileWildCards, filePrefix) ) {
         def dllName = new File(fxCopReportFilePath).name;
-        println fxCopReportFilePath
-        println "${filePrefix}\\${dllName}"
-        def statistic = parseFxCopReportXmlFile("${filePrefix}\\${dllName}") 
+        def statistic = parseFxCopReportXmlFile("${fxCopReportFilePath}") 
         reportMap.put(dllName, statistic)
     }
     return reportMap
