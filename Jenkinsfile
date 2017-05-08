@@ -66,7 +66,7 @@ node {
     }
 }
 // parse fx cop
-def getFxCopReportStatistic(fxCopReportFilePath){
+FxCopStatistic getFxCopReportStatistic(fxCopReportFilePath){
    def errorsCount = 0
    def warningsCount = 0
    def fxCopRootNode = new XmlParser().parse(new File(fxCopReportFilePath))
