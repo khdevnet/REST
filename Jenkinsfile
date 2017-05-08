@@ -70,7 +70,7 @@ def getFxCopReport(fxCopReportFileWildCards, filePrefix){
         def statistic = parseFxCopReportXmlFile("${fxCopReportFilePath}") 
         println dllName
         println statistic
-        reportMap.put(dllName, statistic)
+        //reportMap.put(dllName, statistic)
     }
     return reportMap
 }
