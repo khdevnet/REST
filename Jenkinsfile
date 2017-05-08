@@ -10,22 +10,22 @@ node {
    
     timestamps {
         stage('Checkout') {
-            //cleanDir(buildArtifactsDir)
-            //cleanDir(reportsDir)
+            cleanDir(buildArtifactsDir)
+            cleanDir(reportsDir)
             git 'https://github.com/khdevnet/REST.git'
         }
         def buildStatus = BuildStatus.Ok
         try {
 
-            //stage('Build') {
-                //bat "\"${tool 'nuget'}\" restore $solutionName"
-                //bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
-            //}
+            stage('Build') {
+                bat "\"${tool 'nuget'}\" restore $solutionName"
+                bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+            }
 
-            //stage('Tests') {
-                //def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
-                //bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
-            //}
+            stage('Tests') {
+                def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
+                bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
+            }
 
             stage('CodeQuality') {
               def codeQualityDllNames = getFiles(codeQualityDllWildCards, buildArtifactsDir)
@@ -38,9 +38,10 @@ node {
               }
             }
 
-     //       stage('Archive') {
-     //           archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
-      //      }
+            stage('Archive') {
+                archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
+            }
+            
         } catch (ex) {
             buildStatus = BuildStatus.Error;
             echo ex
@@ -72,6 +73,7 @@ node {
        }
     }
 }
+
 // parse fx cop
 def getFxCopReporModel(fxCopReportFileWildCards, filePrefix){
     def reportMap = [:]
