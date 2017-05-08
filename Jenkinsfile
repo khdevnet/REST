@@ -54,7 +54,7 @@ node {
                   buildResultTemplateDir + 'nunitTestResult.template.html', 
                   getTestReportModel(reportsDir + '\\TestResult.xml'))
               
-              def fxReportStatisticModel = getFxCopReport(["reports/*.fxcop.xml"], reportsDir)
+              def fxReportStatisticModel = getFxCopReporModel(["reports/*.fxcop.xml"], reportsDir)
               def statisticHtml = '';
               for(def model : fxReportStatisticModel ) {
                   statisticHtml+="<li>${model.key}: ${model.value}</li>"
