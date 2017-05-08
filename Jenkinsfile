@@ -13,7 +13,7 @@ node {
         stage('Checkout') {
             //cleanDir(buildArtifactsDir)
             //cleanDir(reportsDir)
-            git 'https://github.com/khdevnet/REST.git'
+            //git 'https://github.com/khdevnet/REST.git'
         }
         def buildStatus = BuildStatus.Ok
         try {
@@ -41,7 +41,7 @@ node {
                 println '========================================='
                 for(def fxCopReportFilePath : getFiles(["reports/*.fxcop.xml"], reportsDir) ) {
                   FxCopStatistic fxCop =  getFxCopReportStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}") 
-                  println fxCop.WarningsCount
+                  
                }
             }
              
@@ -88,6 +88,8 @@ FxCopStatistic getFxCopReportStatistic(fxCopReportFilePath){
            }
        }
     }
+    println warningsCount
+    println errorsCount
     return new FxCopStatistic(errorsCount, warningsCount)
 }
 
