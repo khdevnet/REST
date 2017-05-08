@@ -6,7 +6,7 @@ node {
     def solutionName = 'watchshop.sln'
     def reportsDir = "${env.WORKSPACE}\\reports"
     def buildResultTemplateDir = buildtoolsDir + '\\report\\'
-    def codeQualityDllWildCards = ["$buildArtifacts/*.Domain.dll"];
+    def codeQualityDllWildCards = ["$buildArtifacts/*.Api.dll","$buildArtifacts/*.Domain.dll"];
    
     timestamps {
         stage('Checkout') {
