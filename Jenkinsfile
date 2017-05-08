@@ -45,7 +45,7 @@ node {
                 println '========================================='
                 for(def fxCopReportFilePath : getFiles(["reports/*.fxcop.xml"], reportsDir) ) {
                   println fxCopReportFilePath
-                  println getNamespaceMessagesStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}")   
+                  getNamespaceMessagesStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}")   
                }
             }
              
