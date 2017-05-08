@@ -64,13 +64,13 @@ node {
 }
 // parse fx cop
 def getFxCopReport(fxCopReportFileWildCards, filePrefix){
-    def reportMap = []
+    def reportMap = new Map<String, String>()
     for(def fxCopReportFilePath : getFiles(fxCopReportFileWildCards, filePrefix) ) {
         def dllName = new File(fxCopReportFilePath).name;
         def statistic = parseFxCopReportXmlFile("${fxCopReportFilePath}") 
         println dllName
         println statistic
-        //reportMap.put(dllName, statistic)
+        reportMap.put(dllName, statistic)
     }
     return reportMap
 }
