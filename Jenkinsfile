@@ -5,7 +5,7 @@ node {
     def buildtoolsDir = "${env.WORKSPACE}\\buildtools"
     def solutionName = 'watchshop.sln'
     def reportsDir = "${env.WORKSPACE}\\reports"
-    def buildresultTemplateFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
+    def buildResultTemplateDir = buildtoolsDir + '\\report\\'
     def codeQualityDllWildCards = ["$buildArtifacts/*.Domain.dll"];
    
     timestamps {
@@ -49,14 +49,23 @@ node {
             echo '===FINALY==='
             stage('Notifications') {
               def subject = "Build $buildStatus - $JOB_NAME ($BUILD_DISPLAY_NAME)"
+                
+              def nunitTestBody = renderTemplete(
+                  buildResultTemplateDir + 'nunitTestResult.template.html', 
+                  getTestReportModel(reportsDir + '\\TestResult.xml'))
+              
+              def fxCopTestBody = renderTemplete(
+                  buildResultTemplateDir + 'fxCopTestResult.template.html', 
+                  ['statistic': 'html'])
+                
               def emailBody = renderTemplete(
                   buildresultTemplateFilePath, 
                   getBuildCompleteModel(
-                      getTestReport(reportsDir + '\\TestResult.xml'),
-                      getFxCopReport(["reports/*.fxcop.xml"], reportsDir),
+                      nunitTestBody,
+                      fxCopTestBody,
                       buildStatus))
                 
-              //emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
+              emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
             }
        }
     }
@@ -100,7 +109,7 @@ def parseFxCopReportXmlFile(fxCopReportFilePath){
     return "Warnings: ${warningsCount}, Errors: ${errorsCount}"
 }
 
-def getFirstNodeByName(nodes ,nodeName){
+def getFirstNodeByName(nodes, nodeName){
         for(def node : nodes ) {
             if(node.name() == nodeName){
                 return node
@@ -108,7 +117,7 @@ def getFirstNodeByName(nodes ,nodeName){
         }
     }
     
-def getAllNodesByName(nodes ,nodeName){
+def getAllNodesByName(nodes, nodeName){
         def list = []
         for(def node : nodes ) {
             if(node.name() == nodeName){
@@ -117,11 +126,16 @@ def getAllNodesByName(nodes ,nodeName){
         }
         return list
     }
-def getBuildCompleteModel(nunitResultMap, buildStatus){
-    def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": buildStatus, 
-                 "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME"]
-    for(def result : nunitResultMap ) { model.put(result.key, result.value) }
-    return model
+
+def getBuildCompleteModel(nunitResultBody, fxCopResultBody, buildStatus){
+    return ["buildResultUrl": "$BUILD_URL", "buildStatus": buildStatus, 
+           "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME",
+           "nunitResultBody" : nunitResultBody, "fxCopResultBody": fxCopResultBody]
+}
+
+def mergeMap(target, map){
+    for(def result : map ) { target.put(map.key, map.value) }
+    return target
 }
 
 def renderTemplete(templateFilePath, model){
@@ -130,10 +144,10 @@ def renderTemplete(templateFilePath, model){
     engine.createTemplate(templateBody).make(model).toString()
 }
 
-def getTestReport(nunitTestReportXmlFilePath){
+def getTestReportModel(nunitTestReportXmlFilePath){
     def testXmlRootNode = new XmlParser().parse(new File(nunitTestReportXmlFilePath))
     def resultNode = findlastNode(testXmlRootNode.children(),'test-suite')
-    resultNode.attributes()
+    return resultNode.attributes()
 }
 
 def findlastNode(list, nodeName){
