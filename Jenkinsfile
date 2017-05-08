@@ -42,11 +42,12 @@ node {
                     buildStatus = WarningBuildStatus
                  }
               }
-              
-              for(def fxCopReportFilePath : getFiles(["WatchShop*.fxcop.xml"], "${env.WORKSPACE}") ) {
+               for(def fxCopReportFilePath : getFiles(["WatchShop*.fxcop.xml"], "${env.WORKSPACE}") ) {
                   println fxCopReportFilePath
                   println getNamespaceMessagesStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}")   
-              }
+               }
+            }
+             
 
      //       stage('Archive') {
      //           archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
