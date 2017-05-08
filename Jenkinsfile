@@ -15,22 +15,22 @@ node {
     
     timestamps {
         stage('Checkout') {
-            cleanDir(buildArtifactsDir)
-            cleanDir(reportsDir)
+            //cleanDir(buildArtifactsDir)
+            //cleanDir(reportsDir)
             git 'https://github.com/khdevnet/REST.git'
         }
         def buildStatus = OkBuildStatus
         try {
 
-            stage('Build') {
-                bat "\"${tool 'nuget'}\" restore $solutionName"
-                bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
-            }
+            //stage('Build') {
+                //bat "\"${tool 'nuget'}\" restore $solutionName"
+                //bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+            //}
 
-            stage('Tests') {
-              def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
-              bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
-            }
+            //stage('Tests') {
+              //def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
+              //bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
+            //}
 
             stage('CodeQuality') {
               def codeQualityDllNames = getFiles(codeQualityDllWildCards, buildArtifactsDir)
@@ -53,8 +53,9 @@ node {
      //       stage('Archive') {
      //           archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
       //      }
-        } catch (error) {
+        } catch (ex) {
             buildStatus = ErrorBuildStatus;
+            echo ex.getMessage()
 
         } finally {
             stage('Notifications') {
@@ -63,7 +64,7 @@ node {
                   buildresultTemplateFilePath, 
                   getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath), buildStatus))
                 
-              emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
+              //emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
             }
        }
     }
