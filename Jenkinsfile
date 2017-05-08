@@ -54,24 +54,24 @@ node {
                   buildResultTemplateDir + 'nunitTestResult.template.html', 
                   getTestReportModel(reportsDir + '\\TestResult.xml'))
               
-              def fxCopTestBody = renderTemplete(
-                  buildResultTemplateDir + 'fxCopTestResult.template.html', 
-                  ['statistic': 'html'])
+              //def fxCopTestBody = renderTemplete(
+                  //buildResultTemplateDir + 'fxCopTestResult.template.html', 
+                  //["statistic": 'html'])
                 
-              def emailBody = renderTemplete(
-                  buildResultTemplateDir + 'buildresult.template.html', 
-                  getBuildCompleteModel(
-                      nunitTestBody,
-                      fxCopTestBody,
-                      buildStatus))
+              //def emailBody = renderTemplete(
+                 // buildResultTemplateDir + 'buildresult.template.html', 
+                //  getBuildCompleteModel(
+                //      nunitTestBody,
+                //      fxCopTestBody,
+                //      buildStatus))
                 
-              emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
+              //emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
             }
        }
     }
 }
 // parse fx cop
-def getFxCopReport(fxCopReportFileWildCards, filePrefix){
+def getFxCopReporModel(fxCopReportFileWildCards, filePrefix){
     def reportMap = [:]
     for(def fxCopReportFilePath : getFiles(fxCopReportFileWildCards, filePrefix) ) {
         def dllName = new File(fxCopReportFilePath).name.replace(".fxcop.xml", "");
