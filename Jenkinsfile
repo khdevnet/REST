@@ -11,22 +11,22 @@ node {
     
     timestamps {
         stage('Checkout') {
-            cleanDir(buildArtifactsDir)
-            cleanDir(reportsDir)
+            //cleanDir(buildArtifactsDir)
+            //cleanDir(reportsDir)
             git 'https://github.com/khdevnet/REST.git'
         }
         def buildStatus = BuildStatus.Ok
         try {
 
-            stage('Build') {
-                bat "\"${tool 'nuget'}\" restore $solutionName"
-                bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
-            }
+            //stage('Build') {
+                //bat "\"${tool 'nuget'}\" restore $solutionName"
+                //bat "\"${tool 'msbuild'}\" $solutionName  /p:DeployOnBuild=true;DeployTarget=Package /p:Configuration=Release;OutputPath=\"$buildArtifactsDir\" /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+            //}
 
-            stage('Tests') {
-                def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
-                bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
-            }
+            //stage('Tests') {
+                //def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
+                //bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
+            //}
 
             stage('CodeQuality') {
               def codeQualityDllNames = getFiles(codeQualityDllWildCards, buildArtifactsDir)
@@ -41,7 +41,7 @@ node {
                 println '========================================='
                 for(def fxCopReportFilePath : getFiles(["reports/*.fxcop.xml"], reportsDir) ) {
                   println fxCopReportFilePath
-                  getNamespaceMessagesStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}")   
+                  println getFxCopReportStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}")   
                }
             }
              
@@ -67,12 +67,26 @@ node {
     }
 }
 // parse fx cop
-def getNamespaceMessagesStatistic(fxCopReportFilePath){
-   def testXmlRootNode = new XmlParser().parse(new File(fxCopReportFilePath))
-   def count = 0
+def getFxCopReportStatistic(fxCopReportFilePath){
+   def errorsCount = 0
+   def warningsCount = 0
    def namespacesNode = getFirstNodeByName(testXmlRootNode.children(), 'Namespaces')
-   def namespaceNodes = getAllNodesByName(namespacesNode.children(),'Namespace');
-   println namespaceNodes
+   def namespaceNodes = getAllNodesByName(namespacesNode.children(), 'Namespace');
+   
+   for(def node : namespaceNodes ) {
+       def messagesNode = getFirstNodeByName(node.children(), 'Messages')
+       def messageNodes = getAllNodesByName(messagesNode.children(), 'Message')
+       for(def messageNode : messageNodes ) {
+           def issueNode = getFirstNodeByName(messageNode.children(), 'Issue')
+           if(issueNode.@Level=='Warning'){
+               warningsCount++
+           }
+           if(issueNode.@Level=='Error'){
+               errorsCount++
+           }
+       }
+    }
+    return new FxCopStatistic(errorsCount, warningsCount)
 }
 
 def getFirstNodeByName(nodes ,nodeName){
@@ -149,6 +163,16 @@ def removeDir(dirPath) {
 def log(message){
     println message
 } 
+
+class FxCopStatistic {
+      FxCopStatistic(errorsCount, warningsCount){
+        ErrorsCount = errorsCount
+        WarningsCount = warningsCount
+      }
+      int ErrorsCount
+      int WarningsCount
+}
+
      class BuildStatus {
            static String Ok = 'Ok'
            static String Error = 'Error'
