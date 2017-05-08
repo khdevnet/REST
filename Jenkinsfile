@@ -70,18 +70,28 @@ node {
 def getNamespaceMessagesStatistic(fxCopReportFilePath){
    def testXmlRootNode = new XmlParser().parse(new File(fxCopReportFilePath))
    def count = 0
-    println "${testXmlRootNode.Namespaces}"
-   println "${testXmlRootNode.getClass()}"
-    // .Namespaces.Namespace
-    // .each { namespace ->
-     //         if(namespace.Messages.Message.Issue.@Level.toString() == '[Warning]')
-    //          {
-  //              count++ 
-    //          }
-   //  }
-    return count
+   def namespacesNode = getFirstNodeByName(testXmlRootNode.children(), 'Namespaces')
+   def namespaceNodes = getAllNodesByName(namespacesNode.children(),'Namespace');
+   println namespaceNodes
 }
 
+def getFirstNodeByName(nodes ,nodeName){
+        for(def node : nodes ) {
+            if(node.name() == nodeName){
+                return node
+            }
+        }
+    }
+    
+def getAllNodesByName(nodes ,nodeName){
+        def list = []
+        for(def node : nodes ) {
+            if(node.name() == nodeName){
+               list << node
+            }
+        }
+        return list
+    }
 def getTemplateModel(nunitResultMap, buildStatus){
     def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": buildStatus, 
                  "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME"]
