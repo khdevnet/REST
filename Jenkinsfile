@@ -5,10 +5,9 @@ node {
     def buildtoolsDir = "${env.WORKSPACE}\\buildtools"
     def solutionName = 'watchshop.sln'
     def reportsDir = "${env.WORKSPACE}\\reports"
-    def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def buildresultTemplateFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
     def codeQualityDllWildCards = ["$buildArtifacts/*.Domain.dll"];
-    
+   
     timestamps {
         stage('Checkout') {
             //cleanDir(buildArtifactsDir)
@@ -35,11 +34,8 @@ node {
                   bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
                  } catch(Exception ex) {
                     echo ex.getMessage()
-                    buildStatus = BuildStatus.Warning
                  }
               }
-                println '========================================='
-                getFxCopReport(["reports/*.fxcop.xml"], reportsDir)
             }
 
      //       stage('Archive') {
@@ -55,7 +51,10 @@ node {
               def subject = "Build $buildStatus - $JOB_NAME ($BUILD_DISPLAY_NAME)"
               def emailBody = renderTemplete(
                   buildresultTemplateFilePath, 
-                  getTemplateModel(getTestReportResult(nunitTestReportXmlFilePath), buildStatus))
+                  getBuildCompleteModel(
+                      getTestReport(reportsDir + '\\TestResult.xml'),
+                      getFxCopReport(["reports/*.fxcop.xml"], reportsDir),
+                      buildStatus))
                 
               //emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
             }
@@ -66,16 +65,14 @@ node {
 def getFxCopReport(fxCopReportFileWildCards, filePrefix){
     def reportMap = [:]
     for(def fxCopReportFilePath : getFiles(fxCopReportFileWildCards, filePrefix) ) {
-        String dllName = new File(fxCopReportFilePath).name;
-        String statistic = parseFxCopReportXmlFile("${fxCopReportFilePath}") 
-        println dllName
-        println statistic
+        def dllName = new File(fxCopReportFilePath).name.replace(".fxcop.xml", "");
+        def statistic = parseFxCopReportXmlFile("${fxCopReportFilePath}") 
         reportMap.put(dllName, statistic)
     }
     return reportMap
 }
 
-String parseFxCopReportXmlFile(fxCopReportFilePath){
+def parseFxCopReportXmlFile(fxCopReportFilePath){
    def errorsCount = 0
    def warningsCount = 0
    def fxCopRootNode = new XmlParser().parse(new File(fxCopReportFilePath))
@@ -120,7 +117,7 @@ def getAllNodesByName(nodes ,nodeName){
         }
         return list
     }
-def getTemplateModel(nunitResultMap, buildStatus){
+def getBuildCompleteModel(nunitResultMap, buildStatus){
     def model = ["buildResultUrl": "$BUILD_URL", "buildStatus": buildStatus, 
                  "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME"]
     for(def result : nunitResultMap ) { model.put(result.key, result.value) }
@@ -133,7 +130,7 @@ def renderTemplete(templateFilePath, model){
     engine.createTemplate(templateBody).make(model).toString()
 }
 
-def getTestReportResult(nunitTestReportXmlFilePath){
+def getTestReport(nunitTestReportXmlFilePath){
     def testXmlRootNode = new XmlParser().parse(new File(nunitTestReportXmlFilePath))
     def resultNode = findlastNode(testXmlRootNode.children(),'test-suite')
     resultNode.attributes()
