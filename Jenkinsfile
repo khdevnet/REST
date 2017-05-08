@@ -28,8 +28,21 @@ node {
                 //bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
             //}
 
-            
-             
+            stage('CodeQuality') {
+              def codeQualityDllNames = getFiles(codeQualityDllWildCards, buildArtifactsDir)
+              for(def fileName : codeQualityDllNames ) { 
+                 try{
+                  bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
+                 } catch(Exception ex) {
+                    echo ex.getMessage()
+                    buildStatus = BuildStatus.Warning
+                 }
+              }
+                println '========================================='
+                for(def fxCopReportFilePath : getFiles(["reports/*.fxcop.xml"], reportsDir) ) {
+                    getFxCopReportStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}") 
+               }
+            }
 
      //       stage('Archive') {
      //           archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
@@ -64,7 +77,7 @@ def getFxCopReportStatistic(fxCopReportFilePath){
        def messageNodes = getAllNodesByName(messagesNode.children(), 'Message')
        for(def messageNode : messageNodes ) {
            def issueNode = getFirstNodeByName(messageNode.children(), 'Issue')
-           def levelAttribute = issueNode.attribute('Level').toString()
+           def levelAttribute = issueNode.attribute('Level')
            if(levelAttribute == 'Warning'){
                warningsCount++
            }
