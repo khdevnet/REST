@@ -100,7 +100,7 @@ def parseFxCopReportXmlFile(fxCopReportFilePath){
        }
     }
     
-    return ["warningsCount": warningsCount, "errorsCount": errorsCount]
+    return "Warnings: ${warningsCount}, Errors: ${errorsCount}"
 }
 
 def getFirstNodeByName(nodes ,nodeName){
