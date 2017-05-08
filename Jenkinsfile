@@ -54,9 +54,14 @@ node {
                   buildResultTemplateDir + 'nunitTestResult.template.html', 
                   getTestReportModel(reportsDir + '\\TestResult.xml'))
               
+              def fxReportStatisticModel = getFxCopReport(["reports/*.fxcop.xml"], reportsDir)
+              def statisticHtml = '';
+              for(def model : fxReportStatisticModel ) {
+                  statisticHtml+="<li>${model.key}: ${model.value}</li>"
+              }
               def fxCopTestBody = renderTemplete(
                   buildResultTemplateDir + 'fxCopTestResult.template.html', 
-                  ["statistic": 'html'])
+                  ["statistic": statisticHtml])
                 
               def emailBody = renderTemplete(
                   buildResultTemplateDir + 'buildresult.template.html', 
