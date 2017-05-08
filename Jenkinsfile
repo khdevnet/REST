@@ -59,7 +59,7 @@ node {
                   ['statistic': 'html'])
                 
               def emailBody = renderTemplete(
-                  buildresultTemplateFilePath, 
+                  buildResultTemplateDir + 'buildresult.template.html', 
                   getBuildCompleteModel(
                       nunitTestBody,
                       fxCopTestBody,
