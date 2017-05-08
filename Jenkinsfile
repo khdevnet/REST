@@ -39,9 +39,7 @@ node {
                  }
               }
                 println '========================================='
-                for(def fxCopReportFilePath : getFiles(["reports/*.fxcop.xml"], reportsDir) ) {
-                    getFxCopReportStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}") 
-               }
+                getFxCopReport(["reports/*.fxcop.xml"], reportsDir)
             }
 
      //       stage('Archive') {
@@ -65,7 +63,19 @@ node {
     }
 }
 // parse fx cop
-def getFxCopReportStatistic(fxCopReportFilePath){
+def getFxCopReport(fxCopReportFileWildCards, filePrefix){
+    def reportMap = []
+    for(def fxCopReportFilePath : getFiles(fxCopReportFileWildCards, filePrefix) ) {
+        def dllName = new File(fxCopReportFilePath).name;
+        println fxCopReportFilePath
+        println "${filePrefix}\\${dllName}"
+        def statistic = getFxCopReportStatistic("${filePrefix}\\${dllName}") 
+        reportMap.put(dllName, statistic)
+    }
+    return reportMap
+}
+
+def parseFxCopReportXmlFile(fxCopReportFilePath){
    def errorsCount = 0
    def warningsCount = 0
    def fxCopRootNode = new XmlParser().parse(new File(fxCopReportFilePath))
@@ -89,9 +99,8 @@ def getFxCopReportStatistic(fxCopReportFilePath){
            }
        }
     }
-    println warningsCount
-    println errorsCount
-   // return new FxCopStatistic(errorsCount, warningsCount)
+    
+    return ["warningsCount": warningsCount, "errorsCount": errorsCount]
 }
 
 def getFirstNodeByName(nodes ,nodeName){
@@ -169,17 +178,8 @@ def log(message){
     println message
 } 
 
-class FxCopStatistic {
-      FxCopStatistic(errorsCount, warningsCount){
-        ErrorsCount = errorsCount
-        WarningsCount = warningsCount
-      }
-      int ErrorsCount
-      int WarningsCount
+class BuildStatus {
+    static String Ok = 'Ok'
+    static String Error = 'Error'
+    static String Warning = 'Warning'
 }
-
-     class BuildStatus {
-           static String Ok = 'Ok'
-           static String Error = 'Error'
-           static String Warning = 'Warning'
-     }
