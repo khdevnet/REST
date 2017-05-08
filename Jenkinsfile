@@ -77,14 +77,16 @@ def getFxCopReportStatistic(fxCopReportFilePath){
        def messageNodes = getAllNodesByName(messagesNode.children(), 'Message')
        for(def messageNode : messageNodes ) {
            def issueNode = getFirstNodeByName(messageNode.children(), 'Issue')
-           def levelAttribute = issueNode.attributes()
-           println levelAttribute
-          // if(levelAttribute == 'Warning'){
-             //  warningsCount++
-          // }
-          // if(levelAttribute == 'Error'){
-         //      errorsCount++
-         //  }
+           def issueNodeAttributes = issueNode.attributes()
+           def levelAttribute = issueNodeAttributes.get('Level')
+           if(levelAttribute != null) {
+           if(levelAttribute == 'Warning'){
+               warningsCount++
+           }
+           if(levelAttribute == 'Error'){
+               errorsCount++
+             }
+           }
        }
     }
     println warningsCount
