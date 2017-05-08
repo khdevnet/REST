@@ -40,7 +40,32 @@ node {
               }
                 println '========================================='
                 for(def fxCopReportFilePath : getFiles(["reports/*.fxcop.xml"], reportsDir) ) {
-                  getFxCopReportStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}") 
+                    
+                    def errorsCount = 0
+               def path =     "${reportsDir}\\${new File(fxCopReportFilePath).name}"
+   def warningsCount = 0
+   def fxCopRootNode = new XmlParser().parse(new File(path))
+   def namespacesNode = getFirstNodeByName(fxCopRootNode.children(), 'Namespaces')
+   def namespaceNodes = getAllNodesByName(namespacesNode.children(), 'Namespace');
+   
+   for(def node : namespaceNodes ) {
+       def messagesNode = getFirstNodeByName(node.children(), 'Messages')
+       def messageNodes = getAllNodesByName(messagesNode.children(), 'Message')
+       for(def messageNode : messageNodes ) {
+           def issueNode = getFirstNodeByName(messageNode.children(), 'Issue')
+           def levelAttribute = issueNode.attribute('Level').toString()
+           if(levelAttribute == 'Warning'){
+               warningsCount++
+           }
+           if(levelAttribute == 'Error'){
+               errorsCount++
+           }
+       }
+    }
+    println warningsCount
+    println errorsCount
+                    
+                 // getFxCopReportStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}") 
                   
                }
             }
