@@ -7,10 +7,7 @@ node {
     def reportsDir = "${env.WORKSPACE}\\reports"
     def nunitTestReportXmlFilePath  = reportsDir + '\\TestResult.xml'
     def buildresultTemplateFilePath = buildtoolsDir + '\\report\\buildresult.template.html'
-    def codeQualityDllWildCards = ["$buildArtifacts/WatchShop*.Api.dll", "$buildArtifacts/*.Domain.dll"];
-    def OkBuildStatus = BuildStatus.Ok;
-    def ErrorBuildStatus = 'Error';
-    def WarningBuildStatus = 'Warning';
+    def codeQualityDllWildCards = ["$buildArtifacts/*.Domain.dll"];
     
     timestamps {
         stage('Checkout') {
@@ -18,7 +15,7 @@ node {
             //cleanDir(reportsDir)
             git 'https://github.com/khdevnet/REST.git'
         }
-        def buildStatus = OkBuildStatus
+        def buildStatus = BuildStatus.Ok
         try {
 
             //stage('Build') {
@@ -38,7 +35,7 @@ node {
                   bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
                  } catch(Exception ex) {
                     echo ex.getMessage()
-                    buildStatus = WarningBuildStatus
+                    buildStatus = BuildStatus.Warning
                  }
               }
                 println '========================================='
@@ -53,7 +50,7 @@ node {
      //           archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
       //      }
         } catch (ex) {
-            buildStatus = ErrorBuildStatus;
+            buildStatus = BuildStatus.Error;
             echo ex
             exit 1
         } finally {
