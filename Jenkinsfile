@@ -28,21 +28,7 @@ node {
                 //bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
             //}
 
-            stage('CodeQuality') {
-              def codeQualityDllNames = getFiles(codeQualityDllWildCards, buildArtifactsDir)
-              for(def fileName : codeQualityDllNames ) { 
-                 try{
-                  bat """${tool 'fxcop'} /f:$fileName /o:$reportsDir\\${new File(fileName).name}.fxcop.xml"""
-                 } catch(Exception ex) {
-                    echo ex.getMessage()
-                    buildStatus = BuildStatus.Warning
-                 }
-              }
-                println '========================================='
-                for(def fxCopReportFilePath : getFiles(["reports/*.fxcop.xml"], reportsDir) ) {
-                    getFxCopReportStatistic("${reportsDir}\\${new File(fxCopReportFilePath).name}") 
-               }
-            }
+            
              
 
      //       stage('Archive') {
