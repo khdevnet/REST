@@ -58,12 +58,9 @@ node {
                   buildResultTemplateDir + 'fxCopTestResult.template.html', 
                   ["statistic": 'html'])
                 
-              //def emailBody = renderTemplete(
-                 // buildResultTemplateDir + 'buildresult.template.html', 
-                //  getBuildCompleteModel(
-                //      nunitTestBody,
-                //      fxCopTestBody,
-                //      buildStatus))
+              def emailBody = renderTemplete(
+                  buildResultTemplateDir + 'buildresult.template.html', 
+                  getBuildCompleteModel(nunitTestBody, fxCopTestBody, buildStatus))
                 
               //emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
             }
@@ -130,7 +127,7 @@ def getAllNodesByName(nodes, nodeName){
 def getBuildCompleteModel(nunitResultBody, fxCopResultBody, buildStatus){
     return ["buildResultUrl": "$BUILD_URL", "buildStatus": buildStatus, 
            "buildNumber": "$BUILD_DISPLAY_NAME", "applicationName": "$JOB_NAME",
-           "nunitResultBody" : nunitResultBody, "fxCopResultBody": fxCopResultBody]
+           "nunitResultBody" : "$nunitResultBody", "fxCopResultBody": "$fxCopResultBody"]
 }
 
 def mergeMap(target, map){
