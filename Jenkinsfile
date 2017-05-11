@@ -69,6 +69,8 @@ node {
                   getBuildCompleteModel(nunitTestBody, fxCopTestBody, buildStatus))
                 
               emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
+              
+              nunit testResultsPattern: '${WORCKSPACE}/reports/TestResult.xml'
             }
        }
     }
