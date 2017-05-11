@@ -154,7 +154,7 @@ def getTestReportModel(nunitTestReportXmlFilePath){
     def testXmlRootNode = new XmlParser().parse(new File(nunitTestReportXmlFilePath))
     def resultNode = findlastNode(testXmlRootNode.children(),'test-suite')
     def result = resultNode.attributes();
-    result.put('testResultsUrl', env.JOB_URL + '/' + env.BUILD_ID + 'testReport')
+    result.put('testResultsUrl', env.JOB_URL + env.BUILD_ID + '/testReport')
     return result
 }
 
