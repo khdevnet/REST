@@ -2,10 +2,9 @@
 node {
     def buildArtifacts = "buildartifacts"
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
-    def buildtoolsDir = "${env.WORKSPACE}\\buildtools"
     def solutionName = 'watchshop.sln'
     def reportsDir = "$buildArtifactsDir\\reports"
-    def buildResultTemplateDir = buildtoolsDir + '\\report\\'
+    def buildResultTemplateDir =  'buildtools\\report\\'
     def codeQualityDllWildCards = ["$buildArtifacts/*.Api.dll","$buildArtifacts/*.Domain.dll"];
    
     timestamps {
@@ -53,15 +52,15 @@ node {
               def subject = "Build $buildStatus - $JOB_NAME ($BUILD_DISPLAY_NAME)"
                 
               def nunitTestBody = renderTemplete(
-                  buildResultTemplateDir + 'nunitTestResult.template.html', 
+                  env.WORKSPACE + buildResultTemplateDir + 'nunitTestResult.template.html', 
                   getTestReportModel(reportsDir + '\\TestResult.xml'))
              
               def fxCopTestBody = renderTemplete(
-                  buildResultTemplateDir + 'fxCopTestResult.template.html', 
+                  env.WORKSPACE + buildResultTemplateDir + 'fxCopTestResult.template.html', 
                   getFxCopReporModel(["reports/*.fxcop.xml"], reportsDir))
                 
               def emailBody = renderTemplete(
-                  buildResultTemplateDir + 'buildresult.template.html', 
+                  env.WORKSPACE + buildResultTemplateDir + 'buildresult.template.html', 
                   getBuildCompleteModel(nunitTestBody, fxCopTestBody, buildStatus))
                 
               emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
