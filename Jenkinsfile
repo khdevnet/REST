@@ -75,7 +75,9 @@ def getFxCopReporModel(fxCopReportFileWildCards, filePrefix){
     def reportMap = [:]
     for(def fxCopReportFilePath : getFiles(fxCopReportFileWildCards, filePrefix) ) {
         def dllName = new File(fxCopReportFilePath).name.replace(".fxcop.xml", "");
-        def statistic = parseFxCopReportXmlFile("${fxCopReportFilePath}") 
+        def statistic = parseFxCopReportXmlFile("${fxCopReportFilePath}")
+        echo dllName
+        echo statistic
         reportMap.put(dllName, statistic)
     }
     
