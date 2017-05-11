@@ -58,7 +58,7 @@ node {
              
               def fxCopTestBody = renderTemplete(
                   buildResultTemplateDir + 'fxCopTestResult.template.html', 
-                  getFxCopReporModel(["reports/*.fxcop.xml"], buildArtifactsDir))
+                  getFxCopReporModel(["reportsDir/*.fxcop.xml"], reportsDir))
                 
               def emailBody = renderTemplete(
                   buildResultTemplateDir + 'buildresult.template.html', 
