@@ -1,10 +1,11 @@
 #!groovy
 node {
-    def buildArtifacts = "buildartifacts"
+    def buildArtifacts = "\\buildartifacts"
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
     def solutionName = 'watchshop.sln'
-    def reportsDir = "$buildArtifactsDir\\reports"
-    def buildResultTemplateDir =  '\\buildtools\\report\\'
+    def reports = "$buildArtifacts\\reports"
+    def reportsDir = "${env.WORKSPACE}$reports"
+    def buildResultTemplateDir =  "${env.WORKSPACE}\\buildtools\\report\\"
     def codeQualityDllWildCards = ["$buildArtifacts/*.Api.dll","$buildArtifacts/*.Domain.dll"];
    
     timestamps {
@@ -24,7 +25,7 @@ node {
             stage('Tests') {
                 def testDllsName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
                 bat """${tool 'nunit'} $testDllsName --work=$reportsDir"""
-                nunit testResultsPattern: "$reportsDir/TestResult.xml"
+                nunit testResultsPattern: "$reports/TestResult.xml"
             }
 
             stage('CodeQuality') {
@@ -52,15 +53,15 @@ node {
               def subject = "Build $buildStatus - $JOB_NAME ($BUILD_DISPLAY_NAME)"
                 
               def nunitTestBody = renderTemplete(
-                  env.WORKSPACE + buildResultTemplateDir + 'nunitTestResult.template.html', 
+                  buildResultTemplateDir + 'nunitTestResult.template.html', 
                   getTestReportModel(reportsDir + '\\TestResult.xml'))
              
               def fxCopTestBody = renderTemplete(
-                  env.WORKSPACE + buildResultTemplateDir + 'fxCopTestResult.template.html', 
+                  buildResultTemplateDir + 'fxCopTestResult.template.html', 
                   getFxCopReporModel(["reports/*.fxcop.xml"], reportsDir))
                 
               def emailBody = renderTemplete(
-                  env.WORKSPACE + buildResultTemplateDir + 'buildresult.template.html', 
+                  buildResultTemplateDir + 'buildresult.template.html', 
                   getBuildCompleteModel(nunitTestBody, fxCopTestBody, buildStatus))
                 
               emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
