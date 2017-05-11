@@ -25,7 +25,7 @@ node {
             stage('Tests') {
                 def testDllsName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
                 bat """${tool 'nunit'} $testDllsName --work=$reportsDir"""
-                nunit testResultsPattern: "$buildArtifacts/reports/TestResult.xml"
+                nunit testResultsPattern: "$reportsDir/TestResult.xml"
             }
 
             stage('CodeQuality') {
