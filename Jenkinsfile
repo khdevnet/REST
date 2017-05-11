@@ -70,7 +70,7 @@ node {
                 
               emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
               
-              nunit testResultsPattern: '${WORCKSPACE}/reports/TestResult.xml'
+              nunit testResultsPattern: 'reports/TestResult.xml'
             }
        }
     }
