@@ -40,7 +40,7 @@ node {
             }
 
             stage('Archive') {
-                archiveArtifacts artifacts: 'buildartifacts/_PublishedWebsites/WatchShop.Api_Package/**/*.*', onlyIfSuccessful: true
+                archiveArtifacts artifacts: 'buildartifacts/**/*.*', onlyIfSuccessful: true
             }
             
         } catch (ex) {
