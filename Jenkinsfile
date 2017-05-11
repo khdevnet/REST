@@ -153,7 +153,9 @@ def renderTemplete(templateFilePath, model){
 def getTestReportModel(nunitTestReportXmlFilePath){
     def testXmlRootNode = new XmlParser().parse(new File(nunitTestReportXmlFilePath))
     def resultNode = findlastNode(testXmlRootNode.children(),'test-suite')
-    return resultNode.attributes()
+    def result = resultNode.attributes();
+    result.put('testResultsUrl', env.JOB_URL + '/' + env.BUILD_ID + 'testReport')
+    return result
 }
 
 def findlastNode(list, nodeName){
