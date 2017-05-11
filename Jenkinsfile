@@ -4,7 +4,7 @@ node {
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
     def solutionName = 'watchshop.sln'
     def reportsDir = "$buildArtifactsDir\\reports"
-    def buildResultTemplateDir =  'buildtools\\report\\'
+    def buildResultTemplateDir =  '\\buildtools\\report\\'
     def codeQualityDllWildCards = ["$buildArtifacts/*.Api.dll","$buildArtifacts/*.Domain.dll"];
    
     timestamps {
