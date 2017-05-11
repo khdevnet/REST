@@ -4,7 +4,7 @@ node {
     def buildArtifactsDir = "${env.WORKSPACE}\\$buildArtifacts"
     def buildtoolsDir = "${env.WORKSPACE}\\buildtools"
     def solutionName = 'watchshop.sln'
-    def reportsDir = "${env.WORKSPACE}\\reports"
+    def reportsDir = "$buildArtifactsDir\\reports"
     def buildResultTemplateDir = buildtoolsDir + '\\report\\'
     def codeQualityDllWildCards = ["$buildArtifacts/*.Api.dll","$buildArtifacts/*.Domain.dll"];
    
@@ -23,8 +23,9 @@ node {
             }
 
             stage('Tests') {
-                def testFilesName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
-                bat """${tool 'nunit'} $testFilesName --work=$reportsDir"""          
+                def testDllsName = getFiles(["$buildArtifacts/*.Tests.dll"], buildArtifactsDir).join(' ')
+                bat """${tool 'nunit'} $testDllsName --work=$reportsDir"""
+                nunit testResultsPattern: "$buildArtifacts/reports/TestResult.xml"
             }
 
             stage('CodeQuality') {
@@ -54,23 +55,16 @@ node {
               def nunitTestBody = renderTemplete(
                   buildResultTemplateDir + 'nunitTestResult.template.html', 
                   getTestReportModel(reportsDir + '\\TestResult.xml'))
-              
-              def fxReportStatisticModel = getFxCopReporModel(["reports/*.fxcop.xml"], reportsDir)
-              def statisticHtml = '';
-              for(def model : fxReportStatisticModel ) {
-                  statisticHtml+="<li>${model.key}: ${model.value}</li>"
-              }
+             
               def fxCopTestBody = renderTemplete(
                   buildResultTemplateDir + 'fxCopTestResult.template.html', 
-                  ["statistic": statisticHtml])
+                  getFxCopReporModel(["reports/*.fxcop.xml"], reportsDir))
                 
               def emailBody = renderTemplete(
                   buildResultTemplateDir + 'buildresult.template.html', 
                   getBuildCompleteModel(nunitTestBody, fxCopTestBody, buildStatus))
                 
               emailext body: emailBody, subject: subject, to: 'khdevnet@gmail.com'
-              
-              nunit testResultsPattern: 'reports/TestResult.xml'
             }
        }
     }
@@ -84,7 +78,13 @@ def getFxCopReporModel(fxCopReportFileWildCards, filePrefix){
         def statistic = parseFxCopReportXmlFile("${fxCopReportFilePath}") 
         reportMap.put(dllName, statistic)
     }
-    return reportMap
+    
+    def statisticHtml = '';
+    for(def model : reportMap ) {
+         statisticHtml+="<li>${model.key}: ${model.value}</li>"
+    }
+    
+    return ["statistic": statisticHtml]
 }
 
 def parseFxCopReportXmlFile(fxCopReportFilePath){
