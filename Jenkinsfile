@@ -7,5 +7,14 @@ node {
     def reportsDir = "$buildArtifactsDir\\reports"
     def buildResultTemplateDir =  "${env.WORKSPACE}\\buildtools\\report\\"
     def codeQualityDllWildCards = ["$buildArtifacts/*.Api.dll","$buildArtifacts/*.Domain.dll"];
-    def thing = load 'Thing.groovy'
-    echo thing.doStuff()    
+   
+    
+ timestamps {
+        stage('Checkout') {
+
+            git 'https://github.com/khdevnet/REST.git'
+             def thing = load 'Thing.groovy'
+             echo thing.doStuff()   
+        }
+    }
+}
