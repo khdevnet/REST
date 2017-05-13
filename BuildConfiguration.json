@@ -2,8 +2,8 @@
   "repositories": [
     {
       "name": "watchshop",
+      "solution": "watchshop.sln"
       "url": "https://github.com/khdevnet/watchshop.git"
     }
-  ],
-  "solution" : "watchshop.sln"
+  ]
 }
