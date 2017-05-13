@@ -1,7 +1,10 @@
 {
-  "solutions": [
-    {
-      "solution": "watchshop\watchshop.sln"
+  "components": [
+    { 
+      "main": true
+      "name": "watchshop",
+      "solution": "watchshop.sln"
+      "url": "https://github.com/khdevnet/watchshop.git"
     }
   ]
 }
