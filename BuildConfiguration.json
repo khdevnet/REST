@@ -4,5 +4,6 @@
       "name": "watchshop",
       "url": "https://github.com/khdevnet/watchshop.git"
     }
-  ]
+  ],
+  "solution" : "watchshop.sln"
 }
