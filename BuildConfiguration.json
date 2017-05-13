@@ -1,8 +1,8 @@
 {
   "repositories": [
     {
-      "name": "REST",
-      "url": "https://github.com/khdevnet/REST.git"
+      "name": "watchshop",
+      "url": "https://github.com/khdevnet/watchshop.git"
     }
   ]
 }
