@@ -5,5 +5,5 @@
       "solution": "watchshop.sln"
     }
   ],
-  "artifactsFolder" : "\\buildartifacts"
+  "artifacts" : "buildartifacts"
 }
