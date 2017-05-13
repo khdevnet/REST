@@ -4,5 +4,6 @@
       "name": "watchshop",
       "solution": "watchshop.sln"
     }
-  ]
+  ],
+  "artifactsFolder" : "buildartifacts"
 }
