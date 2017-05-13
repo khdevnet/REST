@@ -1,8 +1,8 @@
-﻿using Ninject.Modules;
+﻿using Ninject.Extensions.Conventions;
+using Ninject.Modules;
+using Ninject.Web.Common;
 using WatchShop.Domain.Accounts;
 using WatchShop.Domain.Accounts.Extensibility;
-using WatchShop.Domain.Carts;
-using WatchShop.Domain.Carts.Extensibility;
 using WatchShop.Domain.Catalogs;
 using WatchShop.Domain.Catalogs.Extensibility;
 using WatchShop.Domain.Checkout;
@@ -18,15 +18,14 @@ namespace WatchShop.Domain
     {
         public override void Load()
         {
-            Bind<IProductRepository>().To<ProductRepository>();
-            Bind<ICartRepository>().To<CartRepository>();
-            Bind<ICustomerRepository>().To<CustomerRepository>();
-            Bind<IOrderRepository>().To<OrderRepository>();
-            Bind<IIdentityRepository>().To<IdentityRepository>();
-            Bind<ITokenRepository>().To<TokenRepository>();
+            Kernel.Bind(r => r.FromThisAssembly()
+            .IncludingNonePublicTypes()
+            .Select(t => t.Name.EndsWith("Repository"))
+            .BindAllInterfaces());
+
             Bind<IShopDataContext>().To<ShopDataContext>();
 
-            Bind<IShopDbContext>().To<ShopDbContext>().InSingletonScope();
+            Bind<IShopDbContext>().To<ShopDbContext>().InRequestScope();
 
             Bind<IAccount>().To<Account>();
             Bind<ICatalog>().To<Catalog>();
