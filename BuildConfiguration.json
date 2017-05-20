@@ -7,14 +7,15 @@
     }
   ],
   "artifacts": "buildartifacts",
+  "archive": [ "watchshop/WatchShop.Api/bin/**/*.*" ],
   "tests": {
     "reports": "buildartifacts\\reports",
     "wildcards": [ "watchshop/Tests/*.Tests.dll" ]
   },
   "codeQuality": {
     "fxcop": {
-      "reports" : "buildartifacts\\reports",
-      "wildcards": ["watchshop/WatchShop.Api/bin/*.Api.dll","watchshop/WatchShop.Domain/bin/*.Domain.dll"]
+      "reports": "buildartifacts\\reports",
+      "wildcards": [ "watchshop/WatchShop.Api/bin/*.Api.dll", "watchshop/WatchShop.Domain/bin/*.Domain.dll" ]
     }
   }
 }
