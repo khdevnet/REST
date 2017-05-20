@@ -1,9 +1,10 @@
 {
   "components": [
-    { 
+    {
       "name": "watchshop",
       "solution": "watchshop.sln"
     }
   ],
-  "artifacts" : "buildartifacts"
+  "artifacts": "buildartifacts",
+  "tests": [ "watchshop/Tests/*.Tests.dll" ]
 }
