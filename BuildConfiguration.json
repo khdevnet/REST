@@ -18,11 +18,9 @@
   "reportsTemplates": "\\jenkins-build-tool\\buildtools\\report\\",
   "archive": [ "watchshop/WatchShop.Api/bin/**/*.*" ],
   "tests": {
-    "enabled": true,
     "wildcards": [ "watchshop/Tests/*.Tests.dll" ]
   },
   "codeQuality": {
-    "enabled": false,
     "fxcop": {
       "reports": [ "buildartifacts/reports/*.fxcop.xml" ],
       "wildcards": [ "watchshop/WatchShop.Api/bin/*.Api.dll", "watchshop/WatchShop.Domain/bin/*.Domain.dll" ]
