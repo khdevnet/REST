@@ -7,9 +7,8 @@
     }
   ],
   "build": {
-    "clearWorkspace": false,
     "tests": true,
-    "codeQuality": true,
+    "codeQuality": false,
     "archive": true,
     "notifications": true
   },
