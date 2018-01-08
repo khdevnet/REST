@@ -14,7 +14,7 @@
   },
   "artifacts": "buildartifacts",
   "reports": "buildartifacts\\reports",
-  "reportsTemplates": "\\watchshop\\jenkins-build-tool\\buildtools\\report\\",
+  "reportsTemplates": "\\jenkins-build-tool\\buildtools\\report\\",
   "archive": [ "watchshop/WatchShop.Api/bin/**/*.*" ],
   "tests": {
     "wildcards": [ "watchshop/Tests/*.Tests.dll" ]
