@@ -1,0 +1,3 @@
+[submodule "jenkins-build-tool"]
+	path = jenkins-build-tool
+	url = https://github.com/khdevnet/jenkins-build-tool.git
